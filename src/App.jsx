@@ -1,35 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { ReactReader } from "react-reader";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
+  // And your own state logic to persist state
+  const [location, setLocation] = useState(null);
+  const locationChanged = (epubcifi) => {
+    // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
+    setLocation(epubcifi);
+  };
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
-export default App
+    <div style={{ height: "100vh" }}>
+      <ReactReader
+        location={location}
+        locationChanged={locationChanged}
+        url="https://react-reader.metabits.no/files/alice.epub"
+      />
+    </div>
+  );
+};
+export default App;
