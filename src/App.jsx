@@ -1,21 +1,55 @@
 import { useState } from "react";
-import { ReactReader } from "react-reader";
+import { ReactReader, ReactReaderStyle } from "react-reader";
+import "./custom-reader-styles.css"; // Replace with the actual path
+import FileReaderInput from "react-file-reader-input";
+
+const ownStyles = {
+  ...ReactReaderStyle,
+  arrow: {
+    ...ReactReaderStyle.arrow,
+    color: "red",
+  },
+};
 
 const App = () => {
-  // And your own state logic to persist state
-  const [location, setLocation] = useState(null);
   const locationChanged = (epubcifi) => {
-    // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
     setLocation(epubcifi);
   };
+
+  const [location, setLocation] = useState(
+    localStorage.getItem("epub-location") || 2
+  );
+  const [localFile, setLocalFile] = useState(null);
+  const [localName, setLocalName] = useState(null);
+
+  const defaultUrl = "https://react-reader.metabits.no/files/alice.epub"; // Replace with your default URL
+
+  const handleChangeFile = (event, results) => {
+    if (results.length > 0) {
+      const [e, file] = results[0];
+      if (file.type !== "application/epub+zip") {
+        return alert("Unsupported type");
+      }
+      setLocalFile(e.target.result);
+      setLocalName(file.name);
+      setLocation(null);
+    }
+  };
+
   return (
-    <div style={{ height: "100vh" }}>
-      <ReactReader
-        location={location}
-        locationChanged={locationChanged}
-        url="https://react-reader.metabits.no/files/alice.epub"
-      />
+    <div className="">
+      <FileReaderInput as="buffer" onChange={handleChangeFile}>
+        <button>Upload local epub</button>
+      </FileReaderInput>
+      <div style={{ height: "100vh" }}>
+        <ReactReader
+          location={location}
+          locationChanged={locationChanged}
+          url={localFile || defaultUrl} // Use localFile or the default URL
+        />
+      </div>
     </div>
   );
 };
+
 export default App;
