@@ -2,12 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { ReactReader } from "react-reader";
 import FileReaderInput from "react-file-reader-input";
 import "./custom-reader-styles.css"; // Replace with the actual path
-// import EmotionPlaylist from "./components/SpotifyPlaylist";
-import {
-  loadModel,
-  loadTokenizer,
-  predict,
-} from "./scripts/emotionAnalysis.js";
+import SpotifyPlaylist from "./components/spotifyPlaylist";
 
 const App = () => {
   const [location, setLocation] = useState(
@@ -20,7 +15,7 @@ const App = () => {
 
   const defaultUrl = "https://react-reader.metabits.no/files/alice.epub"; // Replace with your default URL
 
-  const getCfiBase = (epubcifi) => {
+  const getCfiChapter = (epubcifi) => {
     // Sample epubcifi: epubcfi(/6/6!/4/2/4[pgepubid00001]/1:0)
     // epubcifi is the status of the current rendered page in the epub
 
@@ -34,6 +29,7 @@ const App = () => {
       return null;
     }
   };
+
   const loadBook = (renditionRef) => {
     if (renditionRef.current) {
       const book = renditionRef.current.book;
@@ -48,7 +44,7 @@ const App = () => {
 
     return new Promise((resolve, reject) => {
       bookSpine.each(async (section) => {
-        if (section.cfiBase === getCfiBase(location)) {
+        if (section.cfiBase === getCfiChapter(location)) {
           try {
             const contents = await section.load(book.load.bind(book));
             const bodyElement = contents.querySelector("body");
@@ -65,27 +61,16 @@ const App = () => {
     });
   };
 
-  useEffect(() => {
-    // Load the model and tokenizer when the component mounts
-    async function loadModelAndTokenizer() {
-      const model = await loadModel();
-      const tokenizer = await loadTokenizer();
-      const prediction = predict(storyText, model, tokenizer);
-      console.log(prediction, "prediction");
-    }
-    loadModelAndTokenizer();
-  }, [storyText]);
-
   const locationChanged = (epubcifi) => {
     setLocation(epubcifi);
-    console.log("locationChanged: epubcifi: ", getCfiBase(epubcifi));
+    console.log("locationChanged: epubcifi: ", getCfiChapter(epubcifi));
   };
 
   const handleChangeFile = (event, results) => {
     if (results.length > 0) {
       const [e, file] = results[0];
       if (file.type !== "application/epub+zip") {
-        return alert("Unsupported type");
+        return alert("Unsupported type. Please upload an epub file.");
       }
       setLocalFile(e.target.result);
       setLocalName(file.name);
@@ -113,6 +98,7 @@ const App = () => {
 
   return (
     <div className="">
+      <SpotifyPlaylist storyText={storyText} />;
       <FileReaderInput as="buffer" onChange={handleChangeFile}>
         <button>Upload local epub</button>
       </FileReaderInput>
@@ -120,13 +106,13 @@ const App = () => {
         <ReactReader
           location={location}
           locationChanged={locationChanged}
-          url={localFile || defaultUrl} // Use localFile or the default URL
+          url={localFile || defaultUrl}
           getRendition={(rendition) => {
             renditionRef.current = rendition;
           }}
           epubOptions={{
-            allowPopups: true, // Adds `allow-popups` to sandbox-attribute
-            allowScriptedContent: true, // Adds `allow-scripts` to sandbox-attribute
+            allowPopups: true,
+            allowScriptedContent: true,
           }}
         />
       </div>

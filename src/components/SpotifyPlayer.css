@@ -1,0 +1,36 @@
+#arrowUpDown {
+  top: 3%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+#spotifyWrapper {
+  position: relative;
+  width: 100%;
+  height: 352px; /* Set a fixed height for the container */
+  background-color: grey;
+  border-radius: 12px 12px 0 0;
+  display: flex; /* Add display: flex; to make flex properties work */
+  transition: transform 0.3s ease;
+}
+
+.hide-embed {
+  transform: translateY(92%);
+}
+
+#spotifyPlaylist {
+  margin-top: 2.3rem;
+}
+
+.spotifyContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 999;
+}
