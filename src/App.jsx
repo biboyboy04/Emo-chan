@@ -2,6 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { ReactReader } from "react-reader";
 import FileReaderInput from "react-file-reader-input";
 import "./custom-reader-styles.css"; // Replace with the actual path
+// import EmotionPlaylist from "./components/SpotifyPlaylist";
+import {
+  loadModel,
+  loadTokenizer,
+  predict,
+} from "./scripts/emotionAnalysis.js";
 
 const App = () => {
   const [location, setLocation] = useState(
@@ -9,6 +15,7 @@ const App = () => {
   );
   const [localFile, setLocalFile] = useState(null);
   const [localName, setLocalName] = useState(null);
+  const [storyText, setStoryText] = useState("");
   const renditionRef = useRef(null);
 
   const defaultUrl = "https://react-reader.metabits.no/files/alice.epub"; // Replace with your default URL
@@ -58,6 +65,17 @@ const App = () => {
     });
   };
 
+  useEffect(() => {
+    // Load the model and tokenizer when the component mounts
+    async function loadModelAndTokenizer() {
+      const model = await loadModel();
+      const tokenizer = await loadTokenizer();
+      const prediction = predict(storyText, model, tokenizer);
+      console.log(prediction, "prediction");
+    }
+    loadModelAndTokenizer();
+  }, [storyText]);
+
   const locationChanged = (epubcifi) => {
     setLocation(epubcifi);
     console.log("locationChanged: epubcifi: ", getCfiBase(epubcifi));
@@ -82,6 +100,9 @@ const App = () => {
     if (book) {
       getCurrentChapterText(book)
         .then((result) => {
+          // console.log(result, "result getcurrentchaptertext");
+          // <EmotionPlaylist textContent={result} />;
+          setStoryText(result);
           console.log(result);
         })
         .catch((error) => {
@@ -102,6 +123,10 @@ const App = () => {
           url={localFile || defaultUrl} // Use localFile or the default URL
           getRendition={(rendition) => {
             renditionRef.current = rendition;
+          }}
+          epubOptions={{
+            allowPopups: true, // Adds `allow-popups` to sandbox-attribute
+            allowScriptedContent: true, // Adds `allow-scripts` to sandbox-attribute
           }}
         />
       </div>
