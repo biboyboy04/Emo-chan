@@ -97,8 +97,8 @@ const App = () => {
   }, [location]);
 
   return (
-    <div className="">
-      <SpotifyPlaylist storyText={storyText} />;
+    <div className="" style={{ position: "relative" }}>
+      <SpotifyPlaylist storyText={storyText} />
       <FileReaderInput as="buffer" onChange={handleChangeFile}>
         <button>Upload local epub</button>
       </FileReaderInput>
