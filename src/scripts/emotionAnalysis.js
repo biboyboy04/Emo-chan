@@ -107,7 +107,7 @@ export function predict(text, model, tokenizer) {
     return null;
   }
 
-  const emotions = ["joy", "anger", "sadness", "fear"];
+  const emotions = ["joy", "anger", "sadness", "fear", "neutral"];
   const maxlen = 100;
 
   text = preprocessText(text);
@@ -120,7 +120,7 @@ export function predict(text, model, tokenizer) {
   const paddedLastSegment = padSequences(lastSegment, maxlen);
   segments[segments.length - 1] = paddedLastSegment;
 
-  let totalEmotionProbability = [0, 0, 0, 0];
+  let totalEmotionProbability = [0, 0, 0, 0, 0];
 
   // iterate through the segments and get the probability of each emotion
   for (let s = 0; s < segments.length; s++) {
