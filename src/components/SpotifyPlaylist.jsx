@@ -4,12 +4,29 @@ import {
   loadTokenizer,
   predict,
 } from "../scripts/emotionAnalysis.js";
-import { slideEmbed } from "../scripts/utils.js";
-import { changePlaylist } from "../scripts/utils.js";
 import "./SpotifyPlayer.css";
 // import TopRightEmotion from "./TopRightEmotion.jsx";
 
 // Can be separated to 2 components: EmotionPrediction and Playlist
+function changePlaylistSrc(emotion) {
+  var playlistId = "";
+  switch (emotion) {
+    case "joy":
+      playlistId = "37i9dQZF1EIenYKDHoroaV";
+      break;
+    case "sadness":
+      playlistId = "37i9dQZF1EIh1T1PukZNVG";
+      break;
+    case "fear":
+      playlistId = "37i9dQZF1EIcDJGAGCcWsK";
+      break;
+    case "anger":
+      playlistId = "6QZnHBnKUjL1TCxzDk2V5o";
+      break;
+  }
+  const newSrc = `https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`;
+  return newSrc;
+}
 
 function SpotifyPlaylist({ storyText, setIsLoading }) {
   const [emotionResult, setEmotionResult] = useState("");
@@ -24,7 +41,6 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       const tokenizer = await loadTokenizer();
       const prediction = await predict(storyText, model, tokenizer);
       setEmotionResult(prediction);
-      handlePlaylistChange(prediction);
       // setIsLoading(false);
       setIsLoading(false);
       console.log(prediction, "prediction");
@@ -32,24 +48,21 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
     loadModelAndTokenizer();
   }, [storyText, setIsLoading]);
 
-  const handleSlideEmbed = () => {
-    const spotifyWrapper = document.getElementById("spotifyWrapper");
-    const arrowIcon = document.getElementById("arrowIcon");
-    slideEmbed(spotifyWrapper, arrowIcon, isDown);
-    setIsDown((prevIsDown) => !prevIsDown);
-  };
-
-  const handlePlaylistChange = (emotion) => {
-    const iframe = document.getElementById("spotifyPlaylist");
-    changePlaylist(emotion, iframe);
-  };
-
-  const spotifyPlaylistUrl = "";
+  useEffect(() => {
+    setIsDown(false);
+  }, [emotionResult]);
 
   return (
     <div className="spotifyContainer">
-      <div id="spotifyWrapper" data-is-down={false}>
-        <div id="arrowUpDown" onClick={handleSlideEmbed}>
+      <div
+        id="spotifyWrapper"
+        className={`${isDown ? "hide-embed" : ""}`}
+        data-is-down={isDown}
+      >
+        <div
+          id="arrowUpDown"
+          onClick={() => setIsDown((prevDown) => !prevDown)}
+        >
           <i
             id="arrowIcon"
             className={`fa-solid fa-arrow-${isDown ? "up" : "down"} fa-xl`}
@@ -63,7 +76,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
             width: "100%",
             height: "100%",
           }}
-          src={spotifyPlaylistUrl}
+          src={changePlaylistSrc(emotionResult)}
           frameBorder="0"
           allowFullScreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
