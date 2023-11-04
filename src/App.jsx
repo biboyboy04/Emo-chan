@@ -15,6 +15,7 @@ const App = () => {
 
   const defaultUrl = "https://react-reader.metabits.no/files/alice.epub"; // Replace with your default URL
 
+  // Can be more shorter
   const getCfiChapter = (epubcifi) => {
     // Sample epubcifi: epubcfi(/6/6!/4/2/4[pgepubid00001]/1:0)
     // epubcifi is the status of the current rendered page in the epub
@@ -81,7 +82,7 @@ const App = () => {
   useEffect(() => {
     // Access the book object
     const book = loadBook(renditionRef);
-
+    // double chech if redundant
     if (book) {
       getCurrentChapterText(book)
         .then((result) => {
@@ -97,12 +98,12 @@ const App = () => {
   }, [location]);
 
   return (
-    <div className="" style={{ position: "relative" }}>
+    <div className="app-container">
       <SpotifyPlaylist storyText={storyText} />
       <FileReaderInput as="buffer" onChange={handleChangeFile}>
         <button>Upload local epub</button>
       </FileReaderInput>
-      <div style={{ height: "100vh" }}>
+      <div className="reader-container">
         <ReactReader
           location={location}
           locationChanged={locationChanged}

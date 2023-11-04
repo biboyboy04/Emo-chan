@@ -65,3 +65,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.app-container {
+  position: "relative";
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.reader-container {
+  flex: 1;
+}
+
+.loading {
+}
