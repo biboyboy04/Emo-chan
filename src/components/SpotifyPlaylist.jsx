@@ -41,16 +41,12 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       const tokenizer = await loadTokenizer();
       const prediction = await predict(storyText, model, tokenizer);
       setEmotionResult(prediction);
-      // setIsLoading(false);
+      setIsDown(false);
       setIsLoading(false);
       console.log(prediction, "prediction");
     }
     loadModelAndTokenizer();
   }, [storyText, setIsLoading]);
-
-  useEffect(() => {
-    setIsDown(false);
-  }, [emotionResult]);
 
   return (
     <div className="spotifyContainer">
