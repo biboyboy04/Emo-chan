@@ -3,6 +3,7 @@ import { ReactReader } from "react-reader";
 import FileReaderInput from "react-file-reader-input";
 import "./custom-reader-styles.css"; // Replace with the actual path
 import SpotifyPlaylist from "./components/spotifyPlaylist";
+import ReactLoading from "react-loading";
 
 const App = () => {
   const [location, setLocation] = useState(
@@ -99,6 +100,14 @@ const App = () => {
 
   return (
     <div className="app-container">
+      <div className="loading">
+        <ReactLoading
+          type={"balls"}
+          color={"red"}
+          height={"50%"}
+          width={"50%"}
+        />
+      </div>
       <SpotifyPlaylist storyText={storyText} />
       <FileReaderInput as="buffer" onChange={handleChangeFile}>
         <button>Upload local epub</button>
