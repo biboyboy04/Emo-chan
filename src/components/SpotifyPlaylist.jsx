@@ -9,6 +9,8 @@ import { changePlaylist } from "../scripts/utils.js";
 import "./SpotifyPlayer.css";
 // import TopRightEmotion from "./TopRightEmotion.jsx";
 
+// Can be separated to 2 components: EmotionPrediction and Playlist
+
 function SpotifyPlaylist({ storyText }) {
   const [emotionResult, setEmotionResult] = useState("");
   const [isDown, setIsDown] = useState(false);

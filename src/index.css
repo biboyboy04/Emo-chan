@@ -14,6 +14,13 @@
   -webkit-text-size-adjust: 100%;
 }
 
+*,
+**,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -71,6 +78,7 @@ button:focus-visible {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .reader-container {
@@ -78,4 +86,16 @@ button:focus-visible {
 }
 
 .loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%; /* Occupy the full width of the viewport */
+  max-height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(169, 169, 169, 0.7);
+  z-index: 3;
+  overflow: hidden;
 }
