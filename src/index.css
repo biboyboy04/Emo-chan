@@ -87,15 +87,22 @@ button:focus-visible {
 
 .loading {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  row-gap: 2rem;
   position: absolute;
-  width: 100%; /* Occupy the full width of the viewport */
+  width: 100%;
+  height: 100vh;
   max-height: 100vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(169, 169, 169, 0.7);
+  background-color: rgba(0, 0, 0, 0.829);
   z-index: 3;
   overflow: hidden;
+}
+
+.loading-text {
+  color: white;
 }

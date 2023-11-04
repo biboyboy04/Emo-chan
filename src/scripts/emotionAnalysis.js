@@ -96,7 +96,7 @@ function addArraysElementWise(arr1, arr2) {
   return result;
 }
 
-export function predict(text, model, tokenizer) {
+export async function predict(text, model, tokenizer) {
   if (!model) {
     console.error("Model is not available.");
     return null;
@@ -114,8 +114,10 @@ export function predict(text, model, tokenizer) {
   const tokenizedTexts = tokenize(text, tokenizer);
   console.log(tokenizedTexts, "tokenizedTexts");
   const segments = createSegments(tokenizedTexts, maxlen);
+  console.log(segments);
 
   //get the segment last value and add padding
+  // add the padding on the segment function !TODO
   const lastSegment = segments[segments.length - 1];
   const paddedLastSegment = padSequences(lastSegment, maxlen);
   segments[segments.length - 1] = paddedLastSegment;
@@ -123,6 +125,7 @@ export function predict(text, model, tokenizer) {
   let totalEmotionProbability = [0, 0, 0, 0, 0];
 
   // iterate through the segments and get the probability of each emotion
+
   for (let s = 0; s < segments.length; s++) {
     const segment = segments[s];
     const inputTensor = tf.tensor2d([segment], [1, maxlen]);
@@ -134,6 +137,7 @@ export function predict(text, model, tokenizer) {
       flattenedPredictions
     );
   }
+
   console.log("totalEmotionProbability :>> ", totalEmotionProbability);
   //get index of the highest number in the totalEmotionProbability
   const maxIndex = totalEmotionProbability.indexOf(

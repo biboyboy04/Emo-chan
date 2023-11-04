@@ -11,26 +11,26 @@ import "./SpotifyPlayer.css";
 
 // Can be separated to 2 components: EmotionPrediction and Playlist
 
-function SpotifyPlaylist({ storyText }) {
+function SpotifyPlaylist({ storyText, setIsLoading }) {
   const [emotionResult, setEmotionResult] = useState("");
   const [isDown, setIsDown] = useState(false);
-  const [isPredictionReady, setIsPredictionReady] = useState(false); // State to track when the prediction is ready
-  const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
+  // const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
 
   useEffect(() => {
     // Load the model and tokenizer when the component mounts
+    setIsLoading(true);
     async function loadModelAndTokenizer() {
       const model = await loadModel();
       const tokenizer = await loadTokenizer();
-      const prediction = predict(storyText, model, tokenizer);
+      const prediction = await predict(storyText, model, tokenizer);
       setEmotionResult(prediction);
       handlePlaylistChange(prediction);
-      setIsPredictionReady(true);
+      // setIsLoading(false);
       setIsLoading(false);
       console.log(prediction, "prediction");
     }
     loadModelAndTokenizer();
-  }, [storyText]);
+  }, [storyText, setIsLoading]);
 
   const handleSlideEmbed = () => {
     const spotifyWrapper = document.getElementById("spotifyWrapper");
@@ -72,7 +72,7 @@ function SpotifyPlaylist({ storyText }) {
       </div>
 
       {/* Show loading message while waiting for prediction */}
-      {isLoading && <div>Loading emotion prediction...</div>}
+      {/* {isLoading && <div>Loading emotion prediction...</div>} */}
 
       {/* Show the TopRightEmotion component only after the prediction is ready */}
       {/* {isPredictionReady && !isLoading && emotionResult !== undefined && (

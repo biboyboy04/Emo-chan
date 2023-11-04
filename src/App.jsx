@@ -11,7 +11,10 @@ const App = () => {
   );
   const [localFile, setLocalFile] = useState(null);
   const [localName, setLocalName] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
+
+  const chapterRef = useRef(null);
   const renditionRef = useRef(null);
 
   const defaultUrl = "https://react-reader.metabits.no/files/alice.epub"; // Replace with your default URL
@@ -22,14 +25,16 @@ const App = () => {
     // epubcifi is the status of the current rendered page in the epub
 
     // We want to extract the substring /6/6, which I used as a basis for the chapter number
-    const match = epubcifi.match(/\/\d+\/\d+/);
+    if (typeof epubcifi === "string") {
+      const match = epubcifi.match(/\/\d+\/\d+/);
 
-    if (match) {
-      const extractedSubstring = match[0];
-      return extractedSubstring;
-    } else {
-      return null;
+      if (match) {
+        const extractedSubstring = match[0];
+        return extractedSubstring;
+      }
     }
+
+    return null; // Return null if the parameter is not a string or doesn't match the pattern
   };
 
   const loadBook = (renditionRef) => {
@@ -46,9 +51,11 @@ const App = () => {
 
     return new Promise((resolve, reject) => {
       bookSpine.each(async (section) => {
+        // Section == Chapter
         if (section.cfiBase === getCfiChapter(location)) {
           try {
             const contents = await section.load(book.load.bind(book));
+            // contents = html dom element of the chapter
             const bodyElement = contents.querySelector("body");
             if (bodyElement) {
               resolve(bodyElement.textContent);
@@ -61,11 +68,6 @@ const App = () => {
         }
       });
     });
-  };
-
-  const locationChanged = (epubcifi) => {
-    setLocation(epubcifi);
-    console.log("locationChanged: epubcifi: ", getCfiChapter(epubcifi));
   };
 
   const handleChangeFile = (event, results) => {
@@ -81,41 +83,52 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Access the book object
-    const book = loadBook(renditionRef);
-    // double chech if redundant
-    if (book) {
-      getCurrentChapterText(book)
-        .then((result) => {
-          // console.log(result, "result getcurrentchaptertext");
-          // <EmotionPlaylist textContent={result} />;
-          setStoryText(result);
-          console.log(result);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    // When the location changes, get and change the chapter
+    const currentChapter = getCfiChapter(location);
+
+    // When the chapter changes, get the text of the current chapter
+    if (currentChapter !== chapterRef.current) {
+      chapterRef.current = currentChapter;
+
+      // Access the book object
+      const book = loadBook(renditionRef);
+      // double chech if redundant code : if book check
+      if (book) {
+        getCurrentChapterText(book)
+          .then((result) => {
+            setStoryText(result);
+            console.log(result);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     }
   }, [location]);
 
   return (
     <div className="app-container">
-      <div className="loading">
-        <ReactLoading
-          type={"balls"}
-          color={"red"}
-          height={"50%"}
-          width={"50%"}
-        />
-      </div>
-      <SpotifyPlaylist storyText={storyText} />
+      {isLoading && (
+        <div className="loading">
+          <ReactLoading
+            type={"spin"}
+            color={"white"}
+            height={"auto"}
+            width={"15%"}
+          />
+          <div className="loading-text">Emotion Analysis in Progress...</div>
+        </div>
+      )}
+      <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
+
       <FileReaderInput as="buffer" onChange={handleChangeFile}>
         <button>Upload local epub</button>
       </FileReaderInput>
+
       <div className="reader-container">
         <ReactReader
           location={location}
-          locationChanged={locationChanged}
+          locationChanged={setLocation}
           url={localFile || defaultUrl}
           getRendition={(rendition) => {
             renditionRef.current = rendition;
