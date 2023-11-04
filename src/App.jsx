@@ -52,7 +52,8 @@ const App = () => {
     return new Promise((resolve, reject) => {
       bookSpine.each(async (section) => {
         // Section == Chapter
-        if (section.cfiBase === getCfiChapter(location)) {
+        // most ebook chapters starts at index 2
+        if (section.index > 1 && section.cfiBase === getCfiChapter(location)) {
           try {
             const contents = await section.load(book.load.bind(book));
             // contents = html dom element of the chapter
@@ -97,7 +98,7 @@ const App = () => {
         getCurrentChapterText(book)
           .then((result) => {
             setStoryText(result);
-            console.log(result);
+            // console.log(result);
           })
           .catch((error) => {
             console.error(error);
