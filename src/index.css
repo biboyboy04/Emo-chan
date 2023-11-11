@@ -116,8 +116,11 @@ button:focus-visible {
   flex-direction: column;
   align-items: stretch;
   text-align: center;
-  width: 100%;
+
   min-height: 100vh;
+  gap: 6rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .navbar-header {
@@ -129,12 +132,6 @@ button:focus-visible {
 
 .logo {
   font-size: 24px;
-}
-
-.search-and-add {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
 }
 
 input {
@@ -154,22 +151,41 @@ input {
   cursor: pointer;
 }
 
+.home-page-header {
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.upload {
+  margin-top: 2rem;
+}
+
+.books {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  justify-content: center;
+}
+
 .book-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  flex: 1;
   align-items: center;
   margin: 20px 20px;
 }
 
 .book {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
   border-radius: 5px;
   margin: 15px;
   padding: 10px;
   flex: 1;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.212);
+}
+
+.book:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.678);
 }
 
 .book img {
@@ -181,11 +197,37 @@ input {
 
 .book-details {
   margin-top: 10px;
+  font-weight: 400;
 }
 
-/* Add more styles as needed */
-/* @media screen and (min-width: 581px) {
-  .book-list {
-    flex-direction: column;
-  }
-} */
+.books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.books-header-title,
+.upload-header-title {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.upload-button {
+  border: 1px solid black;
+  border-radius: 1rem;
+  background-color: white;
+  color: black;
+  padding: 8px 16px; /* Adjust padding as needed */
+  cursor: pointer;
+  outline: none; /* Remove default button outline */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  align-self: flex-start;
+}
+
+.upload-button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}

@@ -62,26 +62,41 @@ const HomePage = () => {
         <div className="logo">Emo-chan</div>
         <div className="hamburger">X</div>
       </div>
-      <div className="search-and-add">
+
+      <div className="home-page-header">
+        Transform your reading experience. Emo-chan analyzes E-book chapters,
+        matches emotions, and plays fitting instrumental music. Immerse yourself
+        in a noise-free, emotion-enhanced literary journey.
+      </div>
+
+      <div className="upload">
+        <div className="upload-header-title">Have your own E-book?</div>
+        <br />
         <FileReaderInput as="buffer" onChange={handleFileChange}>
-          <button>Upload local epub</button>
+          <button className="upload-button">Upload E-book</button>
         </FileReaderInput>
       </div>
-      <div className="book-list">
-        {books.map((book) => (
-          <div
-            className="book"
-            key={book.id}
-            onClick={() => handleBookClick(book.url)}
-          >
-            <img src={`${book.cover}`} alt={book.title} />
-            <div className="book-details">
-              <h3>{book.title}</h3>
-              <p>Author: {book.author}</p>
-              <p>Genre: {book.genre}</p>
+
+      <div className="books">
+        <div className="books-header">
+          <div className="books-header-title">Choose a book</div>
+        </div>
+        <div className="book-list">
+          {books.map((book) => (
+            <div
+              className="book"
+              key={book.id}
+              onClick={() => handleBookClick(book.url)}
+            >
+              <img src={`${book.cover}`} alt={book.title} />
+              <div className="book-details">
+                <h3>{book.title}</h3>
+                <p>Author: {book.author}</p>
+                <p>Genre: {book.genre}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
