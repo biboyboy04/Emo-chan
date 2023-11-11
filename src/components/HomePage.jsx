@@ -5,11 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Reader from "../Reader";
 
 const HomePage = () => {
-  const [location, setLocation] = useState(
-    localStorage.getItem("epub-location") || 2
-  );
-  const [localFile, setLocalFile] = useState(null);
-  const [localName, setLocalName] = useState(null);
   const navigate = useNavigate();
   const books = [
     {
@@ -46,20 +41,19 @@ const HomePage = () => {
     },
   ];
 
-  const handleChangeFile = (event, results) => {
+  const handleFileChange = (event, results) => {
     if (results.length > 0) {
       const [e, file] = results[0];
       if (file.type !== "application/epub+zip") {
         return alert("Unsupported type. Please upload an epub file.");
       }
-      setLocalFile(e.target.result);
-      setLocalName(file.name);
-      setLocation(null);
+      //e.target.result = book file
+      navigate("/App", { state: { book: e.target.result } });
     }
   };
 
   const handleBookClick = (bookUrl) => {
-    navigate("/App", { state: { bookUrl } });
+    navigate("/App", { state: { book: bookUrl } });
   };
 
   return (
@@ -69,7 +63,7 @@ const HomePage = () => {
         <div className="hamburger">X</div>
       </div>
       <div className="search-and-add">
-        <FileReaderInput as="buffer" onChange={handleChangeFile}>
+        <FileReaderInput as="buffer" onChange={handleFileChange}>
           <button>Upload local epub</button>
         </FileReaderInput>
       </div>
@@ -92,10 +86,5 @@ const HomePage = () => {
     </div>
   );
 };
-// This is for passing props onlyu
-// Router
-// Props to the book
-// Add logicv for import
-// All book related function oncluding spotifty is not here
 
 export default HomePage;

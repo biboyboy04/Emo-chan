@@ -17,7 +17,7 @@ const App = () => {
   const renditionRef = useRef(null);
 
   const locationParam = useLocation();
-  const selectedBook = locationParam.state.bookUrl;
+  const selectedBook = locationParam.state.book;
 
   // Can be more shorter
   const getCfiChapter = (epubcifi) => {
