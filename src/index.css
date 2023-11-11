@@ -73,6 +73,40 @@ button:focus-visible {
   }
 }
 
+.app-container {
+  position: "relative";
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.reader-container {
+  flex: 1;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2rem;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.829);
+  z-index: 3;
+  overflow: hidden;
+}
+
+.loading-text {
+  color: white;
+}
+
 /* Home */
 
 /* styles.css */
@@ -139,8 +173,10 @@ input {
 }
 
 .book img {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 25vh;
+  object-fit: cover;
+  border-radius: 5px;
 }
 
 .book-details {
