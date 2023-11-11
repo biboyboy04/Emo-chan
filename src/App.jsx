@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { ReactReader } from "react-reader";
 import FileReaderInput from "react-file-reader-input";
 import "./custom-reader-styles.css"; // Replace with the actual path
@@ -17,10 +18,16 @@ const App = () => {
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
 
-  const defaultUrl = "https://react-reader.metabits.no/files/alice.epub"; // Replace with your default URL
+  const locationParam = useLocation();
+  console.log(locationParam, "locationParam");
+  const selectedBook = locationParam.state.bookId;
+  console.log(selectedBook, "selectedBook");
+
+  const defaultUrl = "/public/e-books/grimms.epub"; // Replace with your default URL
 
   // Can be more shorter
   const getCfiChapter = (epubcifi) => {
+    console.log(epubcifi);
     // Sample epubcifi: epubcfi(/6/6!/4/2/4[pgepubid00001]/1:0)
     // epubcifi is the status of the current rendered page in the epub
 
@@ -130,7 +137,7 @@ const App = () => {
         <ReactReader
           location={location}
           locationChanged={setLocation}
-          url={localFile || defaultUrl}
+          url={localFile || selectedBook}
           getRendition={(rendition) => {
             renditionRef.current = rendition;
           }}
