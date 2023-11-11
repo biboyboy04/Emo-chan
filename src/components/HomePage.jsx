@@ -3,7 +3,7 @@ import FileReaderInput from "react-file-reader-input";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Reader from "../Reader";
-
+import Tilt from "react-parallax-tilt";
 const HomePage = () => {
   const navigate = useNavigate();
   const books = [
@@ -14,6 +14,7 @@ const HomePage = () => {
       genre: "Fiction",
       cover: "/public/e-books/alice.jpg",
       url: "/public/e-books/alice.epub",
+      summary: `Alice's Adventures in Wonderland" by Lewis Carroll is a whimsical and imaginative journey that follows the curious Alice as she falls down a rabbit hole into a fantastical world. Filled with eccentric characters and surreal encounters, the story captures the essence of childhood curiosity and the unpredictable nature of Wonderland. Lewis Carroll's classic tale is a timeless exploration of fantasy, adventure, and the joy of embracing the unexpected.`,
     },
     {
       id: 2,
@@ -22,6 +23,7 @@ const HomePage = () => {
       genre: "Non-fiction",
       cover: "/public/e-books/grimms.png",
       url: "/public/e-books/grimms.epub",
+      summary: `"Grimms' Fairy Tales" by Jacob Grimm and Wilhelm Grimm is a captivating collection of timeless folktales and fairy stories. Authored by the Brothers Grimm, the anthology includes enchanting narratives such as "Cinderella," "Snow White," "Hansel and Gretel," and many more. These tales are woven with magical elements, moral lessons, and enduring characters, making the book a beloved and enduring classic that continues to enchant readers of all ages.`,
     },
     {
       id: 3,
@@ -30,6 +32,7 @@ const HomePage = () => {
       genre: "Mystery",
       cover: "/public/e-books/happy_prince.jpg",
       url: "/public/e-books/happy_prince.epub",
+      summary: `"The Happy Prince and Other Tales" by Oscar Wilde is a collection of charming and poignant short stories. Crafted with Oscar Wilde's wit and literary flair, the tales explore themes of love, sacrifice, and the human condition. The titular story, "The Happy Prince," tells the tale of a golden statue who, despite his privileged past, discovers the true meaning of compassion and generosity. Wilde's collection weaves together fairy-tale elements with social commentary, creating a literary work that resonates with both children and adults, offering a blend of enchantment and thought-provoking reflections on life and morality.`,
     },
     {
       id: 4,
@@ -38,6 +41,7 @@ const HomePage = () => {
       genre: "Mystery",
       cover: "/public/e-books/jungle_book.jpg",
       url: "/public/e-books/jungle_book.epub",
+      summary: `"The Jungle Book" by Rudyard Kipling is a classic collection of stories that vividly brings to life the enchanting world of the Indian jungle. The narrative revolves around Mowgli, a young boy raised by wolves, as he navigates the challenges and adventures of the wild. Through Mowgli's encounters with various animals, including the wise panther Bagheera and the fun-loving bear Baloo, Kipling explores themes of identity, survival, and the delicate balance of nature. "The Jungle Book" remains a beloved work that captivates readers with its rich storytelling, memorable characters, and the timeless lessons it imparts about the interconnectedness of all living things.`,
     },
   ];
 
@@ -83,18 +87,20 @@ const HomePage = () => {
         </div>
         <div className="book-list">
           {books.map((book) => (
-            <div
-              className="book"
-              key={book.id}
-              onClick={() => handleBookClick(book.url)}
-            >
-              <img src={`${book.cover}`} alt={book.title} />
-              <div className="book-details">
-                <h3>{book.title}</h3>
-                <p>Author: {book.author}</p>
-                <p>Genre: {book.genre}</p>
+            <Tilt key={book.id} className="book">
+              <div
+                className=""
+                key={book.id}
+                onClick={() => handleBookClick(book.url)}
+              >
+                <img src={`${book.cover}`} alt={book.title} />
+                <div className="book-details">
+                  <h3>{book.title}</h3>
+                  <p>Author: {book.author}</p>
+                  <p>{book.summary}</p>
+                </div>
               </div>
-            </div>
+            </Tilt>
           ))}
         </div>
       </div>

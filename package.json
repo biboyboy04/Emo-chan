@@ -16,6 +16,7 @@
     "react-dom": "^18.2.0",
     "react-file-reader-input": "^2.0.0",
     "react-loading": "^2.0.3",
+    "react-parallax-tilt": "^1.7.173",
     "react-reader": "^1.2.1",
     "react-render": "^4.0.0",
     "react-router-dom": "^6.18.0",
