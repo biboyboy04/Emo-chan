@@ -119,9 +119,6 @@ const EBookReader = () => {
           getRendition={(rendition) => {
             renditionRef.current = rendition;
           }}
-          epubInitOptions={{
-            openAs: "epub",
-          }}
           epubOptions={{
             allowPopups: true,
             allowScriptedContent: true,
