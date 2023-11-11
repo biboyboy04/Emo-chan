@@ -181,6 +181,7 @@ input {
 .home-page-header {
   font-size: 32px;
   font-weight: 500;
+  padding: 0rem 15vw;
 }
 
 .upload {
@@ -250,8 +251,9 @@ input {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(14, 13, 13, 0.514);
+  background: rgba(14, 13, 13, 0.699);
   color: white;
+  line-height: 1;
 }
 
 .books-header {
@@ -301,6 +303,10 @@ input {
     margin: 0;
   }
 
+  .home-page-header {
+    padding: 0;
+  }
+
   .books {
     padding: 0;
   }
@@ -318,5 +324,12 @@ input {
     grid-template-columns: repeat(2, 1fr); /* 2 columns */
     margin: 0;
     padding: 2rem;
+  }
+  .home-page-header {
+    padding: 10vw;
+  }
+
+  .home-page {
+    gap: 2rem;
   }
 }

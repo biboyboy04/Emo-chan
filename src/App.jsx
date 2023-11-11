@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ReactReader, ReactReaderStyle } from "react-reader";
-import FileReaderInput from "react-file-reader-input";
 import "./custom-reader-styles.css"; // Replace with the actual path
 import SpotifyPlaylist from "./components/spotifyPlaylist";
 import ReactLoading from "react-loading";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const App = () => {
   const [location, setLocation] = useState(

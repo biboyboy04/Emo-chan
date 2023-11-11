@@ -1,9 +1,7 @@
 import React from "react";
 import FileReaderInput from "react-file-reader-input";
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Reader from "../Reader";
-import Tilt from "react-parallax-tilt";
+import { useNavigate } from "react-router-dom";
+
 const HomePage = () => {
   const navigate = useNavigate();
   const books = [
