@@ -35,6 +35,11 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
 
   useEffect(() => {
     // Load the model and tokenizer when the component mounts
+    if (storyText == "") {
+      setIsLoading(false);
+      setIsDown(true);
+      return;
+    }
     setIsLoading(true);
     async function loadModelAndTokenizer() {
       const model = await loadModel();
@@ -62,22 +67,35 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
           <i
             id="arrowIcon"
             className={`fa-solid fa-arrow-${isDown ? "up" : "down"} fa-xl`}
-            style={{ color: "#E1E1E1" }}
+            style={{ color: "white" }}
           ></i>
         </div>
-        <iframe
-          id="spotifyPlaylist"
-          style={{
-            borderRadius: "12px",
-            width: "100%",
-            height: "100%",
-          }}
-          src={changePlaylistSrc(emotionResult)}
-          frameBorder="0"
-          allowFullScreen=""
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-        ></iframe>
+        {emotionResult === "" || emotionResult === "neutral" ? (
+          <p
+            style={{
+              fontSize: "2rem",
+              marginBottom: "10px",
+              color: "white",
+              margin: "auto 0",
+            }}
+          >
+            {emotionResult === "" ? "No Emotion" : "Neutral"}
+          </p>
+        ) : (
+          <iframe
+            id="spotifyPlaylist"
+            style={{
+              borderRadius: "12px",
+              width: "100%",
+              height: "100%",
+            }}
+            src={changePlaylistSrc(emotionResult)}
+            frameBorder="0"
+            allowFullScreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
+        )}
       </div>
 
       {/* Show loading message while waiting for prediction */}
