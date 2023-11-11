@@ -7,11 +7,11 @@ import "./index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/emo-chan/",
+    path: "/Emo-chan/",
     element: <HomePage />,
   },
   {
-    path: "/emo-chan/App",
+    path: "/Emo-chan/App",
     element: <App />,
   },
 ]);

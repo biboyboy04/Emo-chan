@@ -40,12 +40,12 @@ const HomePage = () => {
       if (file.type !== "application/epub+zip") {
         return alert("Unsupported type. Please upload an epub file.");
       }
-      navigate("/emo-chan/App", { state: { book: e.target.result } });
+      navigate("/Emo-chan/App", { state: { book: e.target.result } });
     }
   };
 
   const handleBookClick = (bookUrl) => {
-    navigate("/emo-chan/App", { state: { book: bookUrl } });
+    navigate("/Emo-chan/App", { state: { book: bookUrl } });
   };
 
   return (

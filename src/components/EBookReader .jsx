@@ -88,7 +88,7 @@ const EBookReader = () => {
   }, [location]);
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/Emo-chan/");
   };
 
   return (
