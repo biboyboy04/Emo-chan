@@ -72,7 +72,7 @@ const HomePage = () => {
       <div className="upload">
         <div className="upload-header-title">Have your own E-book?</div>
         <br />
-        <FileReaderInput as="buffer" onChange={handleFileChange}>
+        <FileReaderInput as="url" onChange={handleFileChange}>
           <button className="upload-button">Upload E-book</button>
         </FileReaderInput>
       </div>
