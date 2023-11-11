@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ReactReader, ReactReaderStyle } from "react-reader";
-import "./custom-reader-styles.css"; // Replace with the actual path
-import SpotifyPlaylist from "./components/spotifyPlaylist";
+import SpotifyPlaylist from "./spotifyPlaylist";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 
-const App = () => {
+const EBookReader = () => {
   const [location, setLocation] = useState(
     localStorage.getItem("epub-location")
   );
@@ -21,7 +20,6 @@ const App = () => {
   const locationParam = useLocation();
   const selectedBook = locationParam.state.book;
 
-  // Can be more shorter
   const getCfiChapter = (epubcifi) => {
     console.log(epubcifi);
     // Sample epubcifi: epubcfi(/6/6!/4/2/4[pgepubid00001]/1:0)
@@ -52,7 +50,6 @@ const App = () => {
         if (section.index > 1 && section.cfiBase === getCfiChapter(location)) {
           try {
             const contents = await section.load(book.load.bind(book));
-            // contents = html dom element of the chapter
             const bodyElement = contents.querySelector("body");
             if (bodyElement) {
               resolve(bodyElement.textContent);
@@ -166,4 +163,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default EBookReader;
