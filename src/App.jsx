@@ -107,7 +107,7 @@ const App = () => {
             type={"spin"}
             color={"white"}
             height={"auto"}
-            width={"15%"}
+            width={"10%"}
           />
           <div className="loading-text">Emotion Analysis in Progress...</div>
         </div>

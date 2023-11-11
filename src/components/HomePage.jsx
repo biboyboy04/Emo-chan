@@ -41,7 +41,7 @@ const HomePage = () => {
       genre: "Mystery",
       cover: "/public/e-books/jungle_book.jpg",
       url: "/public/e-books/jungle_book.epub",
-      summary: `"The Jungle Book" by Rudyard Kipling is a classic collection of stories that vividly brings to life the enchanting world of the Indian jungle. The narrative revolves around Mowgli, a young boy raised by wolves, as he navigates the challenges and adventures of the wild. Through Mowgli's encounters with various animals, including the wise panther Bagheera and the fun-loving bear Baloo, Kipling explores themes of identity, survival, and the delicate balance of nature. "The Jungle Book" remains a beloved work that captivates readers with its rich storytelling, memorable characters, and the timeless lessons it imparts about the interconnectedness of all living things.`,
+      summary: `"The Jungle Book" by Rudyard Kipling is a timeless collection of tales set in the enchanting Indian jungle. Follow Mowgli, a young boy raised by wolves, on his thrilling adventures and challenges in the wild. Encounter wise creatures like Bagheera the panther and the fun-loving bear Baloo. Kipling explores themes of identity, survival, and the delicate balance of nature. This beloved classic offers rich storytelling, memorable characters, and timeless lessons about the interconnectedness of all living things. Get ready for a captivating journey into the heart of the jungle.`,
     },
   ];
 
@@ -94,8 +94,7 @@ const HomePage = () => {
               <img src={`${book.cover}`} alt={book.title} />
               <div className="book-details">
                 <h3>{book.title}</h3>
-                <p>Author: {book.author}</p>
-                <p>{book.summary}</p>
+                <p>{book.author}</p>
               </div>
             </div>
           ))}

@@ -62,7 +62,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
           <i
             id="arrowIcon"
             className={`fa-solid fa-arrow-${isDown ? "up" : "down"} fa-xl`}
-            style={{ color: "#E1E1E1" }}
+            style={{ color: "white" }}
           ></i>
         </div>
         <iframe
