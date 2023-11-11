@@ -179,9 +179,11 @@ input {
 }
 
 .home-page-header {
-  font-size: 32px;
-  font-weight: 500;
+  font-size: 4rem;
+  font-weight: 400;
   padding: 0rem 15vw;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .upload {

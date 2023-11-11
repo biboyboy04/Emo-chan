@@ -55,9 +55,16 @@ const HomePage = () => {
       </div>
 
       <div className="home-page-header">
-        Transform your reading experience. Emo-chan analyzes E-book chapters,
-        matches emotions, and plays fitting instrumental music. Immerse yourself
-        in a noise-free, emotion-enhanced literary journey.
+        <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
+          Transform your reading experience
+        </p>
+        <p style={{ fontSize: "1.5rem", margin: "10px 0", fontWeight: "350" }}>
+          Emo-chan analyzes your E-book texts and plays emotionally relevant
+          instrumental music based on the current chapter.
+        </p>
+        <p style={{ fontSize: "1.25rem", fontWeight: "350" }}>
+          Immerse yourself in a noise-free, emotion-enhanced literary journey.
+        </p>
       </div>
 
       <div className="upload">
