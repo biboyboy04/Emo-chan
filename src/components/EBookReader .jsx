@@ -77,6 +77,7 @@ const EBookReader = () => {
       if (book) {
         getCurrentChapterText(book)
           .then((result) => {
+            console.log(result, "asd");
             setStoryText(result);
           })
           .catch((error) => {

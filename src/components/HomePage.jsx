@@ -60,10 +60,10 @@ const HomePage = () => {
         </p>
         <p style={{ fontSize: "1.5rem", margin: "10px 0", fontWeight: "350" }}>
           Emo-chan analyzes your E-book texts and plays emotionally relevant
-          instrumental music based on the current chapter.
+          instrumental music based on the current chapter
         </p>
         <p style={{ fontSize: "1.25rem", fontWeight: "350" }}>
-          Immerse yourself in a noise-free, emotion-enhanced literary journey.
+          Immerse yourself in a noise-free, emotion-enhanced literary journey
         </p>
       </div>
 
