@@ -1,4 +1,3 @@
-import React from "react";
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 
@@ -9,37 +8,29 @@ const HomePage = () => {
       id: 1,
       title: "Alice's Adventures in Wonderland",
       author: "Lewis Carroll",
-      genre: "Fiction",
       cover: "/public/e-books/alice.jpg",
       url: "/public/e-books/alice.epub",
-      summary: `Alice's Adventures in Wonderland" by Lewis Carroll is a whimsical and imaginative journey that follows the curious Alice as she falls down a rabbit hole into a fantastical world. Filled with eccentric characters and surreal encounters, the story captures the essence of childhood curiosity and the unpredictable nature of Wonderland. Lewis Carroll's classic tale is a timeless exploration of fantasy, adventure, and the joy of embracing the unexpected.`,
     },
     {
       id: 2,
       title: "Grimms' Fairy Tales",
       author: "Jacob Grimm and Wilhelm Grimm",
-      genre: "Non-fiction",
       cover: "/public/e-books/grimms.png",
       url: "/public/e-books/grimms.epub",
-      summary: `"Grimms' Fairy Tales" by Jacob Grimm and Wilhelm Grimm is a captivating collection of timeless folktales and fairy stories. Authored by the Brothers Grimm, the anthology includes enchanting narratives such as "Cinderella," "Snow White," "Hansel and Gretel," and many more. These tales are woven with magical elements, moral lessons, and enduring characters, making the book a beloved and enduring classic that continues to enchant readers of all ages.`,
     },
     {
       id: 3,
       title: "The Happy Prince and Other Tales",
       author: "Oscar Wilde",
-      genre: "Mystery",
       cover: "/public/e-books/happy_prince.jpg",
       url: "/public/e-books/happy_prince.epub",
-      summary: `"The Happy Prince and Other Tales" by Oscar Wilde is a collection of charming and poignant short stories. Crafted with Oscar Wilde's wit and literary flair, the tales explore themes of love, sacrifice, and the human condition. The titular story, "The Happy Prince," tells the tale of a golden statue who, despite his privileged past, discovers the true meaning of compassion and generosity. Wilde's collection weaves together fairy-tale elements with social commentary, creating a literary work that resonates with both children and adults, offering a blend of enchantment and thought-provoking reflections on life and morality.`,
     },
     {
       id: 4,
       title: "The Jungle Book",
       author: "Rudyard Kipling",
-      genre: "Mystery",
       cover: "/public/e-books/jungle_book.jpg",
       url: "/public/e-books/jungle_book.epub",
-      summary: `"The Jungle Book" by Rudyard Kipling is a timeless collection of tales set in the enchanting Indian jungle. Follow Mowgli, a young boy raised by wolves, on his thrilling adventures and challenges in the wild. Encounter wise creatures like Bagheera the panther and the fun-loving bear Baloo. Kipling explores themes of identity, survival, and the delicate balance of nature. This beloved classic offers rich storytelling, memorable characters, and timeless lessons about the interconnectedness of all living things. Get ready for a captivating journey into the heart of the jungle.`,
     },
   ];
 
@@ -49,7 +40,6 @@ const HomePage = () => {
       if (file.type !== "application/epub+zip") {
         return alert("Unsupported type. Please upload an epub file.");
       }
-      //e.target.result = book file
       navigate("/App", { state: { book: e.target.result } });
     }
   };
