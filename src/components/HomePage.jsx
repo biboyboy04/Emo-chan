@@ -64,7 +64,6 @@ const HomePage = () => {
     <div className="home-page">
       <div className="navbar-header">
         <div className="logo">Emo-chan</div>
-        <div className="hamburger">X</div>
       </div>
 
       <div className="home-page-header">
@@ -87,23 +86,24 @@ const HomePage = () => {
         </div>
         <div className="book-list">
           {books.map((book) => (
-            <Tilt key={book.id} className="book">
-              <div
-                className=""
-                key={book.id}
-                onClick={() => handleBookClick(book.url)}
-              >
-                <img src={`${book.cover}`} alt={book.title} />
-                <div className="book-details">
-                  <h3>{book.title}</h3>
-                  <p>Author: {book.author}</p>
-                  <p>{book.summary}</p>
-                </div>
+            <div
+              className="book cover"
+              key={book.id}
+              onClick={() => handleBookClick(book.url)}
+            >
+              <img src={`${book.cover}`} alt={book.title} />
+              <div className="book-details">
+                <h3>{book.title}</h3>
+                <p>Author: {book.author}</p>
+                <p>{book.summary}</p>
               </div>
-            </Tilt>
+            </div>
           ))}
         </div>
       </div>
+      <footer className="copyright">
+        &copy; 2023 CSRPITOY. All Rights Reserved.
+      </footer>
     </div>
   );
 };
