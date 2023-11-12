@@ -47,7 +47,7 @@ const EBookReader = () => {
 
     return new Promise((resolve, reject) => {
       bookSpine.each(async (section) => {
-        if (section.index > 1 && section.cfiBase === getCfiChapter(location)) {
+        if (section.cfiBase === getCfiChapter(location)) {
           try {
             const contents = await section.load(book.load.bind(book));
             const bodyElement = contents.querySelector("body");
