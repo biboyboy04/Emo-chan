@@ -83,6 +83,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
           </p>
         ) : (
           <iframe
+            key={emotionResult}
             id="spotifyPlaylist"
             style={{
               borderRadius: "12px",
