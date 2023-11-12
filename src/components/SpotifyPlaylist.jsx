@@ -12,13 +12,13 @@ function changePlaylistSrc(emotion) {
   var playlistId = "";
   switch (emotion) {
     case "joy":
-      playlistId = "37i9dQZF1EIenYKDHoroaV";
+      playlistId = "0ra1sgdNkKatWh3LOMEGCa";
       break;
     case "sadness":
-      playlistId = "37i9dQZF1EIh1T1PukZNVG";
+      playlistId = "2hi47ni1BUFQMoDKACjgTZ";
       break;
     case "fear":
-      playlistId = "37i9dQZF1EIcDJGAGCcWsK";
+      playlistId = "5EbEfrwJPJEe4gLneh6onP";
       break;
     case "anger":
       playlistId = "6QZnHBnKUjL1TCxzDk2V5o";
@@ -34,8 +34,8 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   // const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
 
   useEffect(() => {
-    // Load the model and tokenizer when the component mounts
-    if (storyText == "") {
+    let text = storyText;
+    if (!text.trim()) {
       setIsLoading(false);
       setIsDown(true);
       return;
@@ -83,6 +83,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
           </p>
         ) : (
           <iframe
+            key={emotionResult}
             id="spotifyPlaylist"
             style={{
               borderRadius: "12px",
@@ -94,6 +95,11 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
             allowFullScreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
+            onError={() =>
+              alert(
+                "Error loading Spotify iframe. Please refresh the page. Sorry for the inconvenience."
+              )
+            }
           ></iframe>
         )}
       </div>

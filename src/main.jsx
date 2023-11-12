@@ -1,18 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import HomePage from "./components/HomePage.jsx";
-import App from "./components/EBookReader .jsx";
+import EBookReader from "./components/EBookReader .jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./normalize.css";
 import "./index.css";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/Emo-chan/",
     element: <HomePage />,
   },
   {
-    path: "/App",
-    element: <App />,
+    path: "/Emo-chan/App",
+    element: <EBookReader />,
   },
 ]);
 

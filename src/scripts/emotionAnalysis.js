@@ -2,7 +2,7 @@ import * as tf from "@tensorflow/tfjs";
 
 export async function loadModel() {
   try {
-    const tfjsModel = await tf.loadLayersModel("../../public/model/model.json");
+    const tfjsModel = await tf.loadLayersModel("model/model.json");
     console.log("Model successfully loaded!");
     return tfjsModel;
   } catch (error) {
@@ -40,7 +40,7 @@ function padSequences(arr, maxlen) {
 
 export async function loadTokenizer() {
   try {
-    const tokenizer = await fetch("../../public/model/tokenizer.json");
+    const tokenizer = await fetch("model/tokenizer.json");
     const tokenizerData = await tokenizer.json();
     console.log("Tokenizer data loaded!");
     return tokenizerData;

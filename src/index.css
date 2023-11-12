@@ -1,17 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400&display=swap");
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: "Playpen Sans", Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
 *,
@@ -21,60 +13,14 @@
   box-sizing: border-box;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 .app-container {
-  position: "relative";
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -132,15 +78,28 @@ button:focus-visible {
 
 .logo {
   position: relative;
-  color: #000;
+  color: black;
   text-decoration: none;
   font-size: 24px;
   cursor: pointer;
   user-select: none;
 }
 
-.logo:hover {
-  color: #000;
+.default-text,
+.hover-text {
+  display: inline-block;
+}
+
+.hover-text {
+  display: none;
+}
+
+.logo:hover .default-text {
+  display: none;
+}
+
+.logo:hover .hover-text {
+  display: inline-block;
 }
 
 .logo::before {
@@ -151,7 +110,7 @@ button:focus-visible {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #000;
+  background-color: black;
   transform: scaleX(0);
   transform-origin: top left;
   transition: transform 0.3s ease;
@@ -164,14 +123,14 @@ button:focus-visible {
 input {
   padding: 10px;
   margin-right: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid white;
   border-radius: 5px;
   width: 300px;
 }
 
 .button {
   padding: 10px 20px;
-  background-color: #1a1a1a;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 5px;
@@ -298,6 +257,50 @@ input {
   color: black; /* Adjust color as needed */
 }
 
+/* Spotify */
+#arrowUpDown {
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  transition: transform 0.5s;
+}
+#arrowUpDown:hover {
+  scale: 1.1;
+}
+
+#spotifyWrapper {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background-color: #1d1d1d;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hide-embed {
+  max-height: 2rem;
+}
+
+#spotifyPlaylist {
+  flex: 100%;
+}
+
+.spotifyContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+}
+
 @media only screen and (max-width: 767px) {
   .book-list {
     flex-direction: column;
@@ -306,7 +309,8 @@ input {
   }
 
   .home-page-header {
-    padding: 0;
+    margin-top: -2rem;
+    padding: 1rem;
   }
 
   .books {
@@ -329,6 +333,7 @@ input {
   }
   .home-page-header {
     padding: 10vw;
+    margin-top: -2rem;
   }
 
   .home-page {

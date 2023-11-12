@@ -8,29 +8,29 @@ const HomePage = () => {
       id: 1,
       title: "Alice's Adventures in Wonderland",
       author: "Lewis Carroll",
-      cover: "/public/e-books/alice.jpg",
-      url: "/public/e-books/alice.epub",
+      cover: "e-books/alice.jpg",
+      url: "e-books/alice.epub",
     },
     {
       id: 2,
       title: "Grimms' Fairy Tales",
       author: "Jacob Grimm and Wilhelm Grimm",
-      cover: "/public/e-books/grimms.png",
-      url: "/public/e-books/grimms.epub",
+      cover: "e-books/grimms.png",
+      url: "e-books/grimms.epub",
     },
     {
       id: 3,
       title: "The Happy Prince and Other Tales",
       author: "Oscar Wilde",
-      cover: "/public/e-books/happy_prince.jpg",
-      url: "/public/e-books/happy_prince.epub",
+      cover: "e-books/happy_prince.jpg",
+      url: "e-books/happy_prince.epub",
     },
     {
       id: 4,
       title: "The Jungle Book",
       author: "Rudyard Kipling",
-      cover: "/public/e-books/jungle_book.jpg",
-      url: "/public/e-books/jungle_book.epub",
+      cover: "e-books/jungle_book.jpg",
+      url: "e-books/jungle_book.epub",
     },
   ];
 
@@ -40,18 +40,29 @@ const HomePage = () => {
       if (file.type !== "application/epub+zip") {
         return alert("Unsupported type. Please upload an epub file.");
       }
-      navigate("/App", { state: { book: e.target.result } });
+      console.log(file);
+      console.log(e);
+      navigate("/Emo-chan/App", { state: { book: e.target.result } });
     }
   };
 
   const handleBookClick = (bookUrl) => {
-    navigate("/App", { state: { book: bookUrl } });
+    navigate("/Emo-chan/App", { state: { book: bookUrl } });
   };
 
   return (
     <div className="home-page">
       <div className="navbar-header">
-        <div className="logo">Emo-chan</div>
+        {/* (•ᴗ•❁) | ˃̵ᴗ˂̵ */}
+        <div className="logo">
+          {" "}
+          <span role="img" aria-label="Emo-chan" className="default-text">
+            (•ᴗ•❁)Emo-chan
+          </span>
+          <span role="img" aria-label="Emo-chan" className="hover-text">
+            (˃̵ᴗ˂̵❁)Emo-chan
+          </span>
+        </div>
       </div>
 
       <div className="home-page-header">
