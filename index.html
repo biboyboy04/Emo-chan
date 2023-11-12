@@ -7,9 +7,7 @@
     <title>Emo-chan</title>
     <script type="text/javascript">
       (function (l) {
-        // Check if the second character of the query string is a "/"
         if (l.search[1] === "/") {
-          // Remove the leading slash, replace "~and~" with "&", and join the parts with "?"
           var decoded = l.search
             .slice(1)
             .split("&")
@@ -17,13 +15,11 @@
               return s.replace(/~and~/g, "&");
             })
             .join("?");
-
-          // Construct the modified URL with "Emo-chan/" as the output
-          var modifiedUrl =
-            "/Emo-chan/" + (decoded.length > 0 ? "?" + decoded : "") + l.hash;
-
-          // Replace the current URL with the modified one
-          window.history.replaceState(null, null, modifiedUrl);
+          window.history.replaceState(
+            null,
+            null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
         }
       })(window.location);
     </script>
