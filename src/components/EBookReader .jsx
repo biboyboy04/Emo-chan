@@ -115,7 +115,7 @@ const EBookReader = () => {
           <div className="loading-text">Emotion Analysis in Progress...</div>
         </div>
       )}
-      <div className="reader-container">
+      <div className="reader-container" key={isLoading}>
         <ReactReader
           location={location}
           locationChanged={setLocation}
