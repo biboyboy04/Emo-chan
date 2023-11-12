@@ -34,8 +34,8 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   // const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
 
   useEffect(() => {
-    // Load the model and tokenizer when the component mounts
-    if (storyText == "") {
+    let text = storyText;
+    if (!text.trim()) {
       setIsLoading(false);
       setIsDown(true);
       return;
