@@ -95,6 +95,11 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
             allowFullScreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
+            onError={() =>
+              alert(
+                "Error loading Spotify iframe. Please refresh the page. Sorry for the inconvenience."
+              )
+            }
           ></iframe>
         )}
       </div>
