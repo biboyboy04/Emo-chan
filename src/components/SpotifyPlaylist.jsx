@@ -31,6 +31,7 @@ function changePlaylistSrc(emotion) {
 function SpotifyPlaylist({ storyText, setIsLoading }) {
   const [emotionResult, setEmotionResult] = useState("");
   const [isDown, setIsDown] = useState(false);
+  const [currentPlaylistUrl, setCurrentPlaylistUrl] = useState("");
   // const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
 
   useEffect(() => {
@@ -45,13 +46,19 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       const model = await loadModel();
       const tokenizer = await loadTokenizer();
       const prediction = await predict(storyText, model, tokenizer);
-      setEmotionResult(prediction);
+
+      if (emotionResult !== prediction) {
+        setEmotionResult(prediction);
+        const newPlaylistUrl = changePlaylistSrc(prediction);
+        setCurrentPlaylistUrl(newPlaylistUrl);
+      }
       setIsDown(false);
       setIsLoading(false);
       console.log(prediction, "prediction");
     }
+
     loadModelAndTokenizer();
-  }, [storyText, setIsLoading]);
+  }, [storyText, setIsLoading, currentPlaylistUrl]);
 
   return (
     <div className="spotifyContainer">
@@ -83,13 +90,14 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
           </p>
         ) : (
           <iframe
+            key={emotionResult}
             id="spotifyPlaylist"
             style={{
               borderRadius: "12px",
               width: "100%",
               height: "100%",
             }}
-            src={changePlaylistSrc(emotionResult)}
+            src={currentPlaylistUrl}
             frameBorder="0"
             allowFullScreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
