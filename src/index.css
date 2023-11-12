@@ -63,7 +63,7 @@ button:focus-visible {
 }
 
 .app-container {
-  position: "relative";
+  position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -285,6 +285,50 @@ input {
   text-align: center;
   font-size: 14px;
   color: black; /* Adjust color as needed */
+}
+
+/* Spotify */
+#arrowUpDown {
+  cursor: pointer;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  transition: transform 0.5s;
+}
+#arrowUpDown:hover {
+  scale: 1.1;
+}
+
+#spotifyWrapper {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  background-color: #1d1d1d;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hide-embed {
+  max-height: 2rem;
+}
+
+#spotifyPlaylist {
+  flex: 100%;
+}
+
+.spotifyContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
 }
 
 @media only screen and (max-width: 767px) {
