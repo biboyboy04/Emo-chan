@@ -136,7 +136,6 @@ const EBookReader = () => {
               backgroundColor: "white",
               color: "black",
               fontWeight: 100,
-              fontFamily: "Playpen Sans",
             },
             tocArea: {
               ...ReactReaderStyle.tocArea,
@@ -147,7 +146,6 @@ const EBookReader = () => {
               ...ReactReaderStyle.tocAreaButton,
               backgroundColor: "white",
               color: "black",
-              fontFamily: "Playpen Sans",
             },
             tocButtonBar: {
               ...ReactReaderStyle.tocButtonBar,
