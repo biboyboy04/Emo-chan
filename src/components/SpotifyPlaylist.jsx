@@ -35,7 +35,8 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
 
   useEffect(() => {
     // Load the model and tokenizer when the component mounts
-    if (storyText == "") {
+    var text = storyText;
+    if (!text.trim()) {
       setIsLoading(false);
       setIsDown(true);
       return;
@@ -45,6 +46,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       const model = await loadModel();
       const tokenizer = await loadTokenizer();
       const prediction = await predict(storyText, model, tokenizer);
+
       setEmotionResult(prediction);
       setIsDown(false);
       setIsLoading(false);
