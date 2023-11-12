@@ -309,6 +309,7 @@ input {
   }
 
   .home-page-header {
+    margin-top: -2rem;
     padding: 1rem;
   }
 
@@ -332,6 +333,7 @@ input {
   }
   .home-page-header {
     padding: 10vw;
+    margin-top: -2rem;
   }
 
   .home-page {
