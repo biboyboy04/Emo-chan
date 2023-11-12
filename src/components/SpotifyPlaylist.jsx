@@ -12,13 +12,13 @@ function changePlaylistSrc(emotion) {
   var playlistId = "";
   switch (emotion) {
     case "joy":
-      playlistId = "37i9dQZF1EIenYKDHoroaV";
+      playlistId = "0ra1sgdNkKatWh3LOMEGCa";
       break;
     case "sadness":
-      playlistId = "37i9dQZF1EIh1T1PukZNVG";
+      playlistId = "2hi47ni1BUFQMoDKACjgTZ";
       break;
     case "fear":
-      playlistId = "37i9dQZF1EIcDJGAGCcWsK";
+      playlistId = "5EbEfrwJPJEe4gLneh6onP";
       break;
     case "anger":
       playlistId = "6QZnHBnKUjL1TCxzDk2V5o";
