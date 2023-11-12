@@ -70,12 +70,13 @@ const HomePage = () => {
           Transform your reading experience
         </p>
         <p style={{ fontSize: "1.5rem", margin: "10px 0", fontWeight: "350" }}>
-          Emo-chan analyzes your E-book texts and plays emotionally relevant
-          instrumental music based on the current chapter
+          Emo-chan analyzes your E-book texts and recommends an emotionally
+          relevant Spotify music based on the current chapter
         </p>
         <p style={{ fontSize: "1.25rem", fontWeight: "350" }}>
           Immerse yourself in a noise-free, emotion-enhanced literary journey
         </p>
+        <p style={{ fontSize: "1.25rem", fontWeight: "350" }}></p>
       </div>
 
       <div className="upload">

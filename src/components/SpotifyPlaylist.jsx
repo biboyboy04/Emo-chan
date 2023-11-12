@@ -54,63 +54,40 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   }, [storyText, setIsLoading]);
 
   return (
-    <div className="spotifyContainer">
-      <div
-        id="spotifyWrapper"
-        className={`${isDown ? "hide-embed" : ""}`}
-        data-is-down={isDown}
-      >
-        <div
-          id="arrowUpDown"
-          onClick={() => setIsDown((prevDown) => !prevDown)}
+    <div className="spotify-embed">
+      {emotionResult === "" || emotionResult === "neutral" ? (
+        <p
+          style={{
+            fontSize: "2rem",
+            marginBottom: "10px",
+            color: "black",
+            margin: "auto 0",
+            textAlign: "center",
+          }}
         >
-          <i
-            id="arrowIcon"
-            className={`fa-solid fa-arrow-${isDown ? "up" : "down"} fa-xl`}
-            style={{ color: "white" }}
-          ></i>
-        </div>
-        {emotionResult === "" || emotionResult === "neutral" ? (
-          <p
-            style={{
-              fontSize: "2rem",
-              marginBottom: "10px",
-              color: "white",
-              margin: "auto 0",
-            }}
-          >
-            {emotionResult === "" ? "No Emotion" : "Neutral"}
-          </p>
-        ) : (
-          <iframe
-            key={emotionResult}
-            id="spotifyPlaylist"
-            style={{
-              borderRadius: "12px",
-              width: "100%",
-              height: "100%",
-            }}
-            src={changePlaylistSrc(emotionResult)}
-            frameBorder="0"
-            allowFullScreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            onError={() =>
-              alert(
-                "Error loading Spotify iframe. Please refresh the page. Sorry for the inconvenience."
-              )
-            }
-          ></iframe>
-        )}
-      </div>
-
-      {/* Show loading message while waiting for prediction */}
-      {/* {isLoading && <div>Loading emotion prediction...</div>} */}
-
-      {/* Show the TopRightEmotion component only after the prediction is ready */}
-      {/* {isPredictionReady && !isLoading && emotionResult !== undefined && (
-        <TopRightEmotion emotion={emotionResult} />
-      )} */}
+          {emotionResult === "" ? "No Emotion" : "Neutral Emotion"}
+        </p>
+      ) : (
+        <iframe
+          key={emotionResult}
+          id="spotifyPlaylist"
+          style={{
+            borderRadius: "12px",
+            width: "100%",
+            height: "100%",
+          }}
+          src={changePlaylistSrc(emotionResult)}
+          frameBorder="0"
+          allowFullScreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          onError={() =>
+            alert(
+              "Error loading Spotify iframe. Please refresh the page. Sorry"
+            )
+          }
+        ></iframe>
+      )}
     </div>
   );
 }

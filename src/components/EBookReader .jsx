@@ -115,8 +115,6 @@ const EBookReader = () => {
           <div className="loading-text">Emotion Analysis in Progress...</div>
         </div>
       )}
-      <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
-
       <div className="reader-container">
         <ReactReader
           location={location}
@@ -165,6 +163,7 @@ const EBookReader = () => {
           }}
         />
       </div>
+      <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
     </div>
   );
 };

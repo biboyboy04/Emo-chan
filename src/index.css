@@ -71,11 +71,13 @@ body {
 
 .navbar-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1rem;
 }
 
+.spotify-embed {
+  padding: 0rem 1rem;
+}
 .logo {
   position: relative;
   color: black;
@@ -83,6 +85,10 @@ body {
   font-size: 24px;
   cursor: pointer;
   user-select: none;
+}
+
+.logo-reader {
+  margin-top: -4rem;
 }
 
 .default-text,
