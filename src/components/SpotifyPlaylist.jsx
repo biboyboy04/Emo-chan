@@ -31,6 +31,8 @@ function changePlaylistSrc(emotion) {
 function SpotifyPlaylist({ storyText, setIsLoading }) {
   const [emotionResult, setEmotionResult] = useState("");
   const [isDown, setIsDown] = useState(false);
+  const [errorCount, setErrorCount] = useState(0);
+  const [seed, setSeed] = useState(1);
   // const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
 
   useEffect(() => {
@@ -48,10 +50,19 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       setEmotionResult(prediction);
       setIsDown(false);
       setIsLoading(false);
+      setErrorCount(0);
       console.log(prediction, "prediction");
     }
     loadModelAndTokenizer();
   }, [storyText, setIsLoading]);
+
+  const handleIframeError = () => {
+    // Reload the iframe by updating the key
+    setSeed((prevSeed) => prevSeed + 1);
+    setErrorCount((prevCount) => prevCount + 1);
+
+    // You can add additional logic here if needed, such as handling a maximum number of retries
+  };
 
   return (
     <div className="spotifyContainer">
@@ -83,7 +94,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
           </p>
         ) : (
           <iframe
-            key={emotionResult}
+            key={`${emotionResult}-${seed}`}
             id="spotifyPlaylist"
             style={{
               borderRadius: "12px",
@@ -95,6 +106,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
             allowFullScreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
+            onError={handleIframeError}
           ></iframe>
         )}
       </div>
