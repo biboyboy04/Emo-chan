@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400&display=swap");
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Playpen Sans", Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
   font-weight: 400;
 }
 
@@ -82,8 +85,21 @@ body {
   user-select: none;
 }
 
-.logo:hover {
-  color: black;
+.default-text,
+.hover-text {
+  display: inline-block;
+}
+
+.hover-text {
+  display: none;
+}
+
+.logo:hover .default-text {
+  display: none;
+}
+
+.logo:hover .hover-text {
+  display: inline-block;
 }
 
 .logo::before {

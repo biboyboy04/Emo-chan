@@ -53,7 +53,16 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <div className="navbar-header">
-        <div className="logo">Emo-chan</div>
+        {/* (•ᴗ•❁) | ˃̵ᴗ˂̵ */}
+        <div className="logo">
+          {" "}
+          <span role="img" aria-label="Emo-chan" className="default-text">
+            (•ᴗ•❁)Emo-chan
+          </span>
+          <span role="img" aria-label="Emo-chan" className="hover-text">
+            (˃̵ᴗ˂̵❁)Emo-chan
+          </span>
+        </div>
       </div>
 
       <div className="home-page-header">

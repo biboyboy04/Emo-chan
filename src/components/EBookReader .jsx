@@ -95,7 +95,13 @@ const EBookReader = () => {
     <div className="app-container">
       <div className="navbar-header">
         <div className="logo" onClick={handleLogoClick}>
-          Emo-chan
+          {" "}
+          <span role="img" aria-label="Emo-chan" className="default-text">
+            (•ᴗ•❁)Emo-chan
+          </span>
+          <span role="img" aria-label="Emo-chan" className="hover-text">
+            (˃̵ᴗ˂̵❁)Emo-chan
+          </span>
         </div>
       </div>
       {isLoading && (
