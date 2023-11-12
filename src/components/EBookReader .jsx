@@ -44,10 +44,12 @@ const EBookReader = () => {
 
   const getCurrentChapterText = async (book) => {
     const bookSpine = await book.loaded.spine;
+    console.log(bookSpine, "bookSpine");
 
     return new Promise((resolve, reject) => {
       bookSpine.each(async (section) => {
-        if (section.index > 1 && section.cfiBase === getCfiChapter(location)) {
+        console.log(section.cfiBase, "section.cfiBase");
+        if (section.cfiBase === getCfiChapter(location)) {
           try {
             const contents = await section.load(book.load.bind(book));
             const bodyElement = contents.querySelector("body");
@@ -74,6 +76,7 @@ const EBookReader = () => {
 
       // Access the book object
       const book = loadBook(renditionRef);
+      console.log(book);
       if (book) {
         getCurrentChapterText(book)
           .then((result) => {
