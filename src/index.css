@@ -4,6 +4,11 @@
   font-family: "Playpen Sans", Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
   font-weight: 400;
+  --toastify-color-info: black;
+}
+
+.Toastify__toast--info {
+  font-family: "Playpen Sans";
 }
 
 *,

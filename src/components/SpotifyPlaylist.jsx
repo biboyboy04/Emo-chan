@@ -5,6 +5,8 @@ import {
   predict,
 } from "../scripts/emotionAnalysis.js";
 import "./SpotifyPlayer.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import TopRightEmotion from "./TopRightEmotion.jsx";
 
 // Can be separated to 2 components: EmotionPrediction and Playlist
@@ -49,12 +51,43 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       setIsDown(false);
       setIsLoading(false);
       console.log(prediction, "prediction");
+
+      // Display a toast when there is a prediction
+      notify(prediction);
     }
     loadModelAndTokenizer();
   }, [storyText, setIsLoading]);
 
+  const notify = (emotion) => {
+    toast.info(`Dominant Emotion: ${emotion}`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      icon: false,
+    });
+  };
+
   return (
     <div className="spotify-embed">
+      <ToastContainer
+        style={{ backgroundColor: "white", fontFamily: "Playpen Sans" }}
+        position="top-right"
+        autoClose={2000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       {emotionResult === "" || emotionResult === "neutral" ? (
         <p
           style={{
