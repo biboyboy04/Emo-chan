@@ -65,7 +65,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
             textAlign: "center",
           }}
         >
-          {emotionResult === "" ? "No Emotion" : "Neutral Emotion"}
+          {emotionResult === "" ? "No Emotion" : "Neutral"}
         </p>
       ) : (
         <iframe
