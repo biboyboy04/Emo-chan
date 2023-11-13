@@ -75,7 +75,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   return (
     <div className="spotify-embed">
       <ToastContainer
-        style={{ backgroundColor: "white", fontFamily: "Playpen Sans" }}
+        style={{ backgroundColor: "transparent", fontFamily: "Playpen Sans" }}
         position="top-right"
         autoClose={2000}
         limit={1}

@@ -11,13 +11,11 @@ const EBookReader = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
-
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
-
   const navigate = useNavigate();
-
   const locationParam = useLocation();
+
   const selectedBook = locationParam.state.book;
 
   const getCfiChapter = (epubcifi) => {
@@ -112,7 +110,13 @@ const EBookReader = () => {
             height={"auto"}
             width={"10%"}
           />
-          <div className="loading-text">Emotion Analysis in Progress...</div>
+          <div className="loading-text">
+            <p>Emotion Analysis in Progress...</p>
+            <p>
+              Sorry if the analysis is long; there&rsquo;s a lot of text to
+              analyze. (╥﹏╥❁)
+            </p>
+          </div>
         </div>
       )}
       <div className="reader-container" key={isLoading}>
