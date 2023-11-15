@@ -7,8 +7,19 @@
   --toastify-color-info: black;
 }
 
-.Toastify__toast--info {
-  font-family: "Playpen Sans";
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1d1c1c;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  scrollbar-width: thin;
 }
 
 *,
@@ -22,6 +33,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.Toastify__toast--info {
+  font-family: "Playpen Sans";
 }
 
 .app-container {
@@ -315,6 +330,13 @@ input {
 
 .epub-container {
   overflow-x: hidden !important;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+* {
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
 }
 
 @media only screen and (max-width: 767px) {
