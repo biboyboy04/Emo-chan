@@ -130,41 +130,9 @@ const EBookReader = () => {
           epubOptions={{
             allowPopups: true,
             allowScriptedContent: true,
+            flow: "scrolled",
           }}
-          readerStyles={{
-            ...ReactReaderStyle,
-            arrow: {
-              ...ReactReaderStyle.arrow,
-              backgroundColor: "white",
-              color: "black",
-              fontWeight: 100,
-              fontFamily: "Playpen Sans",
-            },
-            tocArea: {
-              ...ReactReaderStyle.tocArea,
-              backgroundColor: "white",
-              color: "black",
-            },
-            tocAreaButton: {
-              ...ReactReaderStyle.tocAreaButton,
-              backgroundColor: "white",
-              color: "black",
-              fontFamily: "Playpen Sans",
-            },
-            tocButtonBar: {
-              ...ReactReaderStyle.tocButtonBar,
-              backgroundColor: "black",
-            },
-            tocButton: {
-              ...ReactReaderStyle.tocButton,
-              backgroundColor: "white",
-              color: "black",
-            },
-            tocButtonExpanded: {
-              ...ReactReaderStyle.tocButtonExpanded,
-              backgroundColor: "white",
-            },
-          }}
+          readerStyles={readerStyles}
         />
       </div>
       <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
@@ -173,3 +141,38 @@ const EBookReader = () => {
 };
 
 export default EBookReader;
+
+const readerStyles = {
+  ...ReactReaderStyle,
+  arrow: {
+    ...ReactReaderStyle.arrow,
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: 100,
+    fontFamily: "Playpen Sans",
+  },
+  tocArea: {
+    ...ReactReaderStyle.tocArea,
+    backgroundColor: "white",
+    color: "black",
+  },
+  tocAreaButton: {
+    ...ReactReaderStyle.tocAreaButton,
+    backgroundColor: "white",
+    color: "black",
+    fontFamily: "Playpen Sans",
+  },
+  tocButtonBar: {
+    ...ReactReaderStyle.tocButtonBar,
+    backgroundColor: "black",
+  },
+  tocButton: {
+    ...ReactReaderStyle.tocButton,
+    backgroundColor: "white",
+    color: "black",
+  },
+  tocButtonExpanded: {
+    ...ReactReaderStyle.tocButtonExpanded,
+    backgroundColor: "white",
+  },
+};
