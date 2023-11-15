@@ -313,6 +313,10 @@ input {
   z-index: 2;
 }
 
+.epub-container {
+  overflow-x: hidden !important;
+}
+
 @media only screen and (max-width: 767px) {
   .book-list {
     flex-direction: column;
