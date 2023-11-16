@@ -20,10 +20,10 @@ const HomePage = () => {
     },
     {
       id: 3,
-      title: "The Happy Prince and Other Tales",
-      author: "Oscar Wilde",
-      cover: "e-books/happy_prince.jpg",
-      url: "e-books/happy_prince.epub",
+      title: "Omniscient Reader's Viewpoint",
+      author: "Singshong",
+      cover: "e-books/ovr.jpg",
+      url: "e-books/ovr.epub",
     },
     {
       id: 4,
@@ -32,6 +32,13 @@ const HomePage = () => {
       cover: "e-books/jungle_book.jpg",
       url: "e-books/jungle_book.epub",
     },
+    // {
+    //   id: 3,
+    //   title: "The Happy Prince and Other Tales",
+    //   author: "Oscar Wilde",
+    //   cover: "e-books/happy_prince.jpg",
+    //   url: "e-books/happy_prince.epub",
+    // },
   ];
 
   const handleFileChange = (event, results) => {
