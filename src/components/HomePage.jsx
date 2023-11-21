@@ -70,6 +70,47 @@ const HomePage = () => {
             (˃̵ᴗ˂̵❁)Emo-chan
           </span>
         </div>
+        <div className="nav-links">
+          <a href="#home">Playlist</a>
+          <div id="playlistBox" className="hidden-box">
+            <div className="playlist">
+              <h2 className="playlist-title">Joy</h2>
+              <input
+                type="text"
+                className="playlist-input"
+                placeholder="Enter playlist link..."
+              />
+            </div>
+            <div className="playlist">
+              <h2 className="playlist-title">Sadness</h2>
+              <input
+                type="text"
+                className="playlist-input"
+                placeholder="Enter playlist link..."
+              />
+            </div>
+            <div className="playlist">
+              <h2 className="playlist-title">Fear</h2>
+              <input
+                type="text"
+                className="playlist-input"
+                placeholder="Enter playlist link..."
+              />
+            </div>
+            <div className="playlist">
+              <h2 className="playlist-title">Anger</h2>
+              <input
+                type="text"
+                className="playlist-input"
+                placeholder="Enter playlist link..."
+              />
+            </div>
+            <div className="action-buttons">
+              <button className="action-button save-button">Save</button>
+              <button className="action-button revert-button">Revert</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="home-page-header">

@@ -94,6 +94,22 @@ body {
   display: flex;
   align-items: center;
   padding: 1rem;
+  justify-content: space-between;
+}
+
+.nav-links {
+  position: relative;
+}
+
+.hidden-box {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  width: 300px; /* Adjust the width as needed */
+  background-color: #fff; /* Adjust the background color as needed */
+  border: 1px solid #ccc; /* Adjust the border as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for a subtle effect */
+  padding: 10px;
 }
 
 .spotify-embed {
@@ -337,6 +353,51 @@ input {
 * {
   scrollbar-color: #888 #f1f1f1;
   scrollbar-width: thin;
+}
+
+.playlist {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.playlist-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.playlist-input {
+  border-color: #e2e8f0;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  width: 90%;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-button {
+  color: #fff;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+}
+
+.save-button {
+  background-color: #4299e1;
+}
+
+.revert-button {
+  background-color: #718096;
+}
+
+.save-button:hover {
+  background-color: #2b6cb0;
+}
+
+.revert-button:hover {
+  background-color: #4a5568;
 }
 
 @media only screen and (max-width: 767px) {
