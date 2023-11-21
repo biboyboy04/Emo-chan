@@ -4,6 +4,22 @@
   font-family: "Playpen Sans", Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
   font-weight: 400;
+  --toastify-color-info: black;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1d1c1c;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  scrollbar-width: thin;
 }
 
 *,
@@ -17,6 +33,10 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.Toastify__toast--info {
+  font-family: "Playpen Sans";
 }
 
 .app-container {
@@ -51,6 +71,7 @@ body {
 
 .loading-text {
   color: white;
+  text-align: center;
 }
 
 /* Home */
@@ -71,11 +92,13 @@ body {
 
 .navbar-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1rem;
 }
 
+.spotify-embed {
+  padding: 0rem 1rem;
+}
 .logo {
   position: relative;
   color: black;
@@ -83,6 +106,10 @@ body {
   font-size: 24px;
   cursor: pointer;
   user-select: none;
+}
+
+.logo-reader {
+  margin-top: -4rem;
 }
 
 .default-text,
@@ -299,6 +326,17 @@ input {
   width: 100%;
   overflow: hidden;
   z-index: 2;
+}
+
+.epub-container {
+  overflow-x: hidden !important;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+* {
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
 }
 
 @media only screen and (max-width: 767px) {

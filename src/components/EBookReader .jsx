@@ -11,13 +11,11 @@ const EBookReader = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
-
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
-
   const navigate = useNavigate();
-
   const locationParam = useLocation();
+
   const selectedBook = locationParam.state.book;
 
   const getCfiChapter = (epubcifi) => {
@@ -112,12 +110,16 @@ const EBookReader = () => {
             height={"auto"}
             width={"10%"}
           />
-          <div className="loading-text">Emotion Analysis in Progress...</div>
+          <div className="loading-text">
+            <p>Emotion Analysis in Progress...</p>
+            <p>
+              Sorry if the analysis is long; there&rsquo;s a lot of text to
+              analyze. (╥﹏╥❁)
+            </p>
+          </div>
         </div>
       )}
-      <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
-
-      <div className="reader-container">
+      <div className="reader-container" key={isLoading}>
         <ReactReader
           location={location}
           locationChanged={setLocation}
@@ -128,43 +130,49 @@ const EBookReader = () => {
           epubOptions={{
             allowPopups: true,
             allowScriptedContent: true,
+            flow: "scrolled",
           }}
-          readerStyles={{
-            ...ReactReaderStyle,
-            arrow: {
-              ...ReactReaderStyle.arrow,
-              backgroundColor: "white",
-              color: "black",
-              fontWeight: 100,
-            },
-            tocArea: {
-              ...ReactReaderStyle.tocArea,
-              backgroundColor: "white",
-              color: "black",
-            },
-            tocAreaButton: {
-              ...ReactReaderStyle.tocAreaButton,
-              backgroundColor: "white",
-              color: "black",
-            },
-            tocButtonBar: {
-              ...ReactReaderStyle.tocButtonBar,
-              backgroundColor: "black",
-            },
-            tocButton: {
-              ...ReactReaderStyle.tocButton,
-              backgroundColor: "white",
-              color: "black",
-            },
-            tocButtonExpanded: {
-              ...ReactReaderStyle.tocButtonExpanded,
-              backgroundColor: "white",
-            },
-          }}
+          readerStyles={readerStyles}
         />
       </div>
+      <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
     </div>
   );
 };
 
 export default EBookReader;
+
+const readerStyles = {
+  ...ReactReaderStyle,
+  arrow: {
+    ...ReactReaderStyle.arrow,
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: 100,
+    fontFamily: "Playpen Sans",
+  },
+  tocArea: {
+    ...ReactReaderStyle.tocArea,
+    backgroundColor: "white",
+    color: "black",
+  },
+  tocAreaButton: {
+    ...ReactReaderStyle.tocAreaButton,
+    backgroundColor: "white",
+    color: "black",
+    fontFamily: "Playpen Sans",
+  },
+  tocButtonBar: {
+    ...ReactReaderStyle.tocButtonBar,
+    backgroundColor: "black",
+  },
+  tocButton: {
+    ...ReactReaderStyle.tocButton,
+    backgroundColor: "white",
+    color: "black",
+  },
+  tocButtonExpanded: {
+    ...ReactReaderStyle.tocButtonExpanded,
+    backgroundColor: "white",
+  },
+};

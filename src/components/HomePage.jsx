@@ -20,10 +20,10 @@ const HomePage = () => {
     },
     {
       id: 3,
-      title: "The Happy Prince and Other Tales",
-      author: "Oscar Wilde",
-      cover: "e-books/happy_prince.jpg",
-      url: "e-books/happy_prince.epub",
+      title: "Omniscient Reader's Viewpoint",
+      author: "Singshong",
+      cover: "e-books/ovr.jpg",
+      url: "e-books/ovr.epub",
     },
     {
       id: 4,
@@ -32,6 +32,13 @@ const HomePage = () => {
       cover: "e-books/jungle_book.jpg",
       url: "e-books/jungle_book.epub",
     },
+    // {
+    //   id: 3,
+    //   title: "The Happy Prince and Other Tales",
+    //   author: "Oscar Wilde",
+    //   cover: "e-books/happy_prince.jpg",
+    //   url: "e-books/happy_prince.epub",
+    // },
   ];
 
   const handleFileChange = (event, results) => {
@@ -70,12 +77,13 @@ const HomePage = () => {
           Transform your reading experience
         </p>
         <p style={{ fontSize: "1.5rem", margin: "10px 0", fontWeight: "350" }}>
-          Emo-chan analyzes your E-book texts and plays emotionally relevant
-          instrumental music based on the current chapter
+          Emo-chan analyzes your E-book texts and recommends an emotionally
+          relevant Spotify music based on the current chapter
         </p>
         <p style={{ fontSize: "1.25rem", fontWeight: "350" }}>
           Immerse yourself in a noise-free, emotion-enhanced literary journey
         </p>
+        <p style={{ fontSize: "1.25rem", fontWeight: "350" }}></p>
       </div>
 
       <div className="upload">
