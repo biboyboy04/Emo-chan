@@ -101,15 +101,71 @@ body {
   position: relative;
 }
 
+.nav-links .playlist-btn {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  font-size: 1.2rem;
+
+  &:hover {
+    color: #333;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::before {
+    transform: scaleX(1);
+  }
+}
+
 .hidden-box {
+  display: none;
   position: absolute;
   top: 130%;
   right: 0;
-  width: 300px; /* Adjust the width as needed */
-  background-color: #fff; /* Adjust the background color as needed */
-  border: 1px solid #ccc; /* Adjust the border as needed */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for a subtle effect */
-  padding: 10px;
+  width: 300px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  overflow: hidden;
+  animation: slide-up 1.2s ease-in;
+}
+
+.visible {
+  display: block;
+  animation: slide-down 1.1s ease forwards;
+  height: auto;
+}
+
+@keyframes slide-down {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: 600px;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    max-height: 600;
+  }
+  to {
+    max-height: 0;
+  }
 }
 
 .spotify-embed {
@@ -165,7 +221,6 @@ body {
 
 input {
   padding: 10px;
-  margin-right: 10px;
   border: 1px solid white;
   border-radius: 5px;
   width: 300px;
@@ -276,7 +331,8 @@ input {
   font-weight: 400;
 }
 
-.upload-button {
+.upload-button,
+.revert-button {
   border: 1px solid black;
   border-radius: 1rem;
   background-color: white;
@@ -288,7 +344,26 @@ input {
   align-self: flex-start;
 }
 
-.upload-button:hover {
+.upload-button:hover,
+.revert-button:hover {
+  background-color: black;
+  color: white;
+  border-color: white;
+}
+
+.save-button {
+  border: 1px solid white;
+  border-radius: 1rem;
+  background-color: rgb(34, 34, 34);
+  color: white;
+  padding: 8px 16px; /* Adjust padding as needed */
+  cursor: pointer;
+  outline: none; /* Remove default button outline */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  align-self: flex-start;
+}
+
+.save-button:hover {
   background-color: black;
   color: white;
   border-color: white;
@@ -361,15 +436,15 @@ input {
 }
 
 .playlist-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .playlist-input {
   border-color: #e2e8f0;
   border-radius: 0.25rem;
-  padding: 0.5rem;
+  padding: 0.2rem;
   width: 90%;
 }
 
@@ -379,25 +454,8 @@ input {
 }
 
 .action-button {
-  color: #fff;
-  border-radius: 0.25rem;
+  border-radius: 1rem;
   padding: 0.5rem 1rem;
-}
-
-.save-button {
-  background-color: #4299e1;
-}
-
-.revert-button {
-  background-color: #718096;
-}
-
-.save-button:hover {
-  background-color: #2b6cb0;
-}
-
-.revert-button:hover {
-  background-color: #4a5568;
 }
 
 @media only screen and (max-width: 767px) {

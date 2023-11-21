@@ -1,5 +1,6 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const HomePage = () => {
     //   url: "e-books/happy_prince.epub",
     // },
   ];
+  const [isPlaylistVisible, setPlaylistVisible] = useState(false);
 
   const handleFileChange = (event, results) => {
     if (results.length > 0) {
@@ -57,6 +59,43 @@ const HomePage = () => {
     navigate("/Emo-chan/App", { state: { book: bookUrl } });
   };
 
+  const playlistBoxRef = useRef(null);
+
+  useEffect(() => {
+    const handlePlaylistBox = (event) => {
+      if (
+        playlistBoxRef.current &&
+        !playlistBoxRef.current.contains(event.target)
+      ) {
+        setPlaylistVisible(false);
+      }
+      if (event.target.className === "playlist-btn") {
+        setPlaylistVisible(!isPlaylistVisible);
+      }
+    };
+    // Add event listener to the document body
+    document.body.addEventListener("click", handlePlaylistBox);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      document.body.removeEventListener("click", handlePlaylistBox);
+    };
+  }, [isPlaylistVisible]);
+
+  function handleSavePlaylist() {
+    if (!confirm("Are you sure you want to save the playlist?")) {
+      return "false";
+    }
+    const playlistInputs = document.querySelectorAll(".playlist-input");
+    const playlistLinks = [];
+    playlistInputs.forEach((input) => {
+      playlistLinks.push(input.value);
+      input.value = "";
+    });
+    localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
+    setPlaylistVisible(false);
+  }
+
   return (
     <div className="home-page">
       <div className="navbar-header">
@@ -71,42 +110,32 @@ const HomePage = () => {
           </span>
         </div>
         <div className="nav-links">
-          <a href="#home">Playlist</a>
-          <div id="playlistBox" className="hidden-box">
-            <div className="playlist">
-              <h2 className="playlist-title">Joy</h2>
-              <input
-                type="text"
-                className="playlist-input"
-                placeholder="Enter playlist link..."
-              />
-            </div>
-            <div className="playlist">
-              <h2 className="playlist-title">Sadness</h2>
-              <input
-                type="text"
-                className="playlist-input"
-                placeholder="Enter playlist link..."
-              />
-            </div>
-            <div className="playlist">
-              <h2 className="playlist-title">Fear</h2>
-              <input
-                type="text"
-                className="playlist-input"
-                placeholder="Enter playlist link..."
-              />
-            </div>
-            <div className="playlist">
-              <h2 className="playlist-title">Anger</h2>
-              <input
-                type="text"
-                className="playlist-input"
-                placeholder="Enter playlist link..."
-              />
-            </div>
+          <div className="playlist-btn">Playlist</div>
+          <div
+            id="playlistBox"
+            className={`hidden-box ${isPlaylistVisible ? "visible" : ""}`}
+            key={isPlaylistVisible}
+            ref={playlistBoxRef}
+          >
+            {["Joy", "Sadness", "Fear", "Anger"].map((emotion) => {
+              return (
+                <div className="playlist" key={emotion}>
+                  <div className="playlist-title">{emotion}</div>
+                  <input
+                    type="text"
+                    className="playlist-input"
+                    placeholder="Enter spotify playlist link..."
+                  />
+                </div>
+              );
+            })}
             <div className="action-buttons">
-              <button className="action-button save-button">Save</button>
+              <button
+                className="action-button save-button"
+                onClick={handleSavePlaylist}
+              >
+                Save
+              </button>
               <button className="action-button revert-button">Revert</button>
             </div>
           </div>
