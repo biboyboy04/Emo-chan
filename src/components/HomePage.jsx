@@ -41,13 +41,13 @@ const books = [
 ];
 
 const HomePage = () => {
+  const initialPlaylistLinks =
+    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
   const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
   const [isPlaylistVisible, setPlaylistVisible] = useState(false);
 
   const navigate = useNavigate();
   const playlistBoxRef = useRef(null);
-  const initialPlaylistLinks =
-    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
 
   const handleFileChange = (event, results) => {
     if (results.length > 0) {
