@@ -5,6 +5,41 @@ import SpotifyPlaylist from "./spotifyPlaylist";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 
+const readerStyles = {
+  ...ReactReaderStyle,
+  arrow: {
+    ...ReactReaderStyle.arrow,
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: 100,
+    fontFamily: "Playpen Sans",
+  },
+  tocArea: {
+    ...ReactReaderStyle.tocArea,
+    backgroundColor: "white",
+    color: "black",
+  },
+  tocAreaButton: {
+    ...ReactReaderStyle.tocAreaButton,
+    backgroundColor: "white",
+    color: "black",
+    fontFamily: "Playpen Sans",
+  },
+  tocButtonBar: {
+    ...ReactReaderStyle.tocButtonBar,
+    backgroundColor: "black",
+  },
+  tocButton: {
+    ...ReactReaderStyle.tocButton,
+    backgroundColor: "white",
+    color: "black",
+  },
+  tocButtonExpanded: {
+    ...ReactReaderStyle.tocButtonExpanded,
+    backgroundColor: "white",
+  },
+};
+
 const EBookReader = () => {
   const [location, setLocation] = useState(
     localStorage.getItem("epub-location")
@@ -15,6 +50,12 @@ const EBookReader = () => {
   const renditionRef = useRef(null);
   const navigate = useNavigate();
   const locationParam = useLocation();
+
+  const initialPlaylistLinks =
+    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
+  const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
+  const [isPlaylistVisible, setPlaylistVisible] = useState(false);
+  const playlistBoxRef = useRef(null);
 
   const selectedBook = locationParam.state.book;
 
@@ -89,9 +130,62 @@ const EBookReader = () => {
     navigate("/Emo-chan/");
   };
 
+  function handleSavePlaylist() {
+    if (!confirm("Are you sure you want to save the playlist?")) {
+      return;
+    }
+    const playlistInputs = document.querySelectorAll(".playlist-input");
+    const playlistLinks = [];
+    playlistInputs.forEach((input) => {
+      playlistLinks.push(input.value);
+    });
+    localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
+
+    setPlaylistVisible(false);
+  }
+
+  const handleInputChange = (event, idx) => {
+    const newPlaylistLinks = [...playlistLinks];
+    newPlaylistLinks[idx] = event.target.value;
+    setPlaylistLinks(newPlaylistLinks);
+  };
+
+  const clearPlaylist = () => {
+    if (!confirm("Are you sure you want to revert to default?")) {
+      return;
+    }
+    localStorage.setItem("playlistLinks", JSON.stringify(Array(4).fill("")));
+    setPlaylistLinks(Array(4).fill(""));
+  };
+
+  useEffect(() => {
+    const handlePlaylistBox = (event) => {
+      if (
+        playlistBoxRef.current &&
+        !playlistBoxRef.current.contains(event.target)
+      ) {
+        setPlaylistVisible(false);
+      }
+      if (event.target.className === "playlist-btn") {
+        setPlaylistVisible(!isPlaylistVisible);
+      }
+    };
+    // Add event listener to the document body
+    document.body.addEventListener("click", handlePlaylistBox);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      document.body.removeEventListener("click", handlePlaylistBox);
+    };
+  }, [isPlaylistVisible]);
+
   return (
     <div className="app-container">
-      <div className="navbar-header">
+      <div
+        className="navbar-header"
+        style={{ paddingLeft: "2rem", paddingRight: "2rem" }}
+      >
+        {/* (•ᴗ•❁) | ˃̵ᴗ˂̵ */}
         <div className="logo" onClick={handleLogoClick}>
           {" "}
           <span role="img" aria-label="Emo-chan" className="default-text">
@@ -100,6 +194,45 @@ const EBookReader = () => {
           <span role="img" aria-label="Emo-chan" className="hover-text">
             (˃̵ᴗ˂̵❁)Emo-chan
           </span>
+        </div>
+        <div className="nav-links">
+          <div className="playlist-btn">Playlist</div>
+          <div
+            id="playlistBox"
+            className={`hidden-box ${isPlaylistVisible ? "visible" : ""}`}
+            key={isPlaylistVisible}
+            ref={playlistBoxRef}
+          >
+            {["Joy", "Sadness", "Fear", "Anger"].map((emotion, idx) => {
+              return (
+                <div className="playlist" key={emotion}>
+                  <div className="playlist-title">{emotion}</div>
+                  <input
+                    type="text"
+                    className="playlist-input"
+                    placeholder="Enter spotify playlist link..."
+                    value={playlistLinks[idx] || ""}
+                    onChange={(event) => handleInputChange(event, idx)}
+                  />
+                </div>
+              );
+            })}
+
+            <div className="action-buttons">
+              <button
+                className="action-button save-button"
+                onClick={handleSavePlaylist}
+              >
+                Save
+              </button>
+              <button
+                className="action-button revert-button"
+                onClick={clearPlaylist}
+              >
+                Revert
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       {isLoading && (
@@ -141,38 +274,3 @@ const EBookReader = () => {
 };
 
 export default EBookReader;
-
-const readerStyles = {
-  ...ReactReaderStyle,
-  arrow: {
-    ...ReactReaderStyle.arrow,
-    backgroundColor: "white",
-    color: "black",
-    fontWeight: 100,
-    fontFamily: "Playpen Sans",
-  },
-  tocArea: {
-    ...ReactReaderStyle.tocArea,
-    backgroundColor: "white",
-    color: "black",
-  },
-  tocAreaButton: {
-    ...ReactReaderStyle.tocAreaButton,
-    backgroundColor: "white",
-    color: "black",
-    fontFamily: "Playpen Sans",
-  },
-  tocButtonBar: {
-    ...ReactReaderStyle.tocButtonBar,
-    backgroundColor: "black",
-  },
-  tocButton: {
-    ...ReactReaderStyle.tocButton,
-    backgroundColor: "white",
-    color: "black",
-  },
-  tocButtonExpanded: {
-    ...ReactReaderStyle.tocButtonExpanded,
-    backgroundColor: "white",
-  },
-};

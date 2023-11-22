@@ -7,39 +7,49 @@ import {
 import "./SpotifyPlayer.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import TopRightEmotion from "./TopRightEmotion.jsx";
 
 // Can be separated to 2 components: EmotionPrediction and Playlist
 function changePlaylistSrc(emotion) {
+  var customPlaylist = JSON.parse(localStorage.getItem("playlistLinks"));
+  const regex = /(?<=playlist\/)([^\/]+)/;
   var playlistId = "";
   switch (emotion) {
     case "joy":
-      playlistId = "0ra1sgdNkKatWh3LOMEGCa";
+      playlistId =
+        customPlaylist && customPlaylist[0] && customPlaylist[0].match(regex)
+          ? customPlaylist[0].match(regex)[1]
+          : "0ra1sgdNkKatWh3LOMEGCa";
       break;
     case "sadness":
-      playlistId = "2hi47ni1BUFQMoDKACjgTZ";
+      playlistId =
+        customPlaylist && customPlaylist[1] && customPlaylist[1].match(regex)
+          ? customPlaylist[1].match(regex)[1]
+          : "2hi47ni1BUFQMoDKACjgTZ";
       break;
     case "fear":
-      playlistId = "5EbEfrwJPJEe4gLneh6onP";
+      playlistId =
+        customPlaylist && customPlaylist[2] && customPlaylist[2].match(regex)
+          ? customPlaylist[2].match(regex)[1]
+          : "5EbEfrwJPJEe4gLneh6onP";
       break;
     case "anger":
-      playlistId = "6QZnHBnKUjL1TCxzDk2V5o";
+      playlistId =
+        customPlaylist && customPlaylist[3] && customPlaylist[3].match(regex)
+          ? customPlaylist[3].match(regex)[1]
+          : "6QZnHBnKUjL1TCxzDk2V5o";
       break;
   }
-  const newSrc = `https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator`;
+  const newSrc = `https://open.spotify.com/embed/playlist/${playlistId}`;
   return newSrc;
 }
 
 function SpotifyPlaylist({ storyText, setIsLoading }) {
   const [emotionResult, setEmotionResult] = useState("");
-  const [isDown, setIsDown] = useState(false);
-  // const [isLoading, setIsLoading] = useState(true); // State to track when loading the prediction
 
   useEffect(() => {
     let text = storyText;
     if (!text.trim()) {
       setIsLoading(false);
-      setIsDown(true);
       return;
     }
     setIsLoading(true);
@@ -48,7 +58,6 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       const tokenizer = await loadTokenizer();
       const prediction = await predict(storyText, model, tokenizer);
       setEmotionResult(prediction);
-      setIsDown(false);
       setIsLoading(false);
       console.log(prediction, "prediction");
 
@@ -61,7 +70,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   const notify = (emotion) => {
     toast.info(`Dominant Emotion: ${emotion}`, {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -77,7 +86,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       <ToastContainer
         style={{ backgroundColor: "transparent", fontFamily: "Playpen Sans" }}
         position="top-right"
-        autoClose={2000}
+        autoClose={3000}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}
