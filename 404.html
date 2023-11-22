@@ -4,11 +4,28 @@
     <meta charset="utf-8" />
     <title>React Router</title>
     <script type="text/javascript">
-      // Specify the target URL
-      var targetUrl = "https://biboyboy04.github.io/Emo-chan";
+      var pathSegmentsToKeep = 1;
 
-      // Redirect to the target URL
-      window.location.replace(targetUrl);
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
     </script>
   </head>
   <body></body>
