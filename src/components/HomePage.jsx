@@ -45,6 +45,7 @@ const HomePage = () => {
     JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
   const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
   const [isPlaylistVisible, setPlaylistVisible] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
 
   const navigate = useNavigate();
   const playlistBoxRef = useRef(null);
@@ -66,17 +67,37 @@ const HomePage = () => {
   };
 
   function handleSavePlaylist() {
-    if (!confirm("Are you sure you want to save the playlist?")) {
-      return;
-    }
     const playlistInputs = document.querySelectorAll(".playlist-input");
     const playlistLinks = [];
-    playlistInputs.forEach((input) => {
-      playlistLinks.push(input.value);
-    });
-    localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
+    const errorMessages = [];
 
-    setPlaylistVisible(false);
+    const regex =
+      /(?:^|\s)(https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22})(?=\?|$)/;
+
+    playlistInputs.forEach((input, idx) => {
+      if (input.value.match(regex)) {
+        playlistLinks.push(input.value);
+        errorMessages[idx] = "";
+      } else if (input.value == "") {
+        playlistLinks.push("");
+        errorMessages[idx] = "";
+      } else {
+        errorMessages[idx] = "Invalid playlist link";
+        playlistLinks.push("");
+      }
+    });
+
+    setErrorMessages(errorMessages);
+    // check the errorMessages if there are no errors
+    if (errorMessages.every((error) => error === "")) {
+      if (!confirm("Are you sure you want to save the playlist?")) {
+        return;
+      }
+      localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
+      console.log(JSON.parse(localStorage.getItem("playlistLinks")));
+
+      setPlaylistVisible(false);
+    }
   }
 
   const handleInputChange = (event, idx) => {
@@ -146,6 +167,11 @@ const HomePage = () => {
                     value={playlistLinks[idx] || ""}
                     onChange={(event) => handleInputChange(event, idx)}
                   />
+                  {errorMessages[idx] && (
+                    <p className="playlist-error" key={emotion}>
+                      {errorMessages[idx]}
+                    </p>
+                  )}
                 </div>
               );
             })}

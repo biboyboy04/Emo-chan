@@ -444,6 +444,12 @@ input {
   padding: 0.5rem 1rem;
 }
 
+.playlist-error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
 @media only screen and (max-width: 767px) {
   .book-list {
     flex-direction: column;
