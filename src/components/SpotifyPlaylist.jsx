@@ -16,19 +16,27 @@ function changePlaylistSrc(emotion) {
   switch (emotion) {
     case "joy":
       playlistId =
-        customPlaylist[0].match(regex)[1] || "0ra1sgdNkKatWh3LOMEGCa";
+        customPlaylist && customPlaylist[0] && customPlaylist[0].match(regex)
+          ? customPlaylist[0].match(regex)[1]
+          : "0ra1sgdNkKatWh3LOMEGCa";
       break;
     case "sadness":
       playlistId =
-        customPlaylist[1].match(regex)[1] || "2hi47ni1BUFQMoDKACjgTZ";
+        customPlaylist && customPlaylist[1] && customPlaylist[1].match(regex)
+          ? customPlaylist[1].match(regex)[1]
+          : "2hi47ni1BUFQMoDKACjgTZ";
       break;
     case "fear":
       playlistId =
-        customPlaylist[2].match(regex)[1] || "5EbEfrwJPJEe4gLneh6onP";
+        customPlaylist && customPlaylist[2] && customPlaylist[2].match(regex)
+          ? customPlaylist[2].match(regex)[1]
+          : "5EbEfrwJPJEe4gLneh6onP";
       break;
     case "anger":
       playlistId =
-        customPlaylist[3].match(regex)[1] || "6QZnHBnKUjL1TCxzDk2V5o";
+        customPlaylist && customPlaylist[3] && customPlaylist[3].match(regex)
+          ? customPlaylist[3].match(regex)[1]
+          : "6QZnHBnKUjL1TCxzDk2V5o";
       break;
   }
   const newSrc = `https://open.spotify.com/embed/playlist/${playlistId}`;

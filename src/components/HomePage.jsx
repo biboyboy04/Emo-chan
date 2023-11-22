@@ -90,7 +90,7 @@ const HomePage = () => {
       return;
     }
     localStorage.setItem("playlistLinks", JSON.stringify(Array(4).fill("")));
-    setPlaylistLinks(...playlistLinks);
+    setPlaylistLinks(Array(4).fill(""));
   };
 
   useEffect(() => {
