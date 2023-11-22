@@ -2,46 +2,52 @@ import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
+const books = [
+  {
+    id: 1,
+    title: "Alice's Adventures in Wonderland",
+    author: "Lewis Carroll",
+    cover: "e-books/alice.jpg",
+    url: "e-books/alice.epub",
+  },
+  {
+    id: 2,
+    title: "Grimms' Fairy Tales",
+    author: "Jacob Grimm and Wilhelm Grimm",
+    cover: "e-books/grimms.png",
+    url: "e-books/grimms.epub",
+  },
+  {
+    id: 3,
+    title: "Omniscient Reader's Viewpoint",
+    author: "Singshong",
+    cover: "e-books/ovr.jpg",
+    url: "e-books/ovr.epub",
+  },
+  {
+    id: 4,
+    title: "The Jungle Book",
+    author: "Rudyard Kipling",
+    cover: "e-books/jungle_book.jpg",
+    url: "e-books/jungle_book.epub",
+  },
+  // {
+  //   id: 3,
+  //   title: "The Happy Prince and Other Tales",
+  //   author: "Oscar Wilde",
+  //   cover: "e-books/happy_prince.jpg",
+  //   url: "e-books/happy_prince.epub",
+  // },
+];
+
 const HomePage = () => {
-  const navigate = useNavigate();
-  const books = [
-    {
-      id: 1,
-      title: "Alice's Adventures in Wonderland",
-      author: "Lewis Carroll",
-      cover: "e-books/alice.jpg",
-      url: "e-books/alice.epub",
-    },
-    {
-      id: 2,
-      title: "Grimms' Fairy Tales",
-      author: "Jacob Grimm and Wilhelm Grimm",
-      cover: "e-books/grimms.png",
-      url: "e-books/grimms.epub",
-    },
-    {
-      id: 3,
-      title: "Omniscient Reader's Viewpoint",
-      author: "Singshong",
-      cover: "e-books/ovr.jpg",
-      url: "e-books/ovr.epub",
-    },
-    {
-      id: 4,
-      title: "The Jungle Book",
-      author: "Rudyard Kipling",
-      cover: "e-books/jungle_book.jpg",
-      url: "e-books/jungle_book.epub",
-    },
-    // {
-    //   id: 3,
-    //   title: "The Happy Prince and Other Tales",
-    //   author: "Oscar Wilde",
-    //   cover: "e-books/happy_prince.jpg",
-    //   url: "e-books/happy_prince.epub",
-    // },
-  ];
+  const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
   const [isPlaylistVisible, setPlaylistVisible] = useState(false);
+
+  const navigate = useNavigate();
+  const playlistBoxRef = useRef(null);
+  const initialPlaylistLinks =
+    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
 
   const handleFileChange = (event, results) => {
     if (results.length > 0) {
@@ -59,7 +65,33 @@ const HomePage = () => {
     navigate("/Emo-chan/App", { state: { book: bookUrl } });
   };
 
-  const playlistBoxRef = useRef(null);
+  function handleSavePlaylist() {
+    if (!confirm("Are you sure you want to save the playlist?")) {
+      return;
+    }
+    const playlistInputs = document.querySelectorAll(".playlist-input");
+    const playlistLinks = [];
+    playlistInputs.forEach((input) => {
+      playlistLinks.push(input.value);
+    });
+    localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
+
+    setPlaylistVisible(false);
+  }
+
+  const handleInputChange = (event, idx) => {
+    const newPlaylistLinks = [...playlistLinks];
+    newPlaylistLinks[idx] = event.target.value;
+    setPlaylistLinks(newPlaylistLinks);
+  };
+
+  const clearPlaylist = () => {
+    if (!confirm("Are you sure you want to revert to default?")) {
+      return;
+    }
+    localStorage.setItem("playlistLinks", JSON.stringify(Array(4).fill("")));
+    setPlaylistLinks(...playlistLinks);
+  };
 
   useEffect(() => {
     const handlePlaylistBox = (event) => {
@@ -82,20 +114,6 @@ const HomePage = () => {
     };
   }, [isPlaylistVisible]);
 
-  function handleSavePlaylist() {
-    if (!confirm("Are you sure you want to save the playlist?")) {
-      return "false";
-    }
-    const playlistInputs = document.querySelectorAll(".playlist-input");
-    const playlistLinks = [];
-    playlistInputs.forEach((input) => {
-      playlistLinks.push(input.value);
-      input.value = "";
-    });
-    localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
-    setPlaylistVisible(false);
-  }
-
   return (
     <div className="home-page">
       <div className="navbar-header">
@@ -117,7 +135,7 @@ const HomePage = () => {
             key={isPlaylistVisible}
             ref={playlistBoxRef}
           >
-            {["Joy", "Sadness", "Fear", "Anger"].map((emotion) => {
+            {["Joy", "Sadness", "Fear", "Anger"].map((emotion, idx) => {
               return (
                 <div className="playlist" key={emotion}>
                   <div className="playlist-title">{emotion}</div>
@@ -125,10 +143,13 @@ const HomePage = () => {
                     type="text"
                     className="playlist-input"
                     placeholder="Enter spotify playlist link..."
+                    value={playlistLinks[idx] || ""}
+                    onChange={(event) => handleInputChange(event, idx)}
                   />
                 </div>
               );
             })}
+
             <div className="action-buttons">
               <button
                 className="action-button save-button"
@@ -136,7 +157,12 @@ const HomePage = () => {
               >
                 Save
               </button>
-              <button className="action-button revert-button">Revert</button>
+              <button
+                className="action-button revert-button"
+                onClick={clearPlaylist}
+              >
+                Revert
+              </button>
             </div>
           </div>
         </div>
