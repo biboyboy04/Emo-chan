@@ -78,7 +78,8 @@ const HomePage = () => {
       if (input.value.match(regex)) {
         playlistLinks.push(input.value);
         errorMessages[idx] = "";
-      } else if (input.value == "") {
+      } // if the user leave it blank,  it's not an error
+      else if (input.value == "") {
         playlistLinks.push("");
         errorMessages[idx] = "";
       } else {
@@ -126,12 +127,13 @@ const HomePage = () => {
         setPlaylistVisible(!isPlaylistVisible);
       }
     };
+
     // Add event listener to the document body
-    document.body.addEventListener("click", handlePlaylistBox);
+    document.body.addEventListener("mousedown", handlePlaylistBox);
 
     // Clean up the event listener on component unmount
     return () => {
-      document.body.removeEventListener("click", handlePlaylistBox);
+      document.body.removeEventListener("mousedown", handlePlaylistBox);
     };
   }, [isPlaylistVisible]);
 
