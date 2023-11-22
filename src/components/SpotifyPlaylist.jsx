@@ -43,25 +43,6 @@ function changePlaylistSrc(emotion) {
   return newSrc;
 }
 
-// Refactor
-// function changePlaylistSrc(emotion) {
-//   const customPlaylist = JSON.parse(localStorage.getItem("playlistLinks"));
-//   console.log(customPlaylist);
-//   const regex = /(?<=playlist\/)([^/]+)/;
-//   const defaultPlaylists = {
-//     joy: "0ra1sgdNkKatWh3LOMEGCa",
-//     sadness: "2hi47ni1BUFQMoDKACjgTZ",
-//     fear: "5EbEfrwJPJEe4gLneh6onP",
-//     anger: "6QZnHBnKUjL1TCxzDk2V5o",
-//   };
-
-//   const playlistId =
-//     customPlaylist[emotion].match(regex)[1] || defaultPlaylists[emotion];
-//   const newSrc = `https://open.spotify.com/embed/playlist/${playlistId}`;
-
-//   return newSrc;
-// }
-
 function SpotifyPlaylist({ storyText, setIsLoading }) {
   const [emotionResult, setEmotionResult] = useState("");
 

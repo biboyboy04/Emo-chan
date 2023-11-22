@@ -142,6 +142,8 @@ body {
   padding: 1rem;
   overflow: hidden;
   animation: slide-up 1.2s ease-in;
+  z-index: 3;
+  text-align: center;
 }
 
 .visible {
