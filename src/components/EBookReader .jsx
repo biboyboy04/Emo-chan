@@ -57,7 +57,25 @@ const EBookReader = () => {
   const [isPlaylistVisible, setPlaylistVisible] = useState(false);
   const playlistBoxRef = useRef(null);
 
-  const selectedBook = locationParam.state.book;
+  var selectedBook = locationParam.state.book;
+  if (selectedBook) {
+    const arrayBuffer = selectedBook;
+    const base64 = btoa(
+      new Uint8Array(arrayBuffer).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        ""
+      )
+    );
+    localStorage.setItem("epub-book", base64);
+  } else {
+    // To retrieve an ArrayBuffer from localStorage
+    const base64 = localStorage.getItem("epub-book");
+    const arrayBuffer = Uint8Array.from(atob(base64), (c) =>
+      c.charCodeAt(0)
+    ).buffer;
+    selectedBook = arrayBuffer;
+    console.log(selectedBook, "SELECTED BOOK BASE");
+  }
 
   const getCfiChapter = (epubcifi) => {
     console.log(epubcifi);
