@@ -111,8 +111,10 @@ const HomePage = () => {
     if (!confirm("Are you sure you want to revert to default?")) {
       return;
     }
-    localStorage.setItem("playlistLinks", JSON.stringify(Array(4).fill("")));
-    setPlaylistLinks(Array(4).fill(""));
+    const emptyArray = Array(4).fill("");
+    localStorage.setItem("playlistLinks", JSON.stringify(emptyArray));
+    setPlaylistLinks(emptyArray);
+    setErrorMessages(emptyArray);
   };
 
   useEffect(() => {
