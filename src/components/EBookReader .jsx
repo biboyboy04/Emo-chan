@@ -55,27 +55,35 @@ const EBookReader = () => {
     JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
   const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
   const [isPlaylistVisible, setPlaylistVisible] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
   const playlistBoxRef = useRef(null);
 
-  var selectedBook = locationParam.state.book;
-  if (selectedBook) {
-    const arrayBuffer = selectedBook;
-    const base64 = btoa(
-      new Uint8Array(arrayBuffer).reduce(
-        (data, byte) => data + String.fromCharCode(byte),
-        ""
-      )
-    );
-    localStorage.setItem("epub-book", base64);
-  } else {
-    // To retrieve an ArrayBuffer from localStorage
-    const base64 = localStorage.getItem("epub-book");
-    const arrayBuffer = Uint8Array.from(atob(base64), (c) =>
-      c.charCodeAt(0)
-    ).buffer;
-    selectedBook = arrayBuffer;
-    console.log(selectedBook, "SELECTED BOOK BASE");
-  }
+  useEffect(() => {
+    if (locationParam.state && locationParam.state.book) {
+      setSelectedBook(locationParam.state.book);
+      const arrayBuffer = locationParam.state.book;
+      const base64 = btoa(
+        new Uint8Array(arrayBuffer).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ""
+        )
+      );
+      localStorage.setItem("epub-book", base64);
+    } else {
+      // To retrieve an ArrayBuffer from localStorage
+      const base64 = localStorage.getItem("epub-book");
+      if (base64) {
+        const arrayBuffer = Uint8Array.from(atob(base64), (c) =>
+          c.charCodeAt(0)
+        ).buffer;
+        setSelectedBook(arrayBuffer); // Use setSelectedBook instead of updating selectedBook directly
+        console.log(selectedBook, "SELECTED BOOK BASE");
+      } else {
+        console.error("No book found in local storage.");
+        // Handle the error appropriately
+      }
+    }
+  }, []);
 
   const getCfiChapter = (epubcifi) => {
     console.log(epubcifi);
