@@ -46,6 +46,7 @@ const EBookReader = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
+  const [errorMessages, setErrorMessages] = useState([]);
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
   const navigate = useNavigate();
@@ -131,31 +132,48 @@ const EBookReader = () => {
   };
 
   function handleSavePlaylist() {
-    if (!confirm("Are you sure you want to save the playlist?")) {
-      return;
-    }
     const playlistInputs = document.querySelectorAll(".playlist-input");
     const playlistLinks = [];
-    playlistInputs.forEach((input) => {
-      playlistLinks.push(input.value);
+    const errorMessages = [];
+
+    const regex =
+      /(?:^|\s)(https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22})(?=\?|$)/;
+
+    playlistInputs.forEach((input, idx) => {
+      if (input.value.match(regex)) {
+        playlistLinks.push(input.value);
+        errorMessages[idx] = "";
+      } // if the user leave it blank,  it's not an error
+      else if (input.value == "") {
+        playlistLinks.push("");
+        errorMessages[idx] = "";
+      } else {
+        errorMessages[idx] = "Invalid playlist link";
+        playlistLinks.push("");
+      }
     });
-    localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
 
-    setPlaylistVisible(false);
+    setErrorMessages(errorMessages);
+    // check the errorMessages if there are no errors
+    if (errorMessages.every((error) => error === "")) {
+      if (!confirm("Are you sure you want to save the playlist?")) {
+        return;
+      }
+      localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
+      console.log(JSON.parse(localStorage.getItem("playlistLinks")));
+
+      setPlaylistVisible(false);
+    }
   }
-
-  const handleInputChange = (event, idx) => {
-    const newPlaylistLinks = [...playlistLinks];
-    newPlaylistLinks[idx] = event.target.value;
-    setPlaylistLinks(newPlaylistLinks);
-  };
 
   const clearPlaylist = () => {
     if (!confirm("Are you sure you want to revert to default?")) {
       return;
     }
-    localStorage.setItem("playlistLinks", JSON.stringify(Array(4).fill("")));
-    setPlaylistLinks(Array(4).fill(""));
+    const emptyArray = Array(4).fill("");
+    localStorage.setItem("playlistLinks", JSON.stringify(emptyArray));
+    setPlaylistLinks(emptyArray);
+    setErrorMessages(emptyArray);
   };
 
   useEffect(() => {
@@ -170,12 +188,13 @@ const EBookReader = () => {
         setPlaylistVisible(!isPlaylistVisible);
       }
     };
+
     // Add event listener to the document body
-    document.body.addEventListener("click", handlePlaylistBox);
+    document.body.addEventListener("mousedown", handlePlaylistBox);
 
     // Clean up the event listener on component unmount
     return () => {
-      document.body.removeEventListener("click", handlePlaylistBox);
+      document.body.removeEventListener("mousedown", handlePlaylistBox);
     };
   }, [isPlaylistVisible]);
 
