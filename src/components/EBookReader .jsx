@@ -42,7 +42,7 @@ const readerStyles = {
 
 const EBookReader = () => {
   const [location, setLocation] = useState(
-    localStorage.getItem("epub-location")
+    localStorage.getItem("epub-location") || 0
   );
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
@@ -285,7 +285,10 @@ const EBookReader = () => {
       <div className="reader-container" key={isLoading}>
         <ReactReader
           location={location}
-          locationChanged={setLocation}
+          locationChanged={(loc) => {
+            setLocation(loc);
+            localStorage.setItem("epub-location", loc);
+          }}
           url={selectedBook}
           getRendition={(rendition) => {
             renditionRef.current = rendition;
