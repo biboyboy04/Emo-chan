@@ -166,6 +166,12 @@ const EBookReader = () => {
     }
   }
 
+  const handleInputChange = (event, idx) => {
+    const newPlaylistLinks = [...playlistLinks];
+    newPlaylistLinks[idx] = event.target.value;
+    setPlaylistLinks(newPlaylistLinks);
+  };
+
   const clearPlaylist = () => {
     if (!confirm("Are you sure you want to revert to default?")) {
       return;
@@ -233,6 +239,11 @@ const EBookReader = () => {
                     value={playlistLinks[idx] || ""}
                     onChange={(event) => handleInputChange(event, idx)}
                   />
+                  {errorMessages[idx] && (
+                    <p className="playlist-error" key={emotion}>
+                      {errorMessages[idx]}
+                    </p>
+                  )}
                 </div>
               );
             })}
