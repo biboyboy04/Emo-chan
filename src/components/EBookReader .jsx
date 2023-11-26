@@ -4,6 +4,7 @@ import { ReactReader, ReactReaderStyle } from "react-reader";
 import SpotifyPlaylist from "./spotifyPlaylist";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 const readerStyles = {
   ...ReactReaderStyle,
@@ -40,6 +41,42 @@ const readerStyles = {
   },
 };
 
+const readerStylesMobile = {
+  ...readerStyles,
+  arrow: {
+    ...ReactReaderStyle.arrow,
+    backgroundColor: "white",
+    color: "black",
+    fontWeight: 300,
+    fontFamily: "Playpen Sans",
+    fontSize: "2rem",
+    padding: "0px",
+    marginTop: "-10px",
+    zIndex: "100",
+  },
+  next: {
+    ...ReactReaderStyle.next,
+    top: "10px",
+    right: "10px",
+  },
+  prev: {
+    ...ReactReaderStyle.prev,
+    top: "10px",
+    right: "40px",
+    left: "auto",
+  },
+  reader: {
+    ...ReactReaderStyle.reader,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "100%",
+    height: "100%",
+    marginTop: "45px",
+  },
+};
+
 const EBookReader = () => {
   const [location, setLocation] = useState(
     localStorage.getItem("epub-location") || 0
@@ -47,6 +84,7 @@ const EBookReader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
   const navigate = useNavigate();
@@ -298,7 +336,7 @@ const EBookReader = () => {
             allowScriptedContent: true,
             flow: "scrolled",
           }}
-          readerStyles={readerStyles}
+          readerStyles={isMobile ? readerStylesMobile : readerStyles}
         />
       </div>
       <SpotifyPlaylist storyText={storyText} setIsLoading={setIsLoading} />
