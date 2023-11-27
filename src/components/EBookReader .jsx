@@ -72,8 +72,8 @@ const readerStylesMobile = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "100%",
-    height: "100%",
-    marginTop: "45px",
+    height: "calc(100% - 50px)",
+    marginTop: "20px",
   },
 };
 
