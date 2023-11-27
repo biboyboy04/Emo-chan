@@ -67,6 +67,7 @@ body {
   background-color: rgba(0, 0, 0, 0.829);
   z-index: 3;
   overflow: hidden;
+  outline: none;
 }
 
 .loading-text {

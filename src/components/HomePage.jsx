@@ -1,54 +1,10 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
-
-const books = [
-  {
-    id: 1,
-    title: "Alice's Adventures in Wonderland",
-    author: "Lewis Carroll",
-    cover: "e-books/alice.jpg",
-    url: "e-books/alice.epub",
-  },
-  {
-    id: 2,
-    title: "Grimms' Fairy Tales",
-    author: "Jacob Grimm and Wilhelm Grimm",
-    cover: "e-books/grimms.png",
-    url: "e-books/grimms.epub",
-  },
-  {
-    id: 3,
-    title: "Omniscient Reader's Viewpoint",
-    author: "Singshong",
-    cover: "e-books/ovr.jpg",
-    url: "e-books/ovr.epub",
-  },
-  {
-    id: 4,
-    title: "The Jungle Book",
-    author: "Rudyard Kipling",
-    cover: "e-books/jungle_book.jpg",
-    url: "e-books/jungle_book.epub",
-  },
-  // {
-  //   id: 3,
-  //   title: "The Happy Prince and Other Tales",
-  //   author: "Oscar Wilde",
-  //   cover: "e-books/happy_prince.jpg",
-  //   url: "e-books/happy_prince.epub",
-  // },
-];
+import Navbar from "./Navbar";
+import bookDetails from "../bookDetails.js";
 
 const HomePage = () => {
-  const initialPlaylistLinks =
-    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
-  const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
-  const [isPlaylistVisible, setPlaylistVisible] = useState(false);
-  const [errorMessages, setErrorMessages] = useState([]);
-
   const navigate = useNavigate();
-  const playlistBoxRef = useRef(null);
 
   const handleFileChange = (event, results) => {
     if (results.length > 0) {
@@ -66,137 +22,9 @@ const HomePage = () => {
     navigate("/Emo-chan/App", { state: { book: bookUrl } });
   };
 
-  function handleSavePlaylist() {
-    const playlistInputs = document.querySelectorAll(".playlist-input");
-    const playlistLinks = [];
-    const errorMessages = [];
-
-    const regex =
-      /(?:^|\s)(https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22})(?=\?|$)/;
-
-    playlistInputs.forEach((input, idx) => {
-      if (input.value.match(regex)) {
-        playlistLinks.push(input.value);
-        errorMessages[idx] = "";
-      } // if the user leave it blank,  it's not an error
-      else if (input.value == "") {
-        playlistLinks.push("");
-        errorMessages[idx] = "";
-      } else {
-        errorMessages[idx] = "Invalid playlist link";
-        playlistLinks.push("");
-      }
-    });
-
-    setErrorMessages(errorMessages);
-    // check the errorMessages if there are no errors
-    if (errorMessages.every((error) => error === "")) {
-      if (!confirm("Are you sure you want to save the playlist?")) {
-        return;
-      }
-      localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
-      console.log(JSON.parse(localStorage.getItem("playlistLinks")));
-
-      setPlaylistVisible(false);
-    }
-  }
-
-  const handleInputChange = (event, idx) => {
-    const newPlaylistLinks = [...playlistLinks];
-    newPlaylistLinks[idx] = event.target.value;
-    setPlaylistLinks(newPlaylistLinks);
-  };
-
-  const clearPlaylist = () => {
-    if (!confirm("Are you sure you want to revert to default?")) {
-      return;
-    }
-    const emptyArray = Array(4).fill("");
-    localStorage.setItem("playlistLinks", JSON.stringify(emptyArray));
-    setPlaylistLinks(emptyArray);
-    setErrorMessages(emptyArray);
-  };
-
-  useEffect(() => {
-    const handlePlaylistBox = (event) => {
-      if (
-        playlistBoxRef.current &&
-        !playlistBoxRef.current.contains(event.target)
-      ) {
-        setPlaylistVisible(false);
-      }
-      if (event.target.className === "playlist-btn") {
-        setPlaylistVisible(!isPlaylistVisible);
-      }
-    };
-
-    // Add event listener to the document body
-    document.body.addEventListener("mousedown", handlePlaylistBox);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      document.body.removeEventListener("mousedown", handlePlaylistBox);
-    };
-  }, [isPlaylistVisible]);
-
   return (
     <div className="home-page">
-      <div className="navbar-header">
-        {/* (•ᴗ•❁) | ˃̵ᴗ˂̵ */}
-        <div className="logo">
-          {" "}
-          <span role="img" aria-label="Emo-chan" className="default-text">
-            (•ᴗ•❁)Emo-chan
-          </span>
-          <span role="img" aria-label="Emo-chan" className="hover-text">
-            (˃̵ᴗ˂̵❁)Emo-chan
-          </span>
-        </div>
-        <div className="nav-links">
-          <div className="playlist-btn">Playlist</div>
-          <div
-            id="playlistBox"
-            className={`hidden-box ${isPlaylistVisible ? "visible" : ""}`}
-            key={isPlaylistVisible}
-            ref={playlistBoxRef}
-          >
-            {["Joy", "Sadness", "Fear", "Anger"].map((emotion, idx) => {
-              return (
-                <div className="playlist" key={emotion}>
-                  <div className="playlist-title">{emotion}</div>
-                  <input
-                    type="text"
-                    className="playlist-input"
-                    placeholder="Enter spotify playlist link..."
-                    value={playlistLinks[idx] || ""}
-                    onChange={(event) => handleInputChange(event, idx)}
-                  />
-                  {errorMessages[idx] && (
-                    <p className="playlist-error" key={emotion}>
-                      {errorMessages[idx]}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-
-            <div className="action-buttons">
-              <button
-                className="action-button save-button"
-                onClick={handleSavePlaylist}
-              >
-                Save
-              </button>
-              <button
-                className="action-button revert-button"
-                onClick={clearPlaylist}
-              >
-                Revert
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navbar />
 
       <div className="home-page-header">
         <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
@@ -225,7 +53,7 @@ const HomePage = () => {
           <div className="books-header-title">Choose a book</div>
         </div>
         <div className="book-list">
-          {books.map((book) => (
+          {bookDetails.map((book) => (
             <div
               className="book cover"
               key={book.id}
@@ -240,6 +68,7 @@ const HomePage = () => {
           ))}
         </div>
       </div>
+
       <footer className="copyright">
         &copy; 2023 CSRPITOY. All Rights Reserved.
       </footer>
