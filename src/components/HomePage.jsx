@@ -1,7 +1,7 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import books from "../bookDetails.js";
+import bookDetails from "../bookDetails.js";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const HomePage = () => {
           <div className="books-header-title">Choose a book</div>
         </div>
         <div className="book-list">
-          {books.map((book) => (
+          {bookDetails.map((book) => (
             <div
               className="book cover"
               key={book.id}
@@ -68,6 +68,7 @@ const HomePage = () => {
           ))}
         </div>
       </div>
+
       <footer className="copyright">
         &copy; 2023 CSRPITOY. All Rights Reserved.
       </footer>

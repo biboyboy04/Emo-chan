@@ -1,4 +1,4 @@
-const books = [
+const bookDetails = [
   {
     id: 1,
     title: "Alice's Adventures in Wonderland",
@@ -36,4 +36,4 @@ const books = [
   // },
 ];
 
-export default books;
+export default bookDetails;
