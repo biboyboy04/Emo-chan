@@ -167,6 +167,7 @@ const HomePage = () => {
         </p>
         <p style={{ fontSize: "1.25rem", fontWeight: "350" }}></p>
       </div>
+
       <div className="upload">
         <div className="upload-header-title">Have your own E-book?</div>
         <br />
@@ -174,6 +175,7 @@ const HomePage = () => {
           <button className="upload-button">Upload E-book</button>
         </FileReaderInput>
       </div>
+
       <div className="books">
         <div className="books-header">
           <div className="books-header-title">Choose a book</div>

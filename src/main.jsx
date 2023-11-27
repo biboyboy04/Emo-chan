@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import HomePage from "./components/HomePage.jsx";
-import EBookReader from "./components/EBookReader .jsx";
+import EBookReader from "./components/EBookReader.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./normalize.css";
 import "./index.css";
