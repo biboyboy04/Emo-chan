@@ -1,7 +1,7 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import books from "../book-details.js";
+import books from "../bookDetails.js";
 
 const HomePage = () => {
   const navigate = useNavigate();
