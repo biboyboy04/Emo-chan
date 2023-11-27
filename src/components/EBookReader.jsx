@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import { ReactReader, ReactReaderStyle } from "react-reader";
 import SpotifyPlaylist from "./spotifyPlaylist";
 import ReactLoading from "react-loading";
-import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import Navbar from "./Navbar";
 
 const readerStyles = {
   ...ReactReaderStyle,
@@ -87,7 +87,6 @@ const EBookReader = () => {
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
-  const navigate = useNavigate();
   const locationParam = useLocation();
 
   const initialPlaylistLinks =
@@ -165,10 +164,6 @@ const EBookReader = () => {
     }
   }, [location]);
 
-  const handleLogoClick = () => {
-    navigate("/Emo-chan/");
-  };
-
   function handleSavePlaylist() {
     const playlistInputs = document.querySelectorAll(".playlist-input");
     const playlistLinks = [];
@@ -242,67 +237,21 @@ const EBookReader = () => {
     };
   }, [isPlaylistVisible]);
 
+  const updatePlaylistRef = (playlistRef) => {
+    playlistBoxRef.current = playlistRef;
+  };
+
   return (
     <div className="app-container">
-      <div
-        className="navbar-header"
-        style={{ paddingLeft: "2rem", paddingRight: "2rem" }}
-      >
-        {/* (•ᴗ•❁) | ˃̵ᴗ˂̵ */}
-        <div className="logo" onClick={handleLogoClick}>
-          {" "}
-          <span role="img" aria-label="Emo-chan" className="default-text">
-            (•ᴗ•❁)Emo-chan
-          </span>
-          <span role="img" aria-label="Emo-chan" className="hover-text">
-            (˃̵ᴗ˂̵❁)Emo-chan
-          </span>
-        </div>
-        <div className="nav-links">
-          <div className="playlist-btn">Playlist</div>
-          <div
-            id="playlistBox"
-            className={`hidden-box ${isPlaylistVisible ? "visible" : ""}`}
-            key={isPlaylistVisible}
-            ref={playlistBoxRef}
-          >
-            {["Joy", "Sadness", "Fear", "Anger"].map((emotion, idx) => {
-              return (
-                <div className="playlist" key={emotion}>
-                  <div className="playlist-title">{emotion}</div>
-                  <input
-                    type="text"
-                    className="playlist-input"
-                    placeholder="Enter spotify playlist link..."
-                    value={playlistLinks[idx] || ""}
-                    onChange={(event) => handleInputChange(event, idx)}
-                  />
-                  {errorMessages[idx] && (
-                    <p className="playlist-error" key={emotion}>
-                      {errorMessages[idx]}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-
-            <div className="action-buttons">
-              <button
-                className="action-button save-button"
-                onClick={handleSavePlaylist}
-              >
-                Save
-              </button>
-              <button
-                className="action-button revert-button"
-                onClick={clearPlaylist}
-              >
-                Revert
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navbar
+        isPlaylistVisible={isPlaylistVisible}
+        updatePlaylistRef={updatePlaylistRef}
+        playlistLinks={playlistLinks}
+        onInputChange={handleInputChange}
+        handleSavePlaylist={handleSavePlaylist}
+        clearPlaylist={clearPlaylist}
+        errorMessages={errorMessages}
+      />
       {isLoading && (
         <div className="loading">
           <ReactLoading
