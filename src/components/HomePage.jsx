@@ -1,6 +1,7 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import Navbar from "./Navbar";
 
 const books = [
   {
@@ -41,14 +42,13 @@ const books = [
 ];
 
 const HomePage = () => {
-  const initialPlaylistLinks =
-    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("");
-  const [playlistLinks, setPlaylistLinks] = useState(initialPlaylistLinks);
-  const [isPlaylistVisible, setPlaylistVisible] = useState(false);
-  const [errorMessages, setErrorMessages] = useState([]);
-
   const navigate = useNavigate();
   const playlistBoxRef = useRef(null);
+  const [playlistLinks, setPlaylistLinks] = useState(
+    JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("")
+  );
+  const [isPlaylistVisible, setPlaylistVisible] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
 
   const handleFileChange = (event, results) => {
     if (results.length > 0) {
@@ -68,35 +68,34 @@ const HomePage = () => {
 
   function handleSavePlaylist() {
     const playlistInputs = document.querySelectorAll(".playlist-input");
-    const playlistLinks = [];
-    const errorMessages = [];
+    const newPlaylistLinks = [];
+    const newErrorMessages = [];
 
     const regex =
       /(?:^|\s)(https:\/\/open\.spotify\.com\/playlist\/[a-zA-Z0-9]{22})(?=\?|$)/;
 
     playlistInputs.forEach((input, idx) => {
       if (input.value.match(regex)) {
-        playlistLinks.push(input.value);
-        errorMessages[idx] = "";
+        newPlaylistLinks.push(input.value);
+        newErrorMessages[idx] = "";
       } // if the user leave it blank,  it's not an error
       else if (input.value == "") {
-        playlistLinks.push("");
-        errorMessages[idx] = "";
+        newPlaylistLinks.push("");
+        newErrorMessages[idx] = "";
       } else {
-        errorMessages[idx] = "Invalid playlist link";
-        playlistLinks.push("");
+        newErrorMessages[idx] = "Invalid playlist link";
+        newPlaylistLinks.push("");
       }
     });
 
-    setErrorMessages(errorMessages);
+    setErrorMessages(newErrorMessages);
+
     // check the errorMessages if there are no errors
-    if (errorMessages.every((error) => error === "")) {
+    if (newErrorMessages.every((error) => error === "")) {
       if (!confirm("Are you sure you want to save the playlist?")) {
         return;
       }
       localStorage.setItem("playlistLinks", JSON.stringify(playlistLinks));
-      console.log(JSON.parse(localStorage.getItem("playlistLinks")));
-
       setPlaylistVisible(false);
     }
   }
@@ -139,64 +138,21 @@ const HomePage = () => {
     };
   }, [isPlaylistVisible]);
 
+  const updatePlaylistRef = (playlistRef) => {
+    playlistBoxRef.current = playlistRef;
+  };
+
   return (
     <div className="home-page">
-      <div className="navbar-header">
-        {/* (•ᴗ•❁) | ˃̵ᴗ˂̵ */}
-        <div className="logo">
-          {" "}
-          <span role="img" aria-label="Emo-chan" className="default-text">
-            (•ᴗ•❁)Emo-chan
-          </span>
-          <span role="img" aria-label="Emo-chan" className="hover-text">
-            (˃̵ᴗ˂̵❁)Emo-chan
-          </span>
-        </div>
-        <div className="nav-links">
-          <div className="playlist-btn">Playlist</div>
-          <div
-            id="playlistBox"
-            className={`hidden-box ${isPlaylistVisible ? "visible" : ""}`}
-            key={isPlaylistVisible}
-            ref={playlistBoxRef}
-          >
-            {["Joy", "Sadness", "Fear", "Anger"].map((emotion, idx) => {
-              return (
-                <div className="playlist" key={emotion}>
-                  <div className="playlist-title">{emotion}</div>
-                  <input
-                    type="text"
-                    className="playlist-input"
-                    placeholder="Enter spotify playlist link..."
-                    value={playlistLinks[idx] || ""}
-                    onChange={(event) => handleInputChange(event, idx)}
-                  />
-                  {errorMessages[idx] && (
-                    <p className="playlist-error" key={emotion}>
-                      {errorMessages[idx]}
-                    </p>
-                  )}
-                </div>
-              );
-            })}
-
-            <div className="action-buttons">
-              <button
-                className="action-button save-button"
-                onClick={handleSavePlaylist}
-              >
-                Save
-              </button>
-              <button
-                className="action-button revert-button"
-                onClick={clearPlaylist}
-              >
-                Revert
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Navbar
+        isPlaylistVisible={isPlaylistVisible}
+        updatePlaylistRef={updatePlaylistRef}
+        playlistLinks={playlistLinks}
+        onInputChange={handleInputChange}
+        handleSavePlaylist={handleSavePlaylist}
+        clearPlaylist={clearPlaylist}
+        errorMessages={errorMessages}
+      />
 
       <div className="home-page-header">
         <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
@@ -211,7 +167,6 @@ const HomePage = () => {
         </p>
         <p style={{ fontSize: "1.25rem", fontWeight: "350" }}></p>
       </div>
-
       <div className="upload">
         <div className="upload-header-title">Have your own E-book?</div>
         <br />
@@ -219,7 +174,6 @@ const HomePage = () => {
           <button className="upload-button">Upload E-book</button>
         </FileReaderInput>
       </div>
-
       <div className="books">
         <div className="books-header">
           <div className="books-header-title">Choose a book</div>
