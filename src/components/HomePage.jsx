@@ -1,6 +1,5 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
 import Navbar from "./Navbar";
 
 const books = [
