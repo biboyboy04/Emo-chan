@@ -4,12 +4,33 @@
   font-family: "Playpen Sans", Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
   font-weight: 400;
-  --toastify-color-info: black;
+  --secondary-color: black;
+  --primary-color: #fefefe;
+  --toastify-color-info: var(--secondary-color);
+  color: var(--secondary-color);
+  --hover-color: #333;
+  --text-overlay-bg: rgba(14, 13, 13, 0.699);
+  --book-shadow: 10px 10px 20px rgba(0, 0, 0, 0.35);
+  --book-shadow-hover: 15px 15px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] {
+  --secondary-color: rgba(255, 255, 255, 0.87);
+  --primary-color: #121212;
+  --toastify-color-info: var(--primary-color);
+  color: var(--secondary-color);
+  --hover-color: rgba(255, 255, 255, 0.7);
+  --text-overlay-bg: rgba(241, 242, 242, 0.699);
+  --book-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+  --book-shadow-hover: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+}
+* {
+  transition: all 0.03s ease-in-out;
 }
 
 ::-webkit-scrollbar {
   width: 5px;
-  background-color: black;
+  background-color: var(--secondary-color);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -33,6 +54,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--primary-color);
 }
 
 .Toastify__toast--info {
@@ -71,7 +93,7 @@ body {
 }
 
 .loading-text {
-  color: white;
+  color: var(--primary-color);
   text-align: center;
   padding: 1rem;
 }
@@ -101,6 +123,10 @@ body {
 
 .nav-links {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .nav-links .playlist-btn {
@@ -110,7 +136,7 @@ body {
   font-size: 1.2rem;
 
   &:hover {
-    color: #333;
+    color: var(--hover-color);
   }
 
   &::before {
@@ -121,7 +147,7 @@ body {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: black;
+    background-color: var(--hover-color);
     transform: scaleX(0);
     transform-origin: top left;
     transition: transform 0.3s ease;
@@ -177,7 +203,7 @@ body {
 }
 .logo {
   position: relative;
-  color: black;
+  color: var(--secondary-color);
   text-decoration: none;
   font-size: 24px;
   cursor: pointer;
@@ -213,7 +239,7 @@ body {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: black;
+  background-color: var(--secondary-color);
   transform: scaleX(0);
   transform-origin: top left;
   transition: transform 0.3s ease;
@@ -225,15 +251,15 @@ body {
 
 input {
   padding: 10px;
-  border: 1px solid white;
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   width: 300px;
 }
 
 .button {
   padding: 10px 20px;
-  background-color: black;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -270,8 +296,7 @@ input {
   border-radius: 5px;
   margin: 15px;
   flex: 1;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.212);
-  background-color: white;
+  background-color: var(--primary-color);
   perspective: 1400px;
   margin: 30px;
   display: flex;
@@ -288,15 +313,15 @@ input {
   width: 300px;
   transform-origin: 0% 50%;
   transition: all 0.8s ease;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--book-shadow);
   position: relative;
   z-index: 2;
-  /*   box-shadow: 15px 15px 20px rgba(0,0,0,.35); */
+  /* box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.35); */
 }
 
 .book:hover {
   transform: rotateY(-15deg);
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--book-shadow-hover);
 }
 
 .book.open .cover {
@@ -338,10 +363,10 @@ input {
 .save-button,
 .upload-button,
 .revert-button {
-  border: 1px solid black;
+  border: 1px solid var(--secondary-color);
   border-radius: 1rem;
-  background-color: white;
-  color: black;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
   padding: 8px 16px; /* Adjust padding as needed */
   cursor: pointer;
   outline: none; /* Remove default button outline */
@@ -352,15 +377,15 @@ input {
 .save-button:hover,
 .upload-button:hover,
 .revert-button:hover {
-  background-color: black;
-  color: white;
-  border-color: white;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 .copyright {
   text-align: center;
   font-size: 14px;
-  color: black; /* Adjust color as needed */
+  color: var(--secondary-color); /* Adjust color as needed */
 }
 
 /* Spotify */
