@@ -16,6 +16,9 @@ const EBookReader = () => {
   const [isDarkMode, setDarkMode] = useState(
     localStorage.getItem("selectedTheme") === "dark"
   );
+  const [progressText, setProgressText] = useState(
+    "Emotion Analysis in Progress..."
+  );
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const chapterRef = useRef(null);
@@ -110,19 +113,42 @@ const EBookReader = () => {
     updateReactReader(isDarkMode);
   }, [isDarkMode]);
 
+  useEffect(() => {
+    const randomTexts = [
+      "Analyzing emotions...",
+      "Processing sentiments...",
+      "Evaluating feelings...",
+      "Calculating mood...",
+      "Deciphering chapter emotions... ",
+      "Analyzing vibes within the text...",
+      "Processing chapter sentiments...",
+    ];
+
+    const setRandomText = () => {
+      const randomIndex = Math.floor(Math.random() * randomTexts.length);
+      setProgressText(randomTexts[randomIndex]);
+    };
+
+    const intervalId = setInterval(() => {
+      setRandomText();
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="app-container">
       <Navbar updateReactReader={updateReactReader} />
-      {isLoading && (
+      {true && (
         <div className="loading">
           <ReactLoading
-            type={"spin"}
+            type={"spinningBubbles"}
             color={"white"}
             height={"auto"}
             width={isMobile ? "15%" : "5%"}
           />
           <div className="loading-text">
-            <p>Emotion Analysis in Progress...</p>
+            <p>{progressText}</p>
             <p>
               Sorry if the analysis is long; there&rsquo;s a lot of text to
               analyze. (╥﹏╥❁)

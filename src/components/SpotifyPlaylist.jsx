@@ -69,7 +69,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   const notify = (emotion) => {
     toast.info(`Dominant Emotion: ${emotion}`, {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 2500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -86,7 +86,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       <ToastContainer
         style={{ backgroundColor: "transparent", fontFamily: "Playpen Sans" }}
         position="top-right"
-        autoClose={3000}
+        autoClose={2500}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}
