@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ReactReader } from "react-reader";
-import SpotifyPlaylist from "./spotifyPlaylist";
+import SpotifyPlaylist from "./SpotifyPlaylist";
 import ReactLoading from "react-loading";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
@@ -13,6 +13,12 @@ const EBookReader = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
+  const [isDarkMode, setDarkMode] = useState(
+    localStorage.getItem("selectedTheme") === "dark"
+  );
+  const [progressText, setProgressText] = useState(
+    "Emotion Analysis in Progress..."
+  );
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const chapterRef = useRef(null);
@@ -88,19 +94,61 @@ const EBookReader = () => {
     }
   }, [location]);
 
+  // Callback function to update ReactReader
+  const updateReactReader = (darkMode) => {
+    if (renditionRef.current) {
+      renditionRef.current.themes.override(
+        "color",
+        darkMode ? "white" : "black"
+      );
+      renditionRef.current.themes.override(
+        "background",
+        darkMode ? "#121212" : "white"
+      );
+    }
+  };
+
+  // Update ReactReader when dark mode changes
+  useEffect(() => {
+    updateReactReader(isDarkMode);
+  }, [isDarkMode]);
+
+  useEffect(() => {
+    const randomTexts = [
+      "Analyzing emotions...",
+      "Processing sentiments...",
+      "Evaluating feelings...",
+      "Calculating mood...",
+      "Deciphering chapter emotions... ",
+      "Analyzing vibes within the text...",
+      "Processing chapter sentiments...",
+    ];
+
+    const setRandomText = () => {
+      const randomIndex = Math.floor(Math.random() * randomTexts.length);
+      setProgressText(randomTexts[randomIndex]);
+    };
+
+    const intervalId = setInterval(() => {
+      setRandomText();
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="app-container">
-      <Navbar />
-      {isLoading && (
+      <Navbar updateReactReader={updateReactReader} />
+      {true && (
         <div className="loading">
           <ReactLoading
-            type={"spin"}
+            type={"spinningBubbles"}
             color={"white"}
             height={"auto"}
-            width={"10%"}
+            width={isMobile ? "15%" : "5%"}
           />
           <div className="loading-text">
-            <p>Emotion Analysis in Progress...</p>
+            <p>{progressText}</p>
             <p>
               Sorry if the analysis is long; there&rsquo;s a lot of text to
               analyze. (╥﹏╥❁)
@@ -108,7 +156,7 @@ const EBookReader = () => {
           </div>
         </div>
       )}
-      <div className="reader-container" key={isLoading}>
+      <div className="reader-container">
         <ReactReader
           location={location}
           locationChanged={(loc) => {
@@ -117,6 +165,11 @@ const EBookReader = () => {
           }}
           url={selectedBook}
           getRendition={(rendition) => {
+            rendition.themes.override("color", isDarkMode ? "white" : "black");
+            rendition.themes.override(
+              "background",
+              isDarkMode ? "#121212" : "white"
+            );
             renditionRef.current = rendition;
           }}
           epubOptions={{
