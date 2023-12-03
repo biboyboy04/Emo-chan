@@ -2,8 +2,12 @@ import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import bookDetails from "../bookDetails.js";
+import { useState, createContext } from "react";
+import ThemeContext from "./ThemeContext";
 
 const HomePage = () => {
+  const initialTheme = localStorage.getItem("selectedTheme") || "light";
+  const [theme, setTheme] = useState(null || initialTheme);
   const navigate = useNavigate();
 
   const handleFileChange = (event, results) => {
@@ -22,9 +26,15 @@ const HomePage = () => {
     navigate("/Emo-chan/App", { state: { book: bookUrl } });
   };
 
+  const handleThemeChange = (theme) => {
+    setTheme(theme);
+  };
+
   return (
     <div className="home-page">
-      <Navbar />
+      <ThemeContext.Provider value={theme}>
+        <Navbar onChangeTheme={handleThemeChange} />
+      </ThemeContext.Provider>
 
       <div className="home-page-header">
         <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
