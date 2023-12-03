@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { ReactReader } from "react-reader";
-import SpotifyPlaylist from "./spotifyPlaylist";
+import SpotifyPlaylist from "./SpotifyPlaylist";
 import ReactLoading from "react-loading";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
@@ -126,7 +126,7 @@ const EBookReader = () => {
           </div>
         </div>
       )}
-      <div className="reader-container" key={isLoading}>
+      <div className="reader-container">
         <ReactReader
           location={location}
           locationChanged={(loc) => {
