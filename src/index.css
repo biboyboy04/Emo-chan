@@ -360,26 +360,41 @@ input {
   font-weight: 400;
 }
 
-.save-button,
 .upload-button,
+.save-button,
 .revert-button {
-  border: 1px solid var(--secondary-color);
   border-radius: 1rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.upload-button {
+  border: 1px solid var(--secondary-color);
   background-color: var(--primary-color);
   color: var(--secondary-color);
-  padding: 8px 16px; /* Adjust padding as needed */
-  cursor: pointer;
-  outline: none; /* Remove default button outline */
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.save-button,
+.revert-button {
+  border: 1px solid black;
+  background-color: white;
+  color: black;
   align-self: flex-start;
 }
 
-.save-button:hover,
-.upload-button:hover,
-.revert-button:hover {
+.upload-button:hover {
   background-color: var(--secondary-color);
   color: var(--primary-color);
   border-color: var(--primary-color);
+}
+
+.save-button:hover,
+.revert-button:hover {
+  background-color: black;
+  color: white;
+  border-color: black;
 }
 
 .copyright {
@@ -449,6 +464,7 @@ input {
 }
 
 .playlist-title {
+  color: black;
   font-size: 1.2rem;
   font-weight: 500;
   margin-bottom: 0.5rem;

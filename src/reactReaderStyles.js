@@ -1,36 +1,50 @@
 import { ReactReaderStyle } from "react-reader";
+console.log(ReactReaderStyle);
 const readerStyles = {
   ...ReactReaderStyle,
+
+  readerArea: {
+    ...ReactReaderStyle.readerArea,
+    backgroundColor: "var(--primary-color)",
+    color: "var(--secondary-color)",
+  },
+  reader: {
+    ...ReactReaderStyle.reader,
+    backgroundColor: "var(--primary-color)",
+    color: "white",
+  },
   arrow: {
     ...ReactReaderStyle.arrow,
-    backgroundColor: "white",
-    color: "black",
+    backgroundColor: "transparent",
+    color: "var(--secondary-color)",
     fontWeight: 100,
     fontFamily: "Playpen Sans",
   },
   tocArea: {
     ...ReactReaderStyle.tocArea,
-    backgroundColor: "white",
-    color: "black",
+    backgroundColor: "var(--primary-color)",
+    color: "var(--secondary-color)",
   },
   tocAreaButton: {
     ...ReactReaderStyle.tocAreaButton,
-    backgroundColor: "white",
-    color: "black",
+    backgroundColor: "var(--primary-color)",
+    color: "var(--secondary-color)",
     fontFamily: "Playpen Sans",
   },
+
   tocButtonBar: {
     ...ReactReaderStyle.tocButtonBar,
-    backgroundColor: "black",
+    backgroundColor: "var(--secondary-color)",
+    color: "red",
   },
   tocButton: {
     ...ReactReaderStyle.tocButton,
-    backgroundColor: "white",
-    color: "black",
+    backgroundColor: "var(--primary-color)",
+    color: "var(--secondary-color)",
   },
   tocButtonExpanded: {
     ...ReactReaderStyle.tocButtonExpanded,
-    backgroundColor: "white",
+    backgroundColor: "#b4b4b4",
   },
 };
 
@@ -38,8 +52,8 @@ const readerStylesMobile = {
   ...readerStyles,
   arrow: {
     ...ReactReaderStyle.arrow,
-    backgroundColor: "white",
-    color: "black",
+    backgroundColor: "transparent",
+    color: "var(--secondary-color)",
     fontWeight: 300,
     fontFamily: "Playpen Sans",
     fontSize: "2rem",

@@ -3,7 +3,7 @@ import { DarkModeSwitch } from "react-toggle-dark-mode";
 import PlaylistInputBox from "./PlaylistInputBox";
 import React from "react";
 import { useEffect } from "react";
-const Navbar = () => {
+const Navbar = ({ updateReactReader }) => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate("/Emo-chan/");
@@ -13,6 +13,7 @@ const Navbar = () => {
 
   const toggleDarkMode = (checked) => {
     setDarkMode(checked);
+    updateReactReader(checked);
   };
 
   useEffect(() => {

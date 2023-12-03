@@ -13,6 +13,9 @@ const EBookReader = () => {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
+  const [isDarkMode, setDarkMode] = useState(
+    localStorage.getItem("selectedTheme") === "dark"
+  );
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
   const chapterRef = useRef(null);
@@ -88,9 +91,24 @@ const EBookReader = () => {
     }
   }, [location]);
 
+  // Callback function to update ReactReader
+  const updateReactReader = (darkMode) => {
+    if (renditionRef.current) {
+      renditionRef.current.themes.override(
+        "color",
+        darkMode ? "white" : "black"
+      );
+    }
+  };
+
+  // Update ReactReader when dark mode changes
+  useEffect(() => {
+    updateReactReader(isDarkMode);
+  }, [isDarkMode]);
+
   return (
     <div className="app-container">
-      <Navbar />
+      <Navbar updateReactReader={updateReactReader} />
       {isLoading && (
         <div className="loading">
           <ReactLoading
@@ -117,6 +135,7 @@ const EBookReader = () => {
           }}
           url={selectedBook}
           getRendition={(rendition) => {
+            rendition.themes.override("color", isDarkMode ? "white" : "black");
             renditionRef.current = rendition;
           }}
           epubOptions={{
