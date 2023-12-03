@@ -2,25 +2,25 @@ import { useNavigate } from "react-router-dom";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import PlaylistInputBox from "./PlaylistInputBox";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const Navbar = ({ updateReactReader }) => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate("/Emo-chan/");
   };
   const initialTheme = localStorage.getItem("selectedTheme") || "light";
-  const [isDarkMode, setDarkMode] = React.useState(initialTheme === "dark");
-
-  const toggleDarkMode = (checked) => {
-    setDarkMode(checked);
-    updateReactReader(checked);
-  };
+  const [isDarkMode, setDarkMode] = useState(initialTheme === "dark");
 
   useEffect(() => {
     const selectedTheme = isDarkMode ? "dark" : "light";
     localStorage.setItem("selectedTheme", selectedTheme);
     document.documentElement.setAttribute("data-theme", selectedTheme);
   }, [isDarkMode]);
+
+  const toggleDarkMode = (checked) => {
+    setDarkMode(checked);
+    updateReactReader(checked);
+  };
 
   return (
     <div className="navbar-header">

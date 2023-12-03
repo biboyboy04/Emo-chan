@@ -75,7 +75,8 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "light",
+      theme:
+        localStorage.getItem("selectedTheme") === "dark" ? "dark" : "light",
       icon: false,
     });
   };

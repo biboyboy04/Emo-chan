@@ -17,7 +17,7 @@
 [data-theme="dark"] {
   --secondary-color: rgba(255, 255, 255, 0.87);
   --primary-color: #121212;
-  --toastify-color-info: var(--primary-color);
+  --toastify-color-info: var(--secondary-color);
   color: var(--secondary-color);
   --hover-color: rgba(255, 255, 255, 0.7);
   --text-overlay-bg: rgba(241, 242, 242, 0.699);
