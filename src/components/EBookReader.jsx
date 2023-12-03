@@ -98,6 +98,10 @@ const EBookReader = () => {
         "color",
         darkMode ? "white" : "black"
       );
+      renditionRef.current.themes.override(
+        "background",
+        darkMode ? "#121212" : "white"
+      );
     }
   };
 
@@ -115,7 +119,7 @@ const EBookReader = () => {
             type={"spin"}
             color={"white"}
             height={"auto"}
-            width={"10%"}
+            width={isMobile ? "15%" : "5%"}
           />
           <div className="loading-text">
             <p>Emotion Analysis in Progress...</p>
@@ -136,6 +140,10 @@ const EBookReader = () => {
           url={selectedBook}
           getRendition={(rendition) => {
             rendition.themes.override("color", isDarkMode ? "white" : "black");
+            rendition.themes.override(
+              "background",
+              isDarkMode ? "#121212" : "white"
+            );
             renditionRef.current = rendition;
           }}
           epubOptions={{

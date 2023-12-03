@@ -93,7 +93,8 @@ body {
 }
 
 .loading-text {
-  color: var(--primary-color);
+  margin-top: -35px;
+  color: white;
   text-align: center;
   padding: 1rem;
 }
