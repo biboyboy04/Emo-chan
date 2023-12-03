@@ -138,7 +138,9 @@ const EBookReader = () => {
 
   return (
     <div className="app-container">
-      <Navbar updateReactReader={updateReactReader} />
+      <div style={{ padding: isMobile ? "0" : "0 2rem" }}>
+        <Navbar updateReactReader={updateReactReader} />
+      </div>
       {isLoading && (
         <div className="loading">
           <ReactLoading
