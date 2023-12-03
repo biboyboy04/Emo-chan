@@ -139,7 +139,7 @@ const EBookReader = () => {
   return (
     <div className="app-container">
       <Navbar updateReactReader={updateReactReader} />
-      {true && (
+      {isLoading && (
         <div className="loading">
           <ReactLoading
             type={"spinningBubbles"}
