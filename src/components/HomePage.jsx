@@ -2,9 +2,22 @@ import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import bookDetails from "../bookDetails.js";
+import { loginUrl, getTokenFromUrl } from "../spotify.js";
+import { useState, useEffect } from "react";
 
 const HomePage = () => {
+  const [spotifyToken, setSpotifyToken] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const _spotifyToken = getTokenFromUrl().access_token;
+    console.log("SPOTIFY TOKEN", _spotifyToken);
+
+    if (_spotifyToken) {
+      setSpotifyToken(_spotifyToken);
+    }
+    console.log("running");
+  }, []);
 
   const handleFileChange = (event, results) => {
     if (results.length > 0) {
@@ -46,6 +59,7 @@ const HomePage = () => {
         <FileReaderInput as="buffer" onChange={handleFileChange}>
           <button className="upload-button">Upload E-book</button>
         </FileReaderInput>
+        <a href={loginUrl}>Login</a>
       </div>
 
       <div className="books">
