@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import bookDetails from "../bookDetails.js";
 import { loginUrl, getTokenFromUrl } from "../spotify.js";
+import { SpotifyWebPlayback } from "../spotifyWebPlaybackSDK.js";
 import { useState, useEffect } from "react";
 
 const HomePage = () => {
@@ -16,7 +17,10 @@ const HomePage = () => {
     if (_spotifyToken) {
       setSpotifyToken(_spotifyToken);
     }
-    console.log("running");
+
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      SpotifyWebPlayback(_spotifyToken);
+    };
   }, []);
 
   const handleFileChange = (event, results) => {
@@ -60,6 +64,11 @@ const HomePage = () => {
           <button className="upload-button">Upload E-book</button>
         </FileReaderInput>
         <a href={loginUrl}>Login</a>
+
+        <h1>Spotify Web Playback SDK Quick Start</h1>
+        <button id="togglePlay">Toggle Play</button>
+        <button id="togglePrevious">Toggle Previous</button>
+        <button id="toggleNext">Toggle Next</button>
       </div>
 
       <div className="books">
