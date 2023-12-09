@@ -44,7 +44,7 @@ const HomePage = () => {
     <div className={styles.homepage}>
       <Navbar />
 
-      <div className={styles.header}>
+      <div className={styles.hero}>
         <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
           Transform your reading experience
         </p>
@@ -62,7 +62,7 @@ const HomePage = () => {
         <div className={styles.header}>Have your own E-book?</div>
         <br />
         <FileReaderInput as="buffer" onChange={handleFileChange}>
-          <button className="upload-button">Upload E-book</button>
+          <button className={styles.btn}>Upload E-book</button>
         </FileReaderInput>
         <a href={loginUrl}>Login</a>
 

@@ -1,5 +1,49 @@
 @import url("./variables.scss");
 
+.logo {
+  position: relative;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+
+  .defaultText,
+  .hoverText {
+    display: inline-block;
+  }
+
+  .hoverText {
+    display: none;
+  }
+
+  &:hover .defaultText {
+    display: none;
+  }
+
+  &:hover .hoverText {
+    display: inline-block;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--secondary-color);
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover::before {
+    transform: scaleX(1);
+  }
+}
+
 .navbar {
   display: flex;
   align-items: center;

@@ -6,6 +6,7 @@ import {
 } from "../scripts/emotionAnalysis.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styles from "./SpotifyPlaylist.module.scss";
 
 // Can be separated to 2 components: EmotionPrediction and Playlist
 function changePlaylistSrc(emotion) {
@@ -82,7 +83,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   };
 
   return (
-    <div className="spotify-embed">
+    <div className={styles.spotifyEmbed}>
       <ToastContainer
         style={{ backgroundColor: "transparent", fontFamily: "Playpen Sans" }}
         position="top-right"
@@ -98,15 +99,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
         theme="light"
       />
       {emotionResult === "" || emotionResult === "neutral" ? (
-        <p
-          style={{
-            fontSize: "2rem",
-            marginBottom: "10px",
-            color: "black",
-            margin: "auto 0",
-            textAlign: "center",
-          }}
-        >
+        <p className={styles.emotionText}>
           {emotionResult === "" ? "No Emotion" : "Neutral"}
         </p>
       ) : (

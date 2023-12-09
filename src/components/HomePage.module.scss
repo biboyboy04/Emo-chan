@@ -8,25 +8,27 @@
   gap: 6rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  .header {
-    margin-bottom: 10px;
-  }
+}
+
+.hero {
+  margin-bottom: 10px;
 }
 
 .upload {
   margin-top: 2rem;
   .header {
-    font-size: 1.5rem;
-    margin: 10px 0;
-    font-weight: 350;
+    font-size: 24px;
+    font-weight: 400;
   }
   .btn {
     border: 1px solid var(--secondary-color);
     background-color: var(--primary-color);
     color: var(--secondary-color);
-    padding: 10px 20px;
-    border-radius: 5px;
     cursor: pointer;
+    border-radius: 1rem;
+    padding: 8px 16px;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
   }
   .btn:hover {
     background-color: var(--secondary-color);
@@ -117,9 +119,8 @@
   color: var(--secondary-color);
 }
 
-/* Media Queries */
 @media only screen and (max-width: 767px) {
-  .book {
+  .books {
     .list {
       flex-direction: column;
       align-items: center;
@@ -129,10 +130,10 @@
 
   .homepage {
     padding: 0.5rem 0;
-    .header {
-      margin-top: -2rem;
-      padding: 1rem;
-    }
+  }
+  .hero {
+    margin-top: -2rem;
+    padding: 1rem;
   }
 
   .books {
@@ -141,7 +142,7 @@
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1024px) {
-  .book {
+  .books {
     .list {
       display: grid;
       grid-template-columns: repeat(2, 1fr); /* 2 columns */
@@ -152,9 +153,9 @@
 
   .homepage {
     gap: 2rem;
-    .header {
-      padding: 10vw;
-      margin-top: -2rem;
-    }
+  }
+  .hero {
+    padding: 10vw;
+    margin-top: -2rem;
   }
 }

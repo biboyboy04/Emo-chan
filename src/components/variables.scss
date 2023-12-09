@@ -31,3 +31,9 @@
 ::before {
   box-sizing: border-box;
 }
+
+.epub-container {
+  overflow-x: hidden !important;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
+}

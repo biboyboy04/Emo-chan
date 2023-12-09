@@ -25,12 +25,12 @@ const Navbar = ({ updateReactReader }) => {
 
   return (
     <div className={styles.navbar}>
-      <div className="logo" onClick={handleLogoClick}>
+      <div className={styles.logo} onClick={handleLogoClick}>
         {" "}
-        <span role="img" aria-label="Emo-chan" className="default-text">
+        <span role="img" aria-label="Emo-chan" className={styles.defaultText}>
           (•ᴗ•❁)Emo-chan
         </span>
-        <span role="img" aria-label="Emo-chan" className="hover-text">
+        <span role="img" aria-label="Emo-chan" className={styles.hoverText}>
           (˃̵ᴗ˂̵❁)Emo-chan
         </span>
       </div>
