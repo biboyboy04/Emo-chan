@@ -1,0 +1,43 @@
+@import url("./variables.scss");
+
+.app {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2rem;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.829);
+    z-index: 3;
+    overflow: hidden;
+    outline: none;
+    .text {
+      margin-top: -35px;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+  }
+}
+
+.epub-container {
+  overflow-x: hidden !important;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+.reader {
+  flex: 1;
+}

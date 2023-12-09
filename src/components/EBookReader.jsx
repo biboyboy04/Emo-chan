@@ -6,6 +6,7 @@ import ReactLoading from "react-loading";
 import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
 import { readerStyles, readerStylesMobile } from "../reactReaderStyles";
+import styles from "./EBookReader.module.scss";
 
 const EBookReader = () => {
   const [location, setLocation] = useState(
@@ -137,19 +138,19 @@ const EBookReader = () => {
   }, []);
 
   return (
-    <div className="app-container">
+    <div className={styles.app}>
       <div style={{ padding: isMobile ? "0" : "0 2rem" }}>
         <Navbar updateReactReader={updateReactReader} />
       </div>
       {isLoading && (
-        <div className="loading">
+        <div className={styles.loading}>
           <ReactLoading
             type={"spinningBubbles"}
             color={"white"}
             height={"auto"}
             width={isMobile ? "15%" : "5%"}
           />
-          <div className="loading-text">
+          <div className={styles.text}>
             <p>{progressText}</p>
             <p>
               Sorry if the analysis is long; there&rsquo;s a lot of text to
@@ -158,7 +159,8 @@ const EBookReader = () => {
           </div>
         </div>
       )}
-      <div className="reader-container">
+
+      <div className={styles.reader}>
         <ReactReader
           location={location}
           locationChanged={(loc) => {
