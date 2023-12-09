@@ -69,6 +69,7 @@ const HomePage = () => {
         <button id="togglePlay">Toggle Play</button>
         <button id="togglePrevious">Toggle Previous</button>
         <button id="toggleNext">Toggle Next</button>
+        <button id="toggleShuffle">Toggle Shuffle</button>
       </div>
 
       <div className="books">

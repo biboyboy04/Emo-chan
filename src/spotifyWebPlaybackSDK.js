@@ -1,5 +1,6 @@
 // SpotifyWebPlayback.js
 export const SpotifyWebPlayback = (token, handlePlaybackError) => {
+  var isShuffle = false;
   const player = new Spotify.Player({
     name: "Web Playback SDK Quick Start Player",
     getOAuthToken: (cb) => {
@@ -11,6 +12,7 @@ export const SpotifyWebPlayback = (token, handlePlaybackError) => {
   // Ready
   player.addListener("ready", ({ device_id }) => {
     console.log("Ready with Device ID", device_id);
+
     // Automatically change to the newly created Spotify Connect
     fetch("https://api.spotify.com/v1/me/player", {
       method: "PUT",
@@ -39,7 +41,27 @@ export const SpotifyWebPlayback = (token, handlePlaybackError) => {
   player.addListener("account_error", handlePlaybackError);
 
   document.getElementById("togglePlay").onclick = () => {
-    player.togglePlay();
+    const playData = {
+      context_uri: "spotify:playlist:0ra1sgdNkKatWh3LOMEGCa",
+    };
+
+    fetch("https://api.spotify.com/v1/me/player/play", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(playData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to start playback with specific data");
+        }
+        player.togglePlay();
+      })
+      .catch((error) =>
+        console.error("Error starting playback with specific data:", error)
+      );
   };
 
   document.getElementById("toggleNext").onclick = () => {
@@ -48,6 +70,16 @@ export const SpotifyWebPlayback = (token, handlePlaybackError) => {
 
   document.getElementById("togglePrevious").onclick = () => {
     player.previousTrack();
+  };
+
+  document.getElementById("toggleShuffle").onclick = () => {
+    isShuffle = !isShuffle;
+    fetch(`https://api.spotify.com/v1/me/player/shuffle?state=${isShuffle}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   player.connect().then((success) => {
