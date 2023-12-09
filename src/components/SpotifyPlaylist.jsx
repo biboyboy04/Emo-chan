@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  loadModel,
-  loadTokenizer,
-  predict,
-} from "../scripts/emotionAnalysis.js";
+import { loadModel, loadTokenizer, predict } from "../emotionAnalysis.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./SpotifyPlaylist.module.scss";
