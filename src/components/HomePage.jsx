@@ -5,6 +5,7 @@ import bookDetails from "../bookDetails.js";
 import { loginUrl, getTokenFromUrl } from "../spotify.js";
 import { SpotifyWebPlayback } from "../spotifyWebPlaybackSDK.js";
 import { useState, useEffect } from "react";
+import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
   const [spotifyToken, setSpotifyToken] = useState(null);
@@ -40,10 +41,10 @@ const HomePage = () => {
   };
 
   return (
-    <div className="home-page">
+    <div className={styles.homepage}>
       <Navbar />
 
-      <div className="home-page-header">
+      <div className={styles.header}>
         <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
           Transform your reading experience
         </p>
@@ -57,8 +58,8 @@ const HomePage = () => {
         <p style={{ fontSize: "1.25rem", fontWeight: "350" }}></p>
       </div>
 
-      <div className="upload">
-        <div className="upload-header-title">Have your own E-book?</div>
+      <div className={styles.upload}>
+        <div className={styles.header}>Have your own E-book?</div>
         <br />
         <FileReaderInput as="buffer" onChange={handleFileChange}>
           <button className="upload-button">Upload E-book</button>
@@ -72,19 +73,19 @@ const HomePage = () => {
         <button id="toggleShuffle">Toggle Shuffle</button>
       </div>
 
-      <div className="books">
-        <div className="books-header">
-          <div className="books-header-title">Choose a book</div>
+      <div className={styles.books}>
+        <div className={styles.header}>
+          <div className={styles.title}>Choose a book</div>
         </div>
-        <div className="book-list">
+        <div className={styles.list}>
           {bookDetails.map((book) => (
             <div
-              className="book cover"
+              className={`${styles.book} ${styles.cover}`}
               key={book.id}
               onClick={() => handleBookClick(book.url)}
             >
               <img src={`${book.cover}`} alt={book.title} />
-              <div className="book-details">
+              <div className={styles.details}>
                 <h3>{book.title}</h3>
                 <p>{book.author}</p>
               </div>

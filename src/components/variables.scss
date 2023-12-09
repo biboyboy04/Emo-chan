@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100;200;300;400&display=swap");
+
+:root {
+  font-family: "Playpen Sans", Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  font-weight: 400;
+  --secondary-color: black;
+  --primary-color: #fefefe;
+  --toastify-color-info: var(--secondary-color);
+  color: var(--secondary-color);
+  --hover-color: #333;
+  --text-overlay-bg: rgba(14, 13, 13, 0.699);
+  --book-shadow: 10px 10px 20px rgba(0, 0, 0, 0.35);
+  --book-shadow-hover: 15px 15px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] {
+  --secondary-color: rgba(255, 255, 255, 0.87);
+  --primary-color: #121212;
+  --toastify-color-info: var(--secondary-color);
+  color: var(--secondary-color);
+  --hover-color: rgba(255, 255, 255, 0.7);
+  --text-overlay-bg: rgba(241, 242, 242, 0.699);
+  --book-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+  --book-shadow-hover: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+}
+
+*,
+**,
+::after,
+::before {
+  box-sizing: border-box;
+}
