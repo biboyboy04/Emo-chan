@@ -1,0 +1,45 @@
+@import url("./variables.scss");
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  justify-content: space-between;
+
+  .links {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    .playlist-btn {
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      font-size: 1.2rem;
+
+      &:hover {
+        color: var(--hover-color);
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--hover-color);
+        transform: scaleX(0);
+        transform-origin: top left;
+        transition: transform 0.3s ease;
+      }
+
+      &:hover::before {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
