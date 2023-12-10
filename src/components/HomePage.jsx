@@ -11,7 +11,9 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem("spotifyToken");
+    if (localStorage.getItem("spotifyToken")) {
+      return;
+    }
     const spotifyToken = getTokenFromUrl().access_token;
     console.log("SPOTIFY TOKEN", spotifyToken);
 
@@ -64,13 +66,6 @@ const HomePage = () => {
         <FileReaderInput as="buffer" onChange={handleFileChange}>
           <button className={styles.btn}>Upload E-book</button>
         </FileReaderInput>
-        <a href={loginUrl}>Login</a>
-
-        <h1>Spotify Web Playback SDK Quick Start</h1>
-        <button id="togglePlay">Toggle Play</button>
-        <button id="togglePrevious">Toggle Previous</button>
-        <button id="toggleNext">Toggle Next</button>
-        <button id="toggleShuffle">Toggle Shuffle</button>
       </div>
 
       <div className={styles.books}>

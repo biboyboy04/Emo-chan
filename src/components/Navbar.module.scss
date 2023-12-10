@@ -57,6 +57,27 @@
     justify-content: center;
     gap: 1rem;
 
+    .spotifyBtn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #1db954;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      &:hover {
+        background-color: #147d43;
+      }
+    }
+
+    .userProfilePic {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
     .playlist-btn {
       cursor: pointer;
       user-select: none;
@@ -85,5 +106,34 @@
         transform: scaleX(1);
       }
     }
+  }
+}
+
+.profileContainer {
+  display: flex;
+  padding: 5px 10px;
+  border: 1px solid var(--secondary-color);
+  gap: 3px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  cursor: pointer;
+  border-radius: 1rem;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  &:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  align-items: center;
+  .logoutTxt {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+
+    z-index: 1;
   }
 }
