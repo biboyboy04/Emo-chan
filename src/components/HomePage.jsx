@@ -8,20 +8,20 @@ import { useState, useEffect } from "react";
 import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
-  const [spotifyToken, setSpotifyToken] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const _spotifyToken = getTokenFromUrl().access_token;
-    console.log("SPOTIFY TOKEN", _spotifyToken);
+    localStorage.removeItem("spotifyToken");
+    const spotifyToken = getTokenFromUrl().access_token;
+    console.log("SPOTIFY TOKEN", spotifyToken);
 
-    if (_spotifyToken) {
-      setSpotifyToken(_spotifyToken);
+    if (spotifyToken) {
+      localStorage.setItem("spotifyToken", spotifyToken);
     }
 
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      SpotifyWebPlayback(_spotifyToken);
-    };
+    // window.onSpotifyWebPlaybackSDKReady = () => {
+    //   SpotifyWebPlayback(_spotifyToken);
+    // };
   }, []);
 
   const handleFileChange = (event, results) => {
