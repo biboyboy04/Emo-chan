@@ -1,123 +1,127 @@
 /*generated with Input range slider CSS style generator (version 20211225)
 https://toughengineer.github.io/demo/slider-styler*/
-input[type=range].styled-slider {
-  height: .5em;
+input[type="range"].styled-slider {
+  height: 0.25em;
   -webkit-appearance: none;
 }
 
 /*progress support*/
-input[type=range].styled-slider.slider-progress {
+input[type="range"].styled-slider.slider-progress {
   --range: calc(var(--max) - var(--min));
   --ratio: calc((var(--value) - var(--min)) / var(--range));
   --sx: calc(0.5 * 1em + var(--ratio) * (100% - 1em));
+  background-color: #b2b2b2;
 }
 
 /*webkit*/
-input[type=range].styled-slider::-webkit-slider-thumb {
+input[type="range"].styled-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 1em;
   height: 1em;
   border-radius: 1em;
-  background: black;
+  background: var(--primary-color);
   border: none;
-  box-shadow: 0 0 2px black;
-  margin-top: calc(max((.5em - 0.5px - 0.5px) * 0.5,0px) - 1em * 0.5);
+  box-shadow: 0 0 2px var(--primary-color);
+  margin-top: calc(max((0.5em - 0.5px - 0.5px) * 0.5, 0px) - 1em * 0.5);
 }
 
-input[type=range].styled-slider::-webkit-slider-runnable-track {
-  height: .5em;
-  border: .5px solid #B2B2B2;
+input[type="range"].styled-slider::-webkit-slider-runnable-track {
+  height: 0.5em;
   border-radius: 1em;
   background: #efefef;
   box-shadow: none;
 }
 
-input[type=range].styled-slider.slider-progress::-webkit-slider-runnable-track {
-  background: linear-gradient(#333,#333) 0/var(--sx) 100% no-repeat, #efefef;
+input[type="range"].styled-slider.slider-progress::-webkit-slider-runnable-track {
+  background: linear-gradient(#333, #333) 0 / var(--sx) 100% no-repeat, #efefef;
 }
 
-input[type=range].styled-slider.slider-progress:hover::-webkit-slider-runnable-track {
-  background: linear-gradient(#6b6b6b,#6b6b6b) 0/var(--sx) 100% no-repeat, #efefef;
+input[type="range"].styled-slider.slider-progress:hover::-webkit-slider-runnable-track {
+  background: linear-gradient(#6b6b6b, #6b6b6b) 0 / var(--sx) 100% no-repeat,
+    #efefef;
 }
 
-input[type=range].styled-slider.slider-progress:active::-webkit-slider-runnable-track {
-  background: linear-gradient(#6b6b6b,#6b6b6b) 0/var(--sx) 100% no-repeat, #efefef;
+input[type="range"].styled-slider.slider-progress:active::-webkit-slider-runnable-track {
+  background: linear-gradient(#6b6b6b, #6b6b6b) 0 / var(--sx) 100% no-repeat,
+    #efefef;
 }
 
 /*mozilla*/
-input[type=range].styled-slider::-moz-range-thumb {
+input[type="range"].styled-slider::-moz-range-thumb {
   width: 1em;
   height: 1em;
   border-radius: 1em;
-  background: black;
+  background: var(--primary-color);
   border: none;
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 2px var(--primary-color);
 }
 
-input[type=range].styled-slider::-moz-range-track {
-  height: max(calc(.5em - 0.5px - 0.5px),0px);
-  border: .5px solid #B2B2B2;
+input[type="range"].styled-slider::-moz-range-track {
+  height: max(calc(0.5em - 0.5px - 0.5px), 0px);
+  border: 0.5px solid #b2b2b2;
   border-radius: 1em;
   background: #efefef;
   box-shadow: none;
 }
 
-input[type=range].styled-slider.slider-progress::-moz-range-track {
-  background: linear-gradient(#333,#333) 0/var(--sx) 100% no-repeat, #efefef;
+input[type="range"].styled-slider.slider-progress::-moz-range-track {
+  background: linear-gradient(#333, #333) 0 / var(--sx) 100% no-repeat, #efefef;
 }
 
-input[type=range].styled-slider.slider-progress:hover::-moz-range-track {
-  background: linear-gradient(#6b6b6b,#6b6b6b) 0/var(--sx) 100% no-repeat, #efefef;
+input[type="range"].styled-slider.slider-progress:hover::-moz-range-track {
+  background: linear-gradient(#6b6b6b, #6b6b6b) 0 / var(--sx) 100% no-repeat,
+    #efefef;
 }
 
-input[type=range].styled-slider.slider-progress:active::-moz-range-track {
-  background: linear-gradient(#6b6b6b,#6b6b6b) 0/var(--sx) 100% no-repeat, #efefef;
+input[type="range"].styled-slider.slider-progress:active::-moz-range-track {
+  background: linear-gradient(#6b6b6b, #6b6b6b) 0 / var(--sx) 100% no-repeat,
+    #efefef;
 }
 
 /*ms*/
-input[type=range].styled-slider::-ms-fill-upper {
+input[type="range"].styled-slider::-ms-fill-upper {
   background: transparent;
   border-color: transparent;
 }
 
-input[type=range].styled-slider::-ms-fill-lower {
+input[type="range"].styled-slider::-ms-fill-lower {
   background: transparent;
   border-color: transparent;
 }
 
-input[type=range].styled-slider::-ms-thumb {
+input[type="range"].styled-slider::-ms-thumb {
   width: 1em;
   height: 1em;
   border-radius: 1em;
-  background: black;
+  background: var(--primary-color);
   border: none;
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 2px var(--primary-color);
   margin-top: 0;
   box-sizing: border-box;
 }
 
-input[type=range].styled-slider::-ms-track {
-  height: .5em;
+input[type="range"].styled-slider::-ms-track {
+  height: 0.5em;
   border-radius: 1em;
   background: #efefef;
-  border: .5px solid #B2B2B2;
+  border: 0.5px solid #b2b2b2;
   box-shadow: none;
   box-sizing: border-box;
 }
 
-input[type=range].styled-slider.slider-progress::-ms-fill-lower {
-  height: max(calc(.5em - 0.5px - 0.5px),0px);
+input[type="range"].styled-slider.slider-progress::-ms-fill-lower {
+  height: max(calc(0.5em - 0.5px - 0.5px), 0px);
   border-radius: 1em 0 0 1em;
   margin: -0.5px 0 -0.5px -0.5px;
   background: #333;
-  border: .5px solid #B2B2B2;
+  border: 0.5px solid #b2b2b2;
   border-right-width: 0;
 }
 
-input[type=range].styled-slider.slider-progress:hover::-ms-fill-lower {
+input[type="range"].styled-slider.slider-progress:hover::-ms-fill-lower {
   background: #6b6b6b;
 }
 
-input[type=range].styled-slider.slider-progress:active::-ms-fill-lower {
+input[type="range"].styled-slider.slider-progress:active::-ms-fill-lower {
   background: #6b6b6b;
 }

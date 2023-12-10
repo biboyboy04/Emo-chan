@@ -12,6 +12,9 @@ import "../range-input.css";
 const SpotifyWebPlayback = ({ playlistID }) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const token = localStorage.getItem("spotifyToken");
+  const [isDarkTheme, setIsDarkTheme] = useState(
+    document.documentElement.getAttribute("data-theme") === "dark"
+  );
   const playerRef = useRef(null);
   const [songInfo, setSongInfo] = useState({
     songName: "",
@@ -50,7 +53,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
       getOAuthToken: (cb) => {
         cb(token);
       },
-      volume: 0.5,
+      volume: 0.3,
     });
 
     playerRef.current.addListener("ready", ({ device_id }) => {
@@ -158,13 +161,12 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           </p>
         </div>
         <div className={styles.progressContainer}>
-          <button id="togglePrevious" onClick={handleTogglePrevious}>
-            <FontAwesomeIcon
-              icon={faBackwardStep}
-              size="lg"
-              style={{ color: "black" }}
-            />
-          </button>
+          <FontAwesomeIcon
+            className={styles.previous}
+            onClick={handleTogglePrevious}
+            icon={faBackwardStep}
+            size="lg"
+          />
 
           <input
             type="range"
@@ -180,30 +182,29 @@ const SpotifyWebPlayback = ({ playlistID }) => {
             //     width: "100%",
             //   }}
           />
-          <button id="toggleNext" onClick={handleToggleNext}>
-            <FontAwesomeIcon
-              icon={faForwardStep}
-              size="lg"
-              style={{ color: "black" }}
-            />
-          </button>
+
+          <FontAwesomeIcon
+            className={styles.next}
+            onClick={handleToggleNext}
+            icon={faForwardStep}
+            size="lg"
+          />
         </div>
       </div>
       <div className={styles.controlsContainer}>
-        <button id="toggleShuffle" onClick={handleToggleShuffle}>
-          <FontAwesomeIcon
-            icon={faShuffle}
-            size="lg"
-            style={{ color: "black" }}
-          />
-        </button>
-        <button id="togglePlay" onClick={handleTogglePlay}>
-          <FontAwesomeIcon
-            icon={faCirclePlay}
-            size="2xl"
-            style={{ color: "black" }}
-          />
-        </button>
+        <FontAwesomeIcon
+          className={`${styles.shuffle} ${isShuffle ? styles.active : ""}`}
+          onClick={handleToggleShuffle}
+          icon={faShuffle}
+          size="lg"
+        />
+
+        <FontAwesomeIcon
+          className={styles.play}
+          onClick={handleTogglePlay}
+          icon={faCirclePlay}
+          size="2xl"
+        />
       </div>
     </div>
   );
