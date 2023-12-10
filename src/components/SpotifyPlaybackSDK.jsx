@@ -5,6 +5,7 @@ import {
   faBackwardStep,
   faForwardStep,
   faCirclePlay,
+  faCirclePause,
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 import "../range-input.css";
@@ -12,6 +13,7 @@ import "../range-input.css";
 const SpotifyWebPlayback = ({ playlistID }) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const token = localStorage.getItem("spotifyToken");
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(
     document.documentElement.getAttribute("data-theme") === "dark"
   );
@@ -20,6 +22,8 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     songName: "",
     artistName: "",
     albumCover: "",
+    position: 0,
+    duration: 0,
   });
 
   const changePlaylist = () => {
@@ -39,7 +43,10 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         if (!response.ok) {
           throw new Error("Failed to start playback with specific data");
         }
-        playerRef.current.togglePlay();
+
+        playerRef.current.togglePlay().then(() => {
+          setIsPlaying(true);
+        });
       })
       .catch((error) =>
         console.error("Error starting playback with specific data:", error)
@@ -92,7 +99,6 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     playerRef.current.connect().then((success) => {
       if (success) {
         console.log("The Web Playback SDK successfully connected to Spotify!");
-        playerRef.current.togglePlay();
       }
     });
 
@@ -101,10 +107,13 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     playerRef.current.addListener(
       "player_state_changed",
       ({ position, duration, track_window: { current_track } }) => {
+        console.log("Currently Playing", current_track);
         let newSongInfo = {
           songName: current_track["name"],
           artistName: current_track["artists"][0]["name"],
           albumCover: current_track["album"]["images"][0]["url"],
+          position: position,
+          duration: duration,
         };
         console.log(newSongInfo);
         setSongInfo(newSongInfo);
@@ -123,15 +132,21 @@ const SpotifyWebPlayback = ({ playlistID }) => {
   }, [playlistID]);
 
   const handleTogglePlay = () => {
-    playerRef.current.togglePlay();
+    playerRef.current.togglePlay().then(() => {
+      setIsPlaying((prev) => !prev);
+    });
   };
 
   const handleToggleNext = () => {
-    playerRef.current.nextTrack();
+    playerRef.current.nextTrack().then(() => {
+      setIsPlaying(true);
+    });
   };
 
   const handleTogglePrevious = () => {
-    playerRef.current.previousTrack();
+    playerRef.current.previousTrack().then(() => {
+      setIsPlaying(true);
+    });
   };
 
   const handleToggleShuffle = () => {
@@ -143,6 +158,20 @@ const SpotifyWebPlayback = ({ playlistID }) => {
       },
     });
   };
+
+  useEffect(() => {
+    if (!isPlaying) return;
+    const interval = setInterval(() => {
+      setSongInfo((prevSongInfo) => ({
+        ...prevSongInfo,
+        position: prevSongInfo.position + 1000,
+      }));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isPlaying]);
 
   return (
     <div className={styles.musicPlayer}>
@@ -171,16 +200,21 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           <input
             type="range"
             min="0"
-            max="100"
-            //   value={progressValue}
-            //   onChange={handleProgressChange}
+            max={songInfo.duration || "1000"}
+            value={songInfo.position}
             className={`styled-slider slider-progress ${styles.progressBar}`}
-            //   style={{
-            //     "--value": progressValue,
-            //     "--min": "0",
-            //     "--max": "100",
-            //     width: "100%",
-            //   }}
+            style={{
+              "--value": songInfo.position,
+              "--min": "0",
+              "--max": songInfo.duration || "1000",
+              width: "100%",
+            }}
+            onChange={(e) => {
+              playerRef.current.seek(e.target.value).then(() => {
+                console.log("Changed position!");
+              });
+              e.target.style.setProperty("--value", e.target.value);
+            }}
           />
 
           <FontAwesomeIcon
@@ -202,7 +236,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         <FontAwesomeIcon
           className={styles.play}
           onClick={handleTogglePlay}
-          icon={faCirclePlay}
+          icon={isPlaying ? faCirclePlay : faCirclePause}
           size="2xl"
         />
       </div>

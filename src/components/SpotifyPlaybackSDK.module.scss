@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1rem;
+  padding: 0.5rem;
 
   .songName {
     font-size: 1rem;
@@ -58,7 +58,7 @@
   display: flex;
   gap: 15px;
   align-self: flex-end;
-  padding-bottom: 1rem;
+  padding-bottom: 8px;
   cursor: pointer;
 
   .shuffle {
@@ -70,7 +70,7 @@
     }
   }
   .active {
-    color: rgb(115, 255, 115);
+    color: rgb(27, 187, 27);
   }
   .play {
     opacity: 0.9;
@@ -84,12 +84,13 @@
 }
 
 .imageContainer {
+  max-width: 100%;
   width: 100px;
   height: 100px;
   overflow: hidden;
   .albumCover {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
   }
 }

@@ -98,7 +98,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
       <ToastContainer
         style={{ backgroundColor: "transparent", fontFamily: "Playpen Sans" }}
         position="top-right"
-        autoClose={2500}
+        autoClose={3000}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}

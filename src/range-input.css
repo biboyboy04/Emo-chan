@@ -22,12 +22,10 @@ input[type="range"].styled-slider::-webkit-slider-thumb {
   background: var(--primary-color);
   border: none;
   box-shadow: 0 0 2px var(--primary-color);
-  margin-top: calc(max((0.5em - 0.5px - 0.5px) * 0.5, 0px) - 1em * 0.5);
+  margin-top: calc(max((0.25em - 0.5px - 0.5px) * 0.5, 0px) - 1em * 0.5);
 }
-
 input[type="range"].styled-slider::-webkit-slider-runnable-track {
-  height: 0.5em;
-  border-radius: 1em;
+  height: 0.25em;
   background: #efefef;
   box-shadow: none;
 }
