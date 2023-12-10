@@ -13,6 +13,11 @@ const SpotifyWebPlayback = ({ playlistID }) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const token = localStorage.getItem("spotifyToken");
   const playerRef = useRef(null);
+  const [songInfo, setSongInfo] = useState({
+    songName: "",
+    artistName: "",
+    albumCover: "",
+  });
 
   const changePlaylist = () => {
     const playData = {
@@ -90,6 +95,19 @@ const SpotifyWebPlayback = ({ playlistID }) => {
 
     console.log("USE EFFECT 1 RUNS");
 
+    playerRef.current.addListener(
+      "player_state_changed",
+      ({ position, duration, track_window: { current_track } }) => {
+        let newSongInfo = {
+          songName: current_track["name"],
+          artistName: current_track["artists"][0]["name"],
+          albumCover: current_track["album"]["images"][0]["url"],
+        };
+        console.log(newSongInfo);
+        setSongInfo(newSongInfo);
+      }
+    );
+
     return () => {
       // Cleanup?
       // playerRef.current.disconnect();
@@ -127,15 +145,17 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     <div className={styles.musicPlayer}>
       <div className={styles.imageContainer}>
         <img
-          src="https://via.placeholder.com/75"
+          src={songInfo.albumCover || "https://via.placeholder.com/75"}
           alt="album cover"
           className={styles.albumCover}
         />
       </div>
       <div className={styles.infoContainer}>
         <div className={styles.songInfo}>
-          <p className={styles.songName}>Song Name</p>
-          <p className={styles.artistName}>Artist Name</p>
+          <p className={styles.songName}>{songInfo.songName || "Song Name"}</p>
+          <p className={styles.artistName}>
+            {songInfo.artistName || "Artist Name"}
+          </p>
         </div>
         <div className={styles.progressContainer}>
           <button id="togglePrevious" onClick={handleTogglePrevious}>
@@ -152,7 +172,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
             max="100"
             //   value={progressValue}
             //   onChange={handleProgressChange}
-            className="styled-slider slider-progress"
+            className={`styled-slider slider-progress ${styles.progressBar}`}
             //   style={{
             //     "--value": progressValue,
             //     "--min": "0",
