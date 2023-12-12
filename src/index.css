@@ -71,3 +71,10 @@ body {
   scrollbar-color: #888 #f1f1f1;
   scrollbar-width: thin;
 }
+
+@media print {
+  html,
+  body {
+    display: none;
+  }
+}

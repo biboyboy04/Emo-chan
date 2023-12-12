@@ -40,6 +40,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         if (!response.ok) {
           throw new Error("Failed to start playback with specific data");
         }
+        console.log("Changed playlist");
         setIsPlaying(true);
 
         // Commented this because the player automatically plays the song after changing playlist
