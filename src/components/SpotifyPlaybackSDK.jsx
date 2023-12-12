@@ -11,16 +11,16 @@ import {
 import "../range-input.css";
 
 const SpotifyWebPlayback = ({ playlistID }) => {
-  const [isShuffle, setIsShuffle] = useState(false);
   const token = localStorage.getItem("spotifyToken");
   const [isPlaying, setIsPlaying] = useState(true);
   const playerRef = useRef(null);
-  const [songInfo, setSongInfo] = useState({
+  const [playerState, setPlayerState] = useState({
     songName: "",
     artistName: "",
     albumCover: "",
     position: 0,
     duration: 0,
+    shuffle: false,
   });
 
   const changePlaylist = () => {
@@ -75,12 +75,12 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         body: JSON.stringify({
           device_ids: [device_id],
           play: true,
-          transferring_playback: true,
         }),
       }).then((response) => {
         if (!response.ok) {
           throw new Error("Failed to start playback with specific device");
         }
+
         console.log("Playback started with specific device");
       });
     });
@@ -111,15 +111,17 @@ const SpotifyWebPlayback = ({ playlistID }) => {
 
     playerRef.current.addListener(
       "player_state_changed",
-      ({ position, duration, track_window: { current_track } }) => {
+      ({ position, duration, shuffle, track_window: { current_track } }) => {
         let newSongInfo = {
           songName: current_track["name"],
           artistName: current_track["artists"][0]["name"],
           albumCover: current_track["album"]["images"][0]["url"],
           position: position,
           duration: duration,
+          shuffle: shuffle,
         };
-        setSongInfo(newSongInfo);
+        setPlayerState(newSongInfo);
+        console.log("shuffleState", shuffle);
       }
     );
 
@@ -131,14 +133,13 @@ const SpotifyWebPlayback = ({ playlistID }) => {
   }, [token]);
 
   useEffect(() => {
-    console.log("USE EFFECT 2 RUNS");
     changePlaylist();
   }, [playlistID]);
 
   useEffect(() => {
     if (!isPlaying) return;
     const interval = setInterval(() => {
-      setSongInfo((prevSongInfo) => ({
+      setPlayerState((prevSongInfo) => ({
         ...prevSongInfo,
         position: prevSongInfo.position + 1000,
       }));
@@ -153,16 +154,18 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     <div className={styles.musicPlayer}>
       <div className={styles.imageContainer}>
         <img
-          src={songInfo.albumCover || "https://via.placeholder.com/75"}
+          src={playerState.albumCover || "https://via.placeholder.com/75"}
           alt="album cover"
           className={styles.albumCover}
         />
       </div>
       <div className={styles.infoContainer}>
-        <div className={styles.songInfo}>
-          <p className={styles.songName}>{songInfo.songName || "Song Name"}</p>
+        <div className={styles.playerState}>
+          <p className={styles.songName}>
+            {playerState.songName || "Song Name"}
+          </p>
           <p className={styles.artistName}>
-            {songInfo.artistName || "Artist Name"}
+            {playerState.artistName || "Artist Name"}
           </p>
         </div>
         <div className={styles.progressContainer}>
@@ -176,13 +179,13 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           <input
             type="range"
             min="0"
-            max={songInfo.duration || "1000"}
-            value={songInfo.position}
+            max={playerState.duration || "1000"}
+            value={playerState.position}
             className={`styled-slider slider-progress ${styles.progressBar}`}
             style={{
-              "--value": songInfo.position,
+              "--value": playerState.position,
               "--min": "0",
-              "--max": songInfo.duration || "1000",
+              "--max": playerState.duration || "1000",
               width: "100%",
             }}
             onChange={(e) => {
@@ -203,11 +206,17 @@ const SpotifyWebPlayback = ({ playlistID }) => {
       </div>
       <div className={styles.controlsContainer}>
         <FontAwesomeIcon
-          className={`${styles.shuffle} ${isShuffle ? styles.active : ""}`}
+          className={`${styles.shuffle} ${
+            playerState.shuffle ? styles.active : ""
+          }`}
           onClick={() => {
-            setIsShuffle((prevShuffle) => !prevShuffle);
+            const newShuffleState = !playerState.shuffle;
+            setPlayerState((prev) => ({
+              ...prev,
+              shuffle: newShuffleState,
+            }));
             fetch(
-              `https://api.spotify.com/v1/me/player/shuffle?state=${isShuffle}`,
+              `https://api.spotify.com/v1/me/player/shuffle?state=${newShuffleState}`,
               {
                 method: "PUT",
                 headers: {
