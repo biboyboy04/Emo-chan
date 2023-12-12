@@ -13,10 +13,7 @@ import "../range-input.css";
 const SpotifyWebPlayback = ({ playlistID }) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const token = localStorage.getItem("spotifyToken");
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(
-    document.documentElement.getAttribute("data-theme") === "dark"
-  );
+  const [isPlaying, setIsPlaying] = useState(true);
   const playerRef = useRef(null);
   const [songInfo, setSongInfo] = useState({
     songName: "",
@@ -43,10 +40,12 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         if (!response.ok) {
           throw new Error("Failed to start playback with specific data");
         }
+        setIsPlaying(true);
 
-        playerRef.current.togglePlay().then(() => {
-          setIsPlaying(true);
-        });
+        // Commented this because the player automatically plays the song after changing playlist
+        // playerRef.current.resume().then(() => {
+        //   setIsPlaying(true);
+        // });
       })
       .catch((error) =>
         console.error("Error starting playback with specific data:", error)
@@ -76,7 +75,13 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         body: JSON.stringify({
           device_ids: [device_id],
           play: true,
+          transferring_playback: true,
         }),
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to start playback with specific device");
+        }
+        console.log("Playback started with specific device");
       });
     });
 
@@ -107,7 +112,6 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     playerRef.current.addListener(
       "player_state_changed",
       ({ position, duration, track_window: { current_track } }) => {
-        console.log("Currently Playing", current_track);
         let newSongInfo = {
           songName: current_track["name"],
           artistName: current_track["artists"][0]["name"],
@@ -115,49 +119,21 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           position: position,
           duration: duration,
         };
-        console.log(newSongInfo);
         setSongInfo(newSongInfo);
       }
     );
 
     return () => {
       // Cleanup?
-      // playerRef.current.disconnect();
+      console.log("PLAYER DISCONNECTED");
+      playerRef.current.disconnect();
     };
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     console.log("USE EFFECT 2 RUNS");
     changePlaylist();
   }, [playlistID]);
-
-  const handleTogglePlay = () => {
-    playerRef.current.togglePlay().then(() => {
-      setIsPlaying((prev) => !prev);
-    });
-  };
-
-  const handleToggleNext = () => {
-    playerRef.current.nextTrack().then(() => {
-      setIsPlaying(true);
-    });
-  };
-
-  const handleTogglePrevious = () => {
-    playerRef.current.previousTrack().then(() => {
-      setIsPlaying(true);
-    });
-  };
-
-  const handleToggleShuffle = () => {
-    setIsShuffle((prevShuffle) => !prevShuffle);
-    fetch(`https://api.spotify.com/v1/me/player/shuffle?state=${isShuffle}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -192,7 +168,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         <div className={styles.progressContainer}>
           <FontAwesomeIcon
             className={styles.previous}
-            onClick={handleTogglePrevious}
+            onClick={() => playerRef.current.previousTrack()}
             icon={faBackwardStep}
             size="lg"
           />
@@ -219,7 +195,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
 
           <FontAwesomeIcon
             className={styles.next}
-            onClick={handleToggleNext}
+            onClick={() => playerRef.current.nextTrack()}
             icon={faForwardStep}
             size="lg"
           />
@@ -228,15 +204,30 @@ const SpotifyWebPlayback = ({ playlistID }) => {
       <div className={styles.controlsContainer}>
         <FontAwesomeIcon
           className={`${styles.shuffle} ${isShuffle ? styles.active : ""}`}
-          onClick={handleToggleShuffle}
+          onClick={() => {
+            setIsShuffle((prevShuffle) => !prevShuffle);
+            fetch(
+              `https://api.spotify.com/v1/me/player/shuffle?state=${isShuffle}`,
+              {
+                method: "PUT",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+          }}
           icon={faShuffle}
           size="lg"
         />
 
         <FontAwesomeIcon
           className={styles.play}
-          onClick={handleTogglePlay}
-          icon={isPlaying ? faCirclePlay : faCirclePause}
+          onClick={() => {
+            playerRef.current.togglePlay().then(() => {
+              setIsPlaying((prev) => !prev);
+            });
+          }}
+          icon={isPlaying ? faCirclePause : faCirclePlay}
           size="2xl"
         />
       </div>

@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import styles from "./Navbar.module.scss";
 import { loginUrl, getTokenFromUrl } from "../spotifyAuth.js";
+
 const Navbar = ({ updateReactReader }) => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
