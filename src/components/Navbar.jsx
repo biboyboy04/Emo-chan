@@ -76,6 +76,14 @@ const Navbar = ({ updateReactReader }) => {
         </span>
       </div>
       <div className={styles.links}>
+        <PlaylistInputBox />
+        <DarkModeSwitch
+          checked={isDarkMode}
+          onChange={toggleDarkMode}
+          size={"1.5rem"}
+          moonColor={"var(--secondary-color)"}
+          sunColor={"var(--secondary-color)"}
+        />
         {localStorage.getItem("spotifyToken") ? (
           <div className={styles.profileContainer} onClick={handleLogout}>
             <img
@@ -90,15 +98,6 @@ const Navbar = ({ updateReactReader }) => {
             Login with Spotify
           </a>
         )}
-
-        <PlaylistInputBox />
-        <DarkModeSwitch
-          checked={isDarkMode}
-          onChange={toggleDarkMode}
-          size={"1.5rem"}
-          moonColor={"var(--secondary-color)"}
-          sunColor={"var(--secondary-color)"}
-        />
       </div>
     </div>
   );
