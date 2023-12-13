@@ -9,7 +9,7 @@ import {
   faShuffle,
   faVolumeHigh,
   faVolumeLow,
-  faVolumeOff,
+  faVolumeXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import "../range-input.css";
 
@@ -24,6 +24,8 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     position: 0,
     duration: 0,
     shuffle: false,
+    volume: 0.3,
+    mute: false,
   });
 
   const changePlaylist = () => {
@@ -237,26 +239,39 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           <FontAwesomeIcon
             className={styles.play}
             onClick={() => {
-              playerRef.current.togglePlay().then(() => {
-                setIsPlaying((prev) => !prev);
-              });
+              playerRef.current.setVolume(
+                playerState.mute ? playerState.volume : 0
+              );
+
+              setPlayerState((prev) => ({
+                ...prev,
+                mute: !prev.mute,
+              }));
             }}
-            icon={isPlaying ? faVolumeHigh : faVolumeLow}
+            icon={
+              playerState.mute
+                ? faVolumeXmark
+                : playerState.volume > 0.5
+                ? faVolumeHigh
+                : faVolumeLow
+            }
             size="sm"
           />
           <input
             type="range"
-            min="0"
-            max={playerState.duration || "1000"}
+            min={0}
+            max={1}
+            step={0.01}
+            value={playerState.volume}
             className={`styled-slider slider-progress ${styles.volumeBar}`}
-            style={{
-              "--value": playerState.position,
-              "--min": "0",
-              "--max": playerState.duration || "1000",
-            }}
             onChange={(e) => {
-              playerRef.current.seek(e.target.value).then(() => {
-                console.log("Changed position!");
+              const newVolume = parseFloat(e.target.value);
+              setPlayerState((prev) => ({
+                ...prev,
+                volume: newVolume,
+              }));
+              playerRef.current.setVolume(newVolume).then(() => {
+                console.log("Changed volume!");
               });
               e.target.style.setProperty("--value", e.target.value);
             }}
