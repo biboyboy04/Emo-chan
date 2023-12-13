@@ -1,37 +1,47 @@
 @import url("./variables.scss");
 
 .musicPlayer {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto auto;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  column-gap: 10px;
   background-color: var(--secondary-color);
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 16px;
 }
 
-.infoContainer {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0.5rem;
+.playerState {
+  grid-column: 2;
+  grid-row: 2;
 
   .songName {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 300;
     color: var(--primary-color);
+    padding: 0;
+    margin: 0;
   }
   .artistName {
-    margin-top: -10px;
-    font-size: 0.8rem;
-    font-weight: 400;
+    margin-top: 0px;
+    margin-bottom: 0;
+    font-size: 0.75rem;
+    font-weight: 100;
     color: var(--primary-color);
     opacity: 0.8;
   }
 }
 
+.playlistSongs {
+  //  start column 2 to the last
+  grid-column: 2 / -1;
+  grid-row: 1;
+}
+
 .progressContainer {
+  grid-column: 2;
+  grid-row: 3;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -55,6 +65,8 @@
 }
 
 .controlsContainer {
+  grid-column: 3;
+  grid-row: 2 / -1;
   display: grid;
   align-self: flex-end;
   align-items: flex-end;
@@ -62,7 +74,6 @@
   grid-template-columns: repeat(2, 40px);
   grid-template-rows: repeat(2, auto);
   row-gap: 10px;
-  margin-bottom: 10px;
 
   cursor: pointer;
 
@@ -104,6 +115,8 @@
 }
 
 .imageContainer {
+  grid-column: 1;
+  grid-row: span 3;
   max-width: 100%;
   width: 100px;
   height: 100px;

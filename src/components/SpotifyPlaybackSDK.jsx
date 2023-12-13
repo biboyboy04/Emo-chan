@@ -10,6 +10,7 @@ import {
   faVolumeHigh,
   faVolumeLow,
   faVolumeXmark,
+  faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 import "../range-input.css";
 
@@ -165,51 +166,91 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           className={styles.albumCover}
         />
       </div>
-      <div className={styles.infoContainer}>
-        <div className={styles.playerState}>
-          <p className={styles.songName}>
-            {playerState.songName || "Song Name"}
-          </p>
-          <p className={styles.artistName}>
-            {playerState.artistName || "Artist Name"}
-          </p>
-        </div>
-        <div className={styles.progressContainer}>
-          <FontAwesomeIcon
-            className={styles.previous}
-            onClick={() => playerRef.current.previousTrack()}
-            icon={faBackwardStep}
-            size="lg"
-          />
 
-          <input
-            type="range"
-            min="0"
-            max={playerState.duration || "1000"}
-            value={playerState.position}
-            className={`styled-slider slider-progress ${styles.progressBar}`}
-            style={{
-              "--value": playerState.position,
-              "--min": "0",
-              "--max": playerState.duration || "1000",
-              width: "100%",
-            }}
-            onChange={(e) => {
-              playerRef.current.seek(e.target.value).then(() => {
-                console.log("Changed position!");
-              });
-              e.target.style.setProperty("--value", e.target.value);
-            }}
-          />
-
-          <FontAwesomeIcon
-            className={styles.next}
-            onClick={() => playerRef.current.nextTrack()}
-            icon={faForwardStep}
-            size="lg"
-          />
-        </div>
+      <div
+        className={styles.playlistSongs}
+        style={{
+          overflowY: "scroll",
+          color: "white",
+          height: "70px",
+          padding: "0",
+          margin: "0",
+        }}
+      >
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
+        <p>
+          <FontAwesomeIcon icon={faPlay} />
+          asd
+        </p>
       </div>
+      <div className={styles.progressContainer}>
+        <FontAwesomeIcon
+          className={styles.previous}
+          onClick={() => playerRef.current.previousTrack()}
+          icon={faBackwardStep}
+          size="lg"
+        />
+        <input
+          type="range"
+          min="0"
+          max={playerState.duration || "1000"}
+          value={playerState.position}
+          className={`styled-slider slider-progress ${styles.progressBar}`}
+          style={{
+            "--value": playerState.position,
+            "--min": "0",
+            "--max": playerState.duration || "1000",
+            width: "100%",
+          }}
+          onChange={(e) => {
+            playerRef.current.seek(e.target.value).then(() => {
+              console.log("Changed position!");
+            });
+            e.target.style.setProperty("--value", e.target.value);
+          }}
+        />
+
+        <FontAwesomeIcon
+          className={styles.next}
+          onClick={() => playerRef.current.nextTrack()}
+          icon={faForwardStep}
+          size="lg"
+        />
+      </div>
+      <div className={styles.playerState}>
+        <p className={styles.songName}>{playerState.songName || "Song Name"}</p>
+        <p className={styles.artistName}>
+          {playerState.artistName || "Artist Name"}
+        </p>
+      </div>
+
       <div className={styles.controlsContainer}>
         <FontAwesomeIcon
           className={`${styles.shuffle} ${
