@@ -7,6 +7,9 @@ import {
   faCirclePlay,
   faCirclePause,
   faShuffle,
+  faVolumeHigh,
+  faVolumeLow,
+  faVolumeOff,
 } from "@fortawesome/free-solid-svg-icons";
 import "../range-input.css";
 
@@ -229,6 +232,36 @@ const SpotifyWebPlayback = ({ playlistID }) => {
           icon={faShuffle}
           size="lg"
         />
+
+        <div className={styles.volumeContainer}>
+          <FontAwesomeIcon
+            className={styles.play}
+            onClick={() => {
+              playerRef.current.togglePlay().then(() => {
+                setIsPlaying((prev) => !prev);
+              });
+            }}
+            icon={isPlaying ? faVolumeHigh : faVolumeLow}
+            size="sm"
+          />
+          <input
+            type="range"
+            min="0"
+            max={playerState.duration || "1000"}
+            className={`styled-slider slider-progress ${styles.volumeBar}`}
+            style={{
+              "--value": playerState.position,
+              "--min": "0",
+              "--max": playerState.duration || "1000",
+            }}
+            onChange={(e) => {
+              playerRef.current.seek(e.target.value).then(() => {
+                console.log("Changed position!");
+              });
+              e.target.style.setProperty("--value", e.target.value);
+            }}
+          />
+        </div>
 
         <FontAwesomeIcon
           className={styles.play}
