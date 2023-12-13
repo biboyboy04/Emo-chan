@@ -9,6 +9,7 @@ import styles from "./HomePage.module.scss";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("spotifyToken")) {
@@ -19,6 +20,9 @@ const HomePage = () => {
 
     if (spotifyToken) {
       localStorage.setItem("spotifyToken", spotifyToken);
+      setHasToken(true);
+    } else {
+      setHasToken(false);
     }
 
     // window.onSpotifyWebPlaybackSDKReady = () => {
@@ -44,7 +48,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.homepage}>
-      <Navbar />
+      <Navbar key={hasToken} />
 
       <div className={styles.hero}>
         <p style={{ fontSize: "3rem", marginBottom: "10px" }}>
