@@ -28,10 +28,15 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     volume: 0.3,
     mute: false,
   });
+  const [playlistSongs, setPlaylistSongs] = useState([]);
+  const [playlistImage, setPlaylistImage] = useState();
 
-  const changePlaylist = () => {
+  const changePlayback = (position = 0) => {
     const playData = {
       context_uri: "spotify:playlist:" + playlistID,
+      offset: {
+        position: position,
+      },
     };
 
     fetch("https://api.spotify.com/v1/me/player/play", {
@@ -48,11 +53,6 @@ const SpotifyWebPlayback = ({ playlistID }) => {
         }
         console.log("Changed playlist");
         setIsPlaying(true);
-
-        // Commented this because the player automatically plays the song after changing playlist
-        // playerRef.current.resume().then(() => {
-        //   setIsPlaying(true);
-        // });
       })
       .catch((error) =>
         console.error("Error starting playback with specific data:", error)
@@ -140,7 +140,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
   }, [token]);
 
   useEffect(() => {
-    changePlaylist();
+    changePlayback();
   }, [playlistID]);
 
   useEffect(() => {
@@ -157,58 +157,57 @@ const SpotifyWebPlayback = ({ playlistID }) => {
     };
   }, [isPlaying]);
 
+  useEffect(() => {
+    fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data, "PLAYLISTS");
+        console.log(data.images[0].url, "PLAYLIST URL");
+        console.log(data.tracks, "trackss");
+        const tracks = data.tracks.items.map((item, index) => ({
+          id: item.track.id,
+          name: item.track.name,
+          artist: item.track.artists[0].name,
+          number: index,
+        }));
+        setPlaylistSongs(tracks);
+        setPlaylistImage(data.images[0].url);
+      })
+      .catch((error) => {
+        console.error("Error fetching playlist tracks:", error);
+      });
+  }, [playlistID]);
+
   return (
     <div className={styles.musicPlayer}>
       <div className={styles.imageContainer}>
         <img
-          src={playerState.albumCover || "https://via.placeholder.com/75"}
+          src={playlistImage || "https://via.placeholder.com/75"}
           alt="album cover"
           className={styles.albumCover}
         />
       </div>
 
-      <div
-        className={styles.playlistSongs}
-        style={{
-          overflowY: "scroll",
-          color: "white",
-          height: "70px",
-          padding: "0",
-          margin: "0",
-        }}
-      >
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPlay} />
-          asd
-        </p>
+      <div className={styles.playlistSongs}>
+        {playlistSongs.map((song) => (
+          <p key={song.id} className={styles.songs}>
+            <FontAwesomeIcon
+              className={styles.playBtn}
+              icon={faPlay}
+              onClick={() => changePlayback(song.number)}
+            />{" "}
+            {song.name} • {song.artist}
+          </p>
+        ))}
       </div>
       <div className={styles.progressContainer}>
         <FontAwesomeIcon

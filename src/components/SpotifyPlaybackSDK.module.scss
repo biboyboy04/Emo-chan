@@ -15,10 +15,11 @@
 .playerState {
   grid-column: 2;
   grid-row: 2;
+  padding: 10px;
 
   .songName {
     font-size: 0.9rem;
-    font-weight: 300;
+    font-weight: 500;
     color: var(--primary-color);
     padding: 0;
     margin: 0;
@@ -26,8 +27,8 @@
   .artistName {
     margin-top: 0px;
     margin-bottom: 0;
-    font-size: 0.75rem;
-    font-weight: 100;
+    font-size: 0.8rem;
+    font-weight: 300;
     color: var(--primary-color);
     opacity: 0.8;
   }
@@ -37,6 +38,26 @@
   //  start column 2 to the last
   grid-column: 2 / -1;
   grid-row: 1;
+  overflow-y: scroll;
+  height: 70px;
+  padding: 0;
+  margin: 0;
+
+  .songs {
+    color: var(--primary-color);
+    margin: 0;
+    padding: 8px;
+    &:hover {
+      background-color: var(--hover-color);
+    }
+  }
+  .playBtn {
+    opacity: 0.9;
+    &:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
 }
 
 .progressContainer {
