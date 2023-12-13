@@ -270,9 +270,12 @@ const SpotifyWebPlayback = ({ playlistID }) => {
                 ...prev,
                 volume: newVolume,
               }));
-              playerRef.current.setVolume(newVolume).then(() => {
-                console.log("Changed volume!");
-              });
+              if (!playerState.mute) {
+                playerRef.current.setVolume(newVolume).then(() => {
+                  console.log("Changed volume!");
+                });
+              }
+
               e.target.style.setProperty("--value", e.target.value);
             }}
           />
