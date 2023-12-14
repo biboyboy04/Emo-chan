@@ -9,9 +9,7 @@ import { readerStyles, readerStylesMobile } from "../reactReaderStyles";
 import styles from "./EBookReader.module.scss";
 
 const EBookReader = () => {
-  const [location, setLocation] = useState(
-    localStorage.getItem("epub-location") || 0
-  );
+  const [location, setLocation] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [storyText, setStoryText] = useState("");
   const [isDarkMode, setDarkMode] = useState(
@@ -175,7 +173,6 @@ const EBookReader = () => {
           location={location}
           locationChanged={(loc) => {
             setLocation(loc);
-            localStorage.setItem("epub-location", loc);
           }}
           url={selectedBook}
           getRendition={(rendition) => {
