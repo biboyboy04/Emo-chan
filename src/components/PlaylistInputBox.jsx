@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import styles from "./PlaylistInputBox.module.scss";
 const PlaylistInputBox = () => {
   const [playlistLinks, setPlaylistLinks] = useState(
     JSON.parse(localStorage.getItem("playlistLinks")) || Array(4).fill("")
@@ -8,7 +9,7 @@ const PlaylistInputBox = () => {
   const playlistBoxRef = useRef(null);
 
   function handleSavePlaylist() {
-    const playlistInputs = document.querySelectorAll(".playlist-input");
+    const playlistInputs = document.querySelectorAll("#playlistInput");
     const newPlaylistLinks = [];
     const newErrorMessages = [];
 
@@ -65,7 +66,7 @@ const PlaylistInputBox = () => {
       ) {
         setPlaylistVisible(false);
       }
-      if (event.target.className === "playlist-btn") {
+      if (event.target.id === "playlistBtn") {
         setPlaylistVisible(!isPlaylistVisible);
       }
     };
@@ -83,44 +84,47 @@ const PlaylistInputBox = () => {
     playlistBoxRef.current = playlistRef;
   };
   return (
-    <div className="playlist-input-container">
-      <div className="playlist-btn">Playlist</div>
+    <div>
+      <div id="playlistBtn" className={styles.playlistBtn}>
+        Playlist
+      </div>
       <div
         id="playlistBox"
-        className={`hidden-box ${isPlaylistVisible ? "visible" : ""}`}
+        className={`${styles.hiddenBox} ${
+          isPlaylistVisible ? `${styles.visible}` : ""
+        }`}
         key={isPlaylistVisible}
         ref={updatePlaylistRef}
       >
         {["Joy", "Sadness", "Fear", "Anger"].map((emotion, idx) => {
           return (
-            <div className="playlist" key={emotion}>
-              <div className="playlist-title">{emotion}</div>
+            <div className={styles.playlist} key={emotion}>
+              <div className={styles.title}>{emotion}</div>
               <input
+                id="playlistInput"
                 type="text"
-                className="playlist-input"
+                className={styles.input}
                 placeholder="Enter spotify playlist link..."
                 value={playlistLinks[idx] || ""}
                 onChange={(event) => handleInputChange(event, idx)}
               />
               {errorMessages[idx] && (
-                <p className="playlist-error" key={emotion}>
+                <p className={styles.error} key={emotion}>
                   {errorMessages[idx]}
                 </p>
               )}
             </div>
           );
         })}
-        <div className="action-buttons">
+        <div className={styles.actionBtns}>
           <button
-            className="action-button save-button"
+            id="saveBtn"
+            className={styles.btn}
             onClick={handleSavePlaylist}
           >
             Save
           </button>
-          <button
-            className="action-button revert-button"
-            onClick={clearPlaylist}
-          >
+          <button id="revertBtn" className={styles.btn} onClick={clearPlaylist}>
             Revert
           </button>
         </div>

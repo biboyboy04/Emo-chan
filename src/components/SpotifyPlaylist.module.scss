@@ -1,0 +1,17 @@
+@import url("./variables.scss");
+
+.spotifyEmbed {
+  padding: 0rem 1rem;
+}
+
+.emotionText {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--secondary-color);
+  margin: auto 0;
+  text-align: center;
+}
+
+.Toastify__toast--info {
+  font-family: "Playpen Sans";
+}

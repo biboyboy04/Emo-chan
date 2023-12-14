@@ -12,7 +12,7 @@ export async function loadModel() {
 }
 
 function preprocessText(sen) {
-  console.log(sen);
+  // console.log(sen);
   // Make all text lowercase
   let sentence = sen.toLowerCase();
 
