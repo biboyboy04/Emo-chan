@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import styles from "./Navbar.module.scss";
 import { loginUrl, getTokenFromUrl } from "../spotifyAuth.js";
+import { useMediaQuery } from "react-responsive";
 
 const Navbar = ({ updateReactReader }) => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Navbar = ({ updateReactReader }) => {
   const initialTheme = localStorage.getItem("selectedTheme") || "light";
   const [isDarkMode, setDarkMode] = useState(initialTheme === "dark");
   const [userProfilePic, setUserProfilePic] = useState(null);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   useEffect(() => {
     const selectedTheme = isDarkMode ? "dark" : "light";
@@ -69,10 +71,10 @@ const Navbar = ({ updateReactReader }) => {
       <div className={styles.logo} onClick={handleLogoClick}>
         {" "}
         <span role="img" aria-label="Emo-chan" className={styles.defaultText}>
-          (•ᴗ•❁)Emo-chan
+          {isMobile ? "(•ᴗ•❁)" : "(•ᴗ•❁)Emo-chan"}
         </span>
         <span role="img" aria-label="Emo-chan" className={styles.hoverText}>
-          (˃̵ᴗ˂̵❁)Emo-chan
+          {isMobile ? "(˃̵ᴗ˂̵❁)" : "(˃̵ᴗ˂̵❁)Emo-chan"}
         </span>
       </div>
       <div className={styles.links}>
@@ -94,8 +96,22 @@ const Navbar = ({ updateReactReader }) => {
             <p className={styles.logoutTxt}>Logout</p>
           </div>
         ) : (
-          <a className={styles.spotifyBtn} href={loginUrl}>
-            Login with Spotify
+          <a
+            className={styles.spotifyBtn}
+            href={loginUrl}
+            style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}
+          >
+            {isMobile ? (
+              <>
+                Login{" "}
+                <img
+                  src="images/spotify-64.png"
+                  style={{ width: "24px", height: "24px" }}
+                ></img>
+              </>
+            ) : (
+              "Login with Spotify"
+            )}
           </a>
         )}
       </div>

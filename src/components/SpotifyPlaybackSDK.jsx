@@ -32,7 +32,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
   const [playlistImage, setPlaylistImage] = useState();
 
   const changePlayback = (position = 0) => {
-    const playData = {
+    let playData = {
       context_uri: "spotify:playlist:" + playlistID,
       offset: {
         position: position,
@@ -62,7 +62,7 @@ const SpotifyWebPlayback = ({ playlistID }) => {
   useEffect(() => {
     if (!token) return;
     playerRef.current = new Spotify.Player({
-      name: "Web Playback SDK Quick Start Player",
+      name: "Emo-chan",
       getOAuthToken: (cb) => {
         cb(token);
       },
@@ -212,7 +212,10 @@ const SpotifyWebPlayback = ({ playlistID }) => {
       <div className={styles.progressContainer}>
         <FontAwesomeIcon
           className={styles.previous}
-          onClick={() => playerRef.current.previousTrack()}
+          onClick={() => {
+            playerRef.current.previousTrack();
+            setIsPlaying(true);
+          }}
           icon={faBackwardStep}
           size="lg"
         />
@@ -238,7 +241,10 @@ const SpotifyWebPlayback = ({ playlistID }) => {
 
         <FontAwesomeIcon
           className={styles.next}
-          onClick={() => playerRef.current.nextTrack()}
+          onClick={() => {
+            playerRef.current.nextTrack();
+            setIsPlaying(true);
+          }}
           icon={faForwardStep}
           size="lg"
         />

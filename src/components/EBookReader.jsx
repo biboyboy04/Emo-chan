@@ -7,6 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import Navbar from "./Navbar";
 import { readerStyles, readerStylesMobile } from "../reactReaderStyles";
 import styles from "./EBookReader.module.scss";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const EBookReader = () => {
   const [location, setLocation] = useState(0);
@@ -15,11 +16,13 @@ const EBookReader = () => {
   const [isDarkMode, setDarkMode] = useState(
     localStorage.getItem("selectedTheme") === "dark"
   );
+  const [isBookValid, setIsBookValid] = useState(false);
   const [progressText, setProgressText] = useState(
     "Emotion Analysis in Progress..."
   );
 
   const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const navigate = useNavigate();
   const chapterRef = useRef(null);
   const renditionRef = useRef(null);
   const locationParam = useLocation();
@@ -42,6 +45,58 @@ const EBookReader = () => {
     }
 
     return null;
+  };
+
+  const checkIfBookIsValid = (rendition) => {
+    const metadataa = rendition.current.book;
+    console.log(metadataa, "METADATA");
+    const metadata = rendition.current.book.package.metadata;
+    console.log(metadata, "METADATA");
+    console.log(metadata.title, "METADATA");
+    console.log(metadata.creator, "METADATA");
+    console.log(metadata.identifier, "METADATA");
+
+    fetch(
+      `https://openlibrary.org/search.json?q=${encodeURIComponent(
+        metadata.title
+      )}`
+    )
+      .then((response) => {
+        // Check if the response is successful (status code 200)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the JSON data
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data, "dataaa");
+
+        let isbns = data.docs.map((doc) => doc.isbn);
+
+        console.log(isbns);
+
+        if (
+          isbns.some(
+            (isbnArray) => isbnArray && isbnArray.includes(metadata.identifier)
+          )
+        ) {
+          // Metadata identifier is in the array of ISBNs
+          console.log(
+            "Metadata identifier is in the ISBNs:",
+            metadata.identifier
+          );
+          console.log("ISBN is Valid", metadata.identifier);
+          setIsBookValid(true);
+        } else {
+          alert("Unavailable or Invalid ISBN number.");
+          navigate("/Emo-chan/");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const loadBook = (renditionRef) => {
@@ -192,6 +247,9 @@ const EBookReader = () => {
               },
             });
             renditionRef.current = rendition;
+            if (!isBookValid && renditionRef) {
+              checkIfBookIsValid(renditionRef);
+            }
           }}
           epubOptions={{
             allowPopups: true,

@@ -73,6 +73,7 @@ function SpotifyPlaylist({ storyText, setIsLoading }) {
   }, [storyText, setIsLoading]);
 
   const notify = (emotion) => {
+    toast.dismiss();
     toast.info(`Dominant Emotion: ${emotion}`, {
       position: "top-right",
       autoClose: 2500,

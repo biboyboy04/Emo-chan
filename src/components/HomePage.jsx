@@ -1,7 +1,7 @@
 import FileReaderInput from "react-file-reader-input";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import bookDetails from "../bookDetails.js";
+import bookDetails from "../isbnBookDetails.js";
 import { loginUrl, getTokenFromUrl } from "../spotifyAuth.js";
 import { SpotifyWebPlayback } from "../spotifyWebPlaybackSDK.js";
 import { useState, useEffect } from "react";

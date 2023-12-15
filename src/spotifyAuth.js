@@ -1,5 +1,5 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
-const redirectUri = "http://localhost:5174/Emo-chan/";
+const redirectUri = "https://biboyboy04.github.io/Emo-chan/";
 const clientId = "0f3a23fadfdd45b0b60f86c80bf4238a";
 
 const scopes = [

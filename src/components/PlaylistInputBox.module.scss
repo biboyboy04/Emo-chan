@@ -108,3 +108,10 @@
     border-color: black;
   }
 }
+
+// Add media query for mobile
+@media (max-width: 768px) {
+  .hiddenBox {
+    margin-right: 0;
+  }
+}
