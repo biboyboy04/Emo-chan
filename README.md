@@ -2,6 +2,9 @@
 
 Welcome to Emo-chan, your ultimate E-book Reader that enhances your reading experience by incorporating emotion detection and personalized music playlists. With Emo-chan, reading becomes a multisensory journey, allowing you to not only delve into captivating stories but also feel the emotions that the chapters evoke.
 
+# Project Inspiration
+We created this project because I am an avid reader who typically enjoys listening to background music while reading. This habit may be driven by a desire to reduce background noise or to enhance my focus on the reading. One day, while immersed in a book, a phenomenon occurred: the emotions conveyed by the background music perfectly connected with the scenario or chapter I was reading. It was a remarkable experience, as the music perfectly aligned with the emotions of the chapter. Instead of relying on RNG of such phenomenon, we decided to automate and increase the likelihood of this happening by creating this app.
+
 ## Features
 
 ### 1. E-book Reading
